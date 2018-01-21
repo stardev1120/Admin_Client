@@ -1,0 +1,157 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/feature-acls" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Feature ACLs
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.role?.role_name}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.role?.role_name}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New Feature ACL
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && feature_api_url.hasError('required') || (feature_api_url.touched && title.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Feature API URL *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.feature_api_url" type="text" class="form-control m-input"
+                               name="feature_api_url"
+                               placeholder="Enter api url" required #feature_api_url="ngModel">
+                        <div *ngIf="mForm.submitted && feature_api_url.hasError('required') || (feature_api_url.touched && feature_api_url.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && actions.hasError('required') || (actions.touched && title.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Actions *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.actions" type="text" class="form-control m-input"
+                               name="actions"
+                               placeholder="Enter actions {'ALL': true}" required #actions="ngModel">
+                        <div *ngIf="mForm.submitted && actions.hasError('required') || (actions.touched && actions.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && fields.hasError('required') || (fields.touched && title.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Fields *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.fields" type="text" class="form-control m-input"
+                               name="fields"
+                               placeholder="Enter fields {'ALL': true}" required #fields="ngModel">
+                        <div *ngIf="mForm.submitted && fields.hasError('required') || (fields.touched && fields.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && role.hasError('required') || (role.touched && role.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Role *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select role" class="form-control m-input"
+                                [(ngModel)]="data.role_id" name="role" #role="ngModel" required>
+                            <option *ngFor="let role of roles" [ngValue]="role.id">
+                                {{role.role_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && role.hasError('required') || (role.touched && role.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button (click)="location.back()" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

@@ -1,0 +1,252 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/collections" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Collections History
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text"  *ngIf="data.id">
+							{{data.loan_id}}
+						</span>
+                        <span class="m-nav__link-text"  *ngIf="!data.id">
+							New
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.loan_id}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New collection history
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && loan.hasError('required') || (loan.touched && loan.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Loan *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select loan" class="form-control m-input"
+                                [(ngModel)]="data.loan_id" name="loan" #loan="ngModel" required>
+                            <option *ngFor="let loan of loans" [ngValue]="loan.id">
+                                {{user.id}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && loan.hasError('required') || (loan.touched && loan.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && amount.hasError('required') || (amount.touched && amount.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Amount *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.amount" type="number" class="form-control m-input" name="amount"
+                               placeholder="Enter collection amount" required #amount="ngModel">
+                        <div *ngIf="mForm.submitted && amount.hasError('required') || (amount.touched && amount.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && date.hasError('required') || (date.touched && date.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Date *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" required placeholder="yyyy-mm-dd"
+                                       name="date" [(ngModel)]="data.date" ngbDatepicker #date="ngModel"
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">
+                                        <i class="la la-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="mForm.submitted && date.hasError('required') || (date.touched && date.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && currency.hasError('required') || (currency.touched && currency.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Currency *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.currency" type="text" class="form-control m-input" name="currency"
+                               placeholder="Enter currency" required #currency="ngModel">
+                        <div *ngIf="mForm.submitted && currency.hasError('required') || (currency.touched && currency.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && retry_date.hasError('required') || (retry_date.touched && retry_date.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Retry date *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" required placeholder="yyyy-mm-dd"
+                                       name="retry_date" [(ngModel)]="data.retry_date" ngbDatepicker #retry_date="ngModel"
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">
+                                        <i class="la la-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="mForm.submitted && retry_date.hasError('required') || (retry_date.touched && retry_date.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Status *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select status" class="form-control m-input"
+                                [(ngModel)]="data.status" name="status" #status="ngModel" required>
+                            <option *ngFor="let status of statuses" [ngValue]="status.id">
+                                {{status.title}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && date_of_entry.hasError('required') || (date_of_entry.touched && date_of_entry.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Date of retry *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" required placeholder="yyyy-mm-dd"
+                                       name="date_of_entry" [(ngModel)]="data.date_of_entry" ngbDatepicker #date_of_entry="ngModel"
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">
+                                        <i class="la la-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="mForm.submitted && date_of_entry.hasError('required') || (date_of_entry.touched && date_of_entry.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && bank_response.hasError('required') || (bank_response.touched && bank_response.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Bank response *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.bank_response" type="text" class="form-control m-input" name="bank_response"
+                               placeholder="Enter bank response" required #bank_response="ngModel">
+                        <div *ngIf="mForm.submitted && bank_response.hasError('required') || (bank_response.touched && bank_response.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button href="#/collection-history" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

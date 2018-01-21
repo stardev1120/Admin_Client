@@ -1,0 +1,585 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                Dashboard
+            </h3>
+        </div>
+        <div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav" style="margin-bottom:0;margin-right: 10px">
+                    <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                        data-dropdown-toggle="hover" aria-expanded="true">
+                        <a href="#" style="height: 40px !important;padding-top: 10px;"
+                           class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
+                            All
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
+                                  style="left: auto; right: 36.5px;"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav">
+                                            <li class="m-nav__item">
+                                                <a href="" class="m-nav__link">
+                                                    <span class="m-nav__link-text">
+																Ukraine
+															</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="" class="m-nav__link">
+                                                    <span class="m-nav__link-text">
+																China
+															</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="" class="m-nav__link">
+                                                    <span class="m-nav__link-text">
+																Egypt
+															</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+			<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+				<span class="m-subheader__daterange-label">
+					<span class="m-subheader__daterange-title"></span>
+					<span class="m-subheader__daterange-date m--font-brand"></span>
+				</span>
+				<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+					<i class="la la-angle-down"></i>
+				</a>
+			</span>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-3">
+            <div class="m-widget14">
+                <div class="m-widget14__stats">
+                    <div class="m-widget14__items m-widget14__items-col1">
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Users
+                                </h3>
+                                <span class="m-widget14__desc">
+								15 User
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales1"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('collections')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Collected
+                                </h3>
+                                <span class="m-widget14__desc">
+								150,000.00 $
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales2"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="m-widget14">
+                <div class="m-widget14__stats">
+                    <div class="m-widget14__items m-widget14__items-col1">
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('loans')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Loans
+                                </h3>
+                                <span class="m-widget14__desc">
+								50 Loan
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales3"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" style="background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Average uScore
+                                </h3>
+                                <span class="m-widget14__desc">
+								152.254
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales4"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="m-widget14">
+                <div class="m-widget14__stats">
+                    <div class="m-widget14__items m-widget14__items-col1">
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('collections')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Collections
+                                </h3>
+                                <span class="m-widget14__desc">
+								108 Collection
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales5"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Users viewed by OTP
+                                </h3>
+                                <span class="m-widget14__desc">
+								34 User
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales6"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="m-widget14">
+                <div class="m-widget14__stats">
+                    <div class="m-widget14__items m-widget14__items-col1">
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('loans')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Give Out Loans
+                                </h3>
+                                <span class="m-widget14__desc">
+								15,000.00 $
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales7"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Un-verified Users
+                                </h3>
+                                <span class="m-widget14__desc">
+								10 User
+							</span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas  id="m_chart_daily_sales8"></canvas>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Daily Sales-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+                <div class="m-widget14__header m--margin-bottom-30">
+                    <h3 class="m-widget14__title">
+                        Country Investment Money Left
+                    </h3>
+                    <span class="m-widget14__desc">
+								670
+							</span>
+                </div>
+                <div class="m-widget14__chart" style="height:120px;">
+                    <canvas  id="m_chart_daily_sales9"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+                <div class="m-widget14__header m--margin-bottom-30">
+                    <h3 class="m-widget14__title">
+                        Country Investment Status
+                    </h3>
+                    <span class="m-widget14__desc">
+								340
+							</span>
+                </div>
+                <div class="m-widget14__chart" style="height:120px;">
+                    <canvas  id="m_chart_daily_sales10"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon m--hide">
+								<i class="la la-gear"></i>
+							</span>
+                            <h3 class="m-portlet__head-text">
+                                Duration on Users, Loans and Collections
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="m_amcharts_8" style="height: 500px;"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon m--hide">
+								<i class="la la-gear"></i>
+							</span>
+                            <h3 class="m-portlet__head-text">
+                                Duration on Users, Amount of Loans and Amount of Collections
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="m_amcharts_14" style="height: 500px;"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--tab">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon m--hide">
+								<i class="la la-gear"></i>
+							</span>
+                            <h3 class="m-portlet__head-text">
+                                Revenue By Day
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div id="m_gchart_5" style="height:500px;"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+    <div class="row">
+        <!--<div class="col-xl-12">
+            &lt;!&ndash;end: Search Form &ndash;&gt;
+            &lt;!&ndash;begin: Datatable &ndash;&gt;
+            <div class="m_datatable" id="json_data"></div>
+            &lt;!&ndash;end: Datatable &ndash;&gt;
+        </div>-->
+        <div class="col-xl-12">
+            <!--begin:: Widgets/Audit Log-->
+            <div class="m-portlet m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Users Activities Logs
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools m-subheader" style="padding-top: 0">
+                        <!--<ul class="nav nav-pills nav-pills&#45;&#45;brand m-nav-pills&#45;&#45;align-right m-nav-pills&#45;&#45;btn-pill m-nav-pills&#45;&#45;btn-sm" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
+                                    Today
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
+                                    Week
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
+                                    Month
+                                </a>
+                            </li>
+                        </ul>-->
+                        <span class="m-subheader__daterange" id="m_dashboard_daterangepicker2"
+                              style="border: 1px solid #ebedf2;">
+				<span class="m-subheader__daterange-label">
+					<span class="m-subheader__daterange-title"></span>
+					<span class="m-subheader__daterange-date m--font-brand"></span>
+				</span>
+				<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+					<i class="la la-angle-down"></i>
+				</a>
+			</span>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="m_widget4_tab1_content">
+                            <div class="m-scrollable" data-scrollable="true" data-max-height="400"
+                                 style="height: 400px; overflow: hidden;">
+                                <div class="m-list-timeline m-list-timeline--skin-light">
+                                    <div class="m-list-timeline__items">
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span class="m-list-timeline__text">
+												12 new users registered
+											</span>
+                                            <span class="m-list-timeline__time">
+												Just now
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">
+												System shutdown
+												<span class="m-badge m-badge--success m-badge--wide">
+													pending
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												14 mins
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                            <span class="m-list-timeline__text">
+												New invoice received
+											</span>
+                                            <span class="m-list-timeline__time">
+												20 mins
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+                                            <span class="m-list-timeline__text">
+												DB overloaded 80%
+												<span class="m-badge m-badge--info m-badge--wide">
+													settled
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												1 hr
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                            <span class="m-list-timeline__text">
+												System error -
+												<a href="#" class="m-link">
+													Check
+												</a>
+											</span>
+                                            <span class="m-list-timeline__time">
+												2 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
+                                            <span class="m-list-timeline__text">
+												Production server down
+											</span>
+                                            <span class="m-list-timeline__time">
+												3 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">
+												Production server up
+											</span>
+                                            <span class="m-list-timeline__time">
+												5 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span href="" class="m-list-timeline__text">
+												New order received
+												<span class="m-badge m-badge--danger m-badge--wide">
+													urgent
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												7 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span class="m-list-timeline__text">
+												12 new users registered
+											</span>
+                                            <span class="m-list-timeline__time">
+												Just now
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">
+												System shutdown
+												<span class="m-badge m-badge--success m-badge--wide">
+													pending
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												14 mins
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                            <span class="m-list-timeline__text">
+												New invoice received
+											</span>
+                                            <span class="m-list-timeline__time">
+												20 mins
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+                                            <span class="m-list-timeline__text">
+												DB overloaded 80%
+												<span class="m-badge m-badge--info m-badge--wide">
+													settled
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												1 hr
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
+                                            <span class="m-list-timeline__text">
+												New invoice received
+											</span>
+                                            <span class="m-list-timeline__time">
+												20 mins
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
+                                            <span class="m-list-timeline__text">
+												DB overloaded 80%
+												<span class="m-badge m-badge--info m-badge--wide">
+													settled
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												1 hr
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                            <span class="m-list-timeline__text">
+												System error -
+												<a href="#" class="m-link">
+													Check
+												</a>
+											</span>
+                                            <span class="m-list-timeline__time">
+												2 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
+                                            <span class="m-list-timeline__text">
+												Production server down
+											</span>
+                                            <span class="m-list-timeline__time">
+												3 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">
+												Production server up
+											</span>
+                                            <span class="m-list-timeline__time">
+												5 hrs
+											</span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span href="" class="m-list-timeline__text">
+												New order received
+												<span class="m-badge m-badge--danger m-badge--wide">
+													urgent
+												</span>
+											</span>
+                                            <span class="m-list-timeline__time">
+												7 hrs
+											</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="m_widget4_tab2_content"></div>
+                        <div class="tab-pane" id="m_widget4_tab3_content"></div>
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Audit Log-->
+        </div>
+    </div>
+</div>

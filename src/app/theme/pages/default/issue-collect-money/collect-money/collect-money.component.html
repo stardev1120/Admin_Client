@@ -1,0 +1,161 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/issue-collect-money" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Issue/Collect Money
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Collect Money
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Collect Money
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form state m-form fit m-form label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    User ID :
+                                </label>
+                                <span class="m--font-normal">Test</span>
+                            </div>
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    Full name:
+                                </label>
+                                <span class="m--font-normal">Test</span>
+                            </div>
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    Phone:
+                                </label>
+                                <span class="m--font-normal">1111111111</span>
+                            </div>
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    Email:
+                                </label>
+                                <span class="m--font-normal">Test@test.com</span>
+                            </div>
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    Date of Birth:
+                                </label>
+                                <span class="m--font-normal">5th Jan 2000</span>
+                            </div>
+                            <div class="">
+                                <label class="m--font-boldest">
+                                    Country:
+                                </label>
+                                <span class="m--font-normal">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <img style="border: 1px solid #575962;margin: 5px;" src="../../../../../../assets/app/media/img/users/300_3.jpg" height="250" width="250"/>
+                            <img style="border: 1px solid #575962;margin: 5px;" src="../../../../../../assets/app/media/img/users/300_3.jpg" height="250" width="250"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__content">
+                    <div class="m-alert m-alert icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                        Amount to be collected :
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="col-form-label m--font-normal">800</div>
+                        <!--<input [(ngModel)]="amount" type="number" class="form-control m-input" name="amount1"
+                               placeholder="Enter amount" required #amount1="ngModel">
+                        <div *ngIf="mForm.submitted && amount1.hasError('required') || (amount1.touched && amount1.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>-->
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                        Confirm amount collected :
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="col-form-label m--font-normal">300</div>
+                       <!-- <input [(ngModel)]="reamount" type="number" class="form-control m-input" name="reamount1"
+                               placeholder="Enter amount" required #reamount1="ngModel">
+                        <div *ngIf="mForm.submitted && reamount1.hasError('required') || (reamount1.touched && reamount1.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                        <div *ngIf="mForm.submitted && reamount!= amount || (reamount1.touched && reamount!= amount)"
+                             class="form-control-feedback">
+                            the amounts is not matched.
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9 ml-lg-auto">
+                    </div>
+                    <div class="col-lg-3 ml-lg-auto">
+                        <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                            Collect Cash
+                        </button>
+                        <button routerLink="/issue-collect-money" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

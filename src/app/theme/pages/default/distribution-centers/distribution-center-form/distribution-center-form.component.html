@@ -1,0 +1,195 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/distribution-centers" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Distribution centers
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.name}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.name}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New company
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && address.hasError('required') || (address.touched && title.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Address *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.address" type="text" class="form-control m-input"
+                               name="address"
+                               placeholder="Enter address" required #address="ngModel">
+                        <div *ngIf="mForm.submitted && address.hasError('required') || (address.touched && address.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && lat.hasError('required') || (lat.touched && lat.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        lat *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.lat" type="text" class="form-control m-input" name="lat"
+                               placeholder="Enter lat" required #lat="ngModel">
+                        <div *ngIf="mForm.submitted && lat.hasError('required') || (lat.touched && lat.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && long.hasError('required') || (long.touched && long.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        long *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.long" type="text" class="form-control m-input" name="long"
+                               placeholder="Enter long" required #long="ngModel">
+                        <div *ngIf="mForm.submitted && long.hasError('required') || (long.touched && long.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && (contact_number.hasError('required')|| contact_number.hasError('tel')) ||
+                     (contact_number.touched && (title.hasError('required')|| contact_number.hasError('tel')))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Contact number *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.contact_number" type="tel" class="form-control m-input"
+                               name="contact_number"
+                               placeholder="Enter contact number" required #contact_number="ngModel">
+                        <div *ngIf="mForm.submitted && contact_number.hasError('required') || (contact_number.touched && contact_number.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                        <div *ngIf="mForm.submitted && contact_number.hasError('tel') || (contact_number.touched && contact_number.hasError('tel'))"
+                             class="form-control-feedback">
+                            contact number is not valid
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Country *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select country" class="form-control m-input"
+                                [(ngModel)]="data.country_id" name="country" #country="ngModel" required>
+                            <option *ngFor="let country of countries" [ngValue]="country.id">
+                                {{country.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && company.hasError('required') || (company.touched && company.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Company *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select company" class="form-control m-input"
+                                [(ngModel)]="data.company_id" name="company" #company="ngModel" required>
+                            <option *ngFor="let company of companies" [ngValue]="company.id">
+                                {{company.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && company.hasError('required') || (company.touched && company.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button (click)="location.back()" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

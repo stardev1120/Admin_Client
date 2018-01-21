@@ -1,0 +1,330 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/users" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Users
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.email}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.email}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New User
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && fname.hasError('required') || (fname.touched && fname.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        First name *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.fname" type="text" class="form-control m-input" name="fname"
+                               placeholder="Enter user first name" required #fname="ngModel">
+                        <div *ngIf="mForm.submitted && fname.hasError('required') || (fname.touched && fname.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && mname.hasError('required') || (mname.touched && nmame.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Medium name *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.mname" type="text" class="form-control m-input" name="mname"
+                               placeholder="Enter user medium name" required #mname="ngModel">
+                        <div *ngIf="mForm.submitted && mname.hasError('required') || (mname.touched && mname.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && lname.hasError('required') || (lname.touched && nmame.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Last name *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.lname" type="text" class="form-control m-input" name="lname"
+                               placeholder="Enter user last name" required #lname="ngModel">
+                        <div *ngIf="mForm.submitted && lname.hasError('required') || (lname.touched && lname.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && (email.hasError('required') || email.hasError('email')) ||
+                      (email.touched && (email.hasError('required') || email.hasError('email')))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Email *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.email" type="email" class="form-control m-input" name="email"
+                               placeholder="Enter User Email" required #email="ngModel">
+                        <div *ngIf="mForm.submitted && email.hasError('required') || (email.touched && email.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                        <div *ngIf="mForm.submitted && email.hasError('email') || (email.touched && email.hasError('email'))"
+                             class="form-control-feedback">
+                            email is not valid.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && dob.hasError('required') || (dob.touched && dob.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Date of birth *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <!--<ngb-datepicker name="dob" required="" #dob="ngModel" [(ngModel)]="data.dob" (navigate)="date = $event.next"></ngb-datepicker>-->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" required placeholder="yyyy-mm-dd"
+                                       name="dob" [(ngModel)]="data.dob" ngbDatepicker #dob="ngModel"
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">
+                                        <i class="la la-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="mForm.submitted && dob.hasError('required') || (dob.touched && dob.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && user_location.hasError('required') || (user_location.touched && user_location.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        User location *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.user_location" type="text" class="form-control m-input"
+                               name="user_location"
+                               placeholder="User Location" required #user_location="ngModel">
+                        <div *ngIf="mForm.submitted && user_location.hasError('required') || (user_location.touched && user_location.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && phone_number.hasError('required') || (phone_number.touched && phone_number.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Phone *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.phone_number" type="text" class="form-control m-input"
+                               name="phone_number"
+                               placeholder="phone" required #phone_number="ngModel">
+                        <div *ngIf="mForm.submitted && phone_number.hasError('required') || (phone_number.touched && phone_number.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+
+                    <label class="col-3 col-form-label">
+                        Verified
+                    </label>
+                    <div class="col-3">
+						<span class="m-switch m-switch--lg m-switch--icon">
+							<label>
+                               <input [(ngModel)]="data.verified" type="checkbox"
+                                      checked="checked" name="verified">
+                                <span></span>
+                            </label>
+						</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Status *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select status" class="form-control m-input"
+                                [(ngModel)]="data.status" name="status" #status="ngModel" required>
+                            <option *ngFor="let status of statuses" [ngValue]="status.id">
+                                {{status.title}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && sex.hasError('required') || (sex.touched && group.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Sex *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="m-radio-inline">
+                            <label class="m-radio">
+                                <input type="radio" [(ngModel)]="data.sex" name="sex" #sex="ngModel" value="'male'">
+                                Male
+                                <span></span>
+                            </label>
+                            <label class="m-radio">
+                                <input type="radio" [(ngModel)]="data.sex" name="sex" #sex="ngModel" value="'female'">
+                                Female
+                                <span></span>
+                            </label>
+                        </div>
+                        <div *ngIf="mForm.submitted && sex.hasError('required') || (sex.touched && sex.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && (profilepic.hasError('required')
+                     || profilepic.hasError('url')) || (profilepic.touched && (profilepic.hasError('required') || profilepic.hasError('url')))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Picture *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.profilepic" type="url" class="form-control m-input" name="profilepic"
+                               placeholder="picture url" required #profilepic="ngModel">
+                        <div *ngIf="mForm.submitted && profilepic.hasError('required') || (profilepic.touched && profilepic.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                        <div *ngIf="mForm.submitted && profilepic.hasError('url') || (profilepic.touched && profilepic.hasError('url'))"
+                             class="form-control-feedback">
+                            invalid required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Country *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select country" class="form-control m-input"
+                                [(ngModel)]="data.country_id" name="country" #country="ngModel" required>
+                            <option *ngFor="let country of countries" [ngValue]="country.id">
+                                {{country.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && relationship.hasError('required') || (relationship.touched && relationship.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Relationship *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.relationship" type="text" class="form-control m-input"
+                               name="relationship"
+                               placeholder="Relationship" required #relationship="ngModel">
+                        <div *ngIf="mForm.submitted && relationship.hasError('required') || (relationship.touched && relationship.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button href="#/users" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

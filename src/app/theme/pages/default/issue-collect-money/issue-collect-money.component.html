@@ -1,0 +1,72 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item"><a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Issue Collect Money
+						</span>
+                </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet m-form">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Scan Barcode or Enter Manually D1
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form__content">
+                <div class="form-group  row">
+                    <label class="col-form-label col-lg-4 col-sm-12 m--font-boldest">
+                        Scan Barcode or Enter Manually D1
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="D1" type="text" class="form-control m-input m--font-normal"
+                               placeholder="Scan Barcode or Enter Manually D1">
+                    </div>
+
+                </div>
+                <div class="row" style="padding: 10px 5px 10px 5px">
+                    <div class="col-lg-6 ml-lg-auto">
+                    </div>
+                    <div class="col-lg-6 ml-lg-auto">
+                        <button type="button" (click)="onIssueMoney()" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                            Issue Money
+                        </button>
+
+                        <button type="button" (click)="onCollectMoney()" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                            Collect Money
+                        </button>
+                        <button routerLink="/index" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit" >
+            <div class="m-form__actions m-form__actions">
+
+            </div>
+        </div>
+    </div>
+</div>

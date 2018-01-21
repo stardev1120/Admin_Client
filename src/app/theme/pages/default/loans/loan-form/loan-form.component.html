@@ -1,0 +1,278 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/loans" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Loans
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text"  *ngIf="data.id">
+							{{data.user_id}}
+						</span>
+                        <span class="m-nav__link-text"  *ngIf="!data.id">
+							New
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.user_id}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New Loan
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && user.hasError('required') || (user.touched && user.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        User *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select user" class="form-control m-input"
+                                [(ngModel)]="data.user_id" name="user" #user="ngModel" required>
+                            <option *ngFor="let user of users" [ngValue]="user.id">
+                                {{user.fname}} {{user.mname}} {{user.lname}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && user.hasError('required') || (user.touched && user.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && date_taken.hasError('required') || (date_taken.touched && date_taken.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Date taken *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" required placeholder="yyyy-mm-dd"
+                                       name="date_taken" [(ngModel)]="data.date_taken" ngbDatepicker #date_taken="ngModel"
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">
+                                        <i class="la la-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="mForm.submitted && date_taken.hasError('required') || (date_taken.touched && date_taken.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && amount_taken.hasError('required') || (amount_taken.touched && amount_taken.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Amount taken *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.amount_taken" type="number" class="form-control m-input" name="amount_taken"
+                               placeholder="Enter loan amount taken" required #amount_taken="ngModel">
+                        <div *ngIf="mForm.submitted && amount_taken.hasError('required') || (amount_taken.touched && amount_taken.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && service_fee.hasError('required') || (service_fee.touched && service_fee.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Service fee *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.service_fee" type="text" class="form-control m-input" name="service_fee"
+                               placeholder="Enter service fee" required #service_fee="ngModel">
+                        <div *ngIf="mForm.submitted && service_fee.hasError('required') || (service_fee.touched && service_fee.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && interest_rate.hasError('required') || (interest_rate.touched && interest_rate.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Interest rate *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.interest_rate" type="text" class="form-control m-input" name="interest_rate"
+                               placeholder="Enter interest rate" required #interest_rate="ngModel">
+                        <div *ngIf="mForm.submitted && interest_rate.hasError('required') || (interest_rate.touched && interest_rate.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && duration_of_loan.hasError('required') || (duration_of_loan.touched && duration_of_loan.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Duration of loan *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.duration_of_loan" type="number" class="form-control m-input" name="duration_of_loan"
+                               placeholder="Enter duration of loan" required #duration_of_loan="ngModel">
+                        <div *ngIf="mForm.submitted && duration_of_loan.hasError('required') || (duration_of_loan.touched && duration_of_loan.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Status *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <select placeholder="Select status" class="form-control m-input"
+                                [(ngModel)]="data.status" name="status" #status="ngModel" required>
+                            <option *ngFor="let status of statuses" [ngValue]="status.id">
+                                {{status.title}}
+                            </option>
+                        </select>
+                        <div *ngIf="mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && amount_pending.hasError('required') || (amount_pending.touched && amount_pending.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Amount pending *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.amount_pending" type="number" class="form-control m-input" name="amount_pending"
+                               placeholder="Enter amount pending" required #amount_pending="ngModel">
+                        <div *ngIf="mForm.submitted && amount_pending.hasError('required') || (amount_pending.touched && amount_pending.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && bank_credit_transaction.hasError('required') || (bank_credit_transaction.touched && bank_credit_transaction.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Bank credit transaction *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.bank_credit_transaction" type="text" class="form-control m-input" name="bank_credit_transaction"
+                               placeholder="Enter bank credit transaction" required #bank_credit_transaction="ngModel">
+                        <div *ngIf="mForm.submitted && bank_credit_transaction.hasError('required') || (bank_credit_transaction.touched && bank_credit_transaction.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+
+                    <label class="col-3 col-form-label">
+                        bank Credit Status
+                    </label>
+                    <div class="col-3">
+						<span class="m-switch m-switch--lg m-switch--icon">
+							<label>
+                               <input [(ngModel)]="data.bank_credit_status" type="checkbox"
+                                      checked="checked" name="bank_credit_status">
+                                <span></span>
+                            </label>
+						</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && currency.hasError('required') || (currency.touched && currency.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Currency *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.currency" type="text" class="form-control m-input" name="currency"
+                               placeholder="Enter currency" required #currency="ngModel">
+                        <div *ngIf="mForm.submitted && currency.hasError('required') || (currency.touched && currency.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button href="#/loans" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

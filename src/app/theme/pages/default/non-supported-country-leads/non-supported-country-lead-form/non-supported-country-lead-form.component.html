@@ -1,0 +1,153 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/non-supported-country-leads" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Non supported country leads
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.country}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        Edit : {{data.country}}
+                    </h3>
+                    <h3 class="m-portlet__head-text" *ngIf="!data.id">
+                        New non supported country lead
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
+              id="m_form_2">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
+                         role="alert" id="m_form_2_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Country *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.country" type="text" class="form-control m-input" name="country"
+                               placeholder="Enter country" required #country="ngModel">
+                        <div *ngIf="mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && ip_address.hasError('required') || (ip_address.touched && ip_address.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        IP address *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.ip_address" type="text" class="form-control m-input" name="ip_address"
+                               placeholder="Enter ip address" required #ip_address="ngModel">
+                        <div *ngIf="mForm.submitted && ip_address.hasError('required') || (ip_address.touched && ip_address.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && gps_location.hasError('required') || (gps_location.touched && gps_location.hasError('required'))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        GPS location *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.gps_location" type="text" class="form-control m-input" name="gps_location"
+                               placeholder="Enter GPS location" required #gps_location="ngModel">
+                        <div *ngIf="mForm.submitted && gps_location.hasError('required') || (gps_location.touched && gps_location.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group m-form__group row"
+                     [ngClass]="{'has-danger':mForm.submitted && (email.hasError('required') || email.hasError('email')) ||
+                     (email.touched && (email.hasError('required') || email.hasError('email')))}">
+                    <label class="col-form-label col-lg-3 col-sm-12">
+                        Email *
+                    </label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <input [(ngModel)]="data.email" type="email" class="form-control m-input" name="email"
+                               placeholder="Enter email" required #email="ngModel">
+                        <div *ngIf="mForm.submitted && email.hasError('required') || (email.touched && email.hasError('required'))"
+                             class="form-control-feedback">
+                            required.
+                        </div>
+                        <div *ngIf="mForm.submitted && email.hasError('email') || (email.touched && email.hasError('email'))"
+                             class="form-control-feedback">
+                            email is not valid.
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="row">
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                                Save
+                            </button>
+                            <button routerLink="/non-supported-country-leads" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>
