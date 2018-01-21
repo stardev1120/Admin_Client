@@ -26985,7 +26985,7 @@ body.m-content--skin-light2 {
   .m-brand {
     width: 100%;
     position: relative;
-    height: 60px !important;
+    height: 70px !important;
     padding: 0px 25px;
     z-index: 2; }
     .m-brand .m-brand__tools .m-brand__icon {
@@ -27067,7 +27067,7 @@ body.m-content--skin-light2 {
 
 @media (max-width: 992px) {
   .m-header {
-    height: 60px !important; }
+    height: 70px !important; }
     .m-header .m-header__nav {
       top: -100%;
       position: relative; }

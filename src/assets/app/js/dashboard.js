@@ -99,7 +99,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('brand'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -233,7 +233,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('metal'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -300,7 +300,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('accent'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -367,7 +367,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('primary'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -434,7 +434,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('info'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -501,7 +501,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('warning'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -568,7 +568,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: mUtil.getColor('danger'),
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -635,7 +635,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: '#E4507E',
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
@@ -702,7 +702,7 @@ var Dashboard = function() {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
                 //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
+                backgroundColor: '#FED151',
                 data: [
                     15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
                 ]
