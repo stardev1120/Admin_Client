@@ -12,7 +12,7 @@ export class CountriesResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        return [];// this.api.query('{"fields": ["id", "name"]}');
+        return this.api.query('{"where":{}, "fields": ["id", "name"]}');
     }
 
 }

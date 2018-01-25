@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
-;
-import { CountrySetting } from "../../../../../models/country-setting";
-import { CountriesSettingsService } from "../../../../../_services/apis/countries-settings.service";
-import { CompaniesService } from "../../../../../_services/apis/company.service";
-import { Company } from "../../../../../models/company";
-import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+
+import {CompaniesService} from "../../../../../_services/apis/company.service";
+import {Company} from "../../../../../models/company";
+import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
+import {CountriesService} from "../../../../../_services/apis/countries.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -19,15 +18,19 @@ export class CompanyFormComponent implements OnInit {
     countries: any;
 
 
-    constructor(private _script: ScriptLoaderService, private api: CompaniesService,
-        private router: Router,
-        private route: ActivatedRoute) {
+    constructor(private _script: ScriptLoaderService,
+                private api: CompaniesService,
+                private country: CountriesService,
+                private router: Router,
+                private route: ActivatedRoute) {
 
     }
+
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/distribution-centers.js');
     }
+
     ngOnInit() {
         this.data = this.route.snapshot.data.company as Company;
         this.countries = this.route.snapshot.data.countries;

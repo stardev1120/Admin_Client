@@ -1891,7 +1891,7 @@ jQuery.fn.extend({
                             include: options.include,
                             offset: (cPage - 1) * size,
                             //order: dsParams.sort.field + ' ' + dsParams.sort.sort
-                            order: dsParams.sort.field ? dsParams.sort.field + ' ' + dsParams.sort.sort : null,
+                            order: dsParams.sort.field ? [[dsParams.sort.field, dsParams.sort.sort]] : null,
                             where: dsParams.query || {}
                         })
                     };
@@ -1913,9 +1913,11 @@ jQuery.fn.extend({
 
 
                 ajaxCount.url += '/count'
+                console.log('ajaxCount ====> ', ajaxCount)
                 return $.ajax(ajaxCount).done(function (cData) {
                     API.setDataSourceParam('total', cData.count)
                 }).then(function (count) {
+                    console.log('params ===> ', params);
                     return $.ajax(params).done(function (data, textStatus, jqXHR) {
                         // extendible data map callback for custom datasource
                         datatable.dataSet = datatable.originalDataSet
@@ -2068,7 +2070,7 @@ jQuery.fn.extend({
                         if(API.getOption('toolbar.items.actions')) {
                             var actionsSelect = $('<select/>')
                                 .addClass('selectpicker m-datatable__pager-size')
-                                .attr('title', 'actions').attr('data-width', '70px')
+                                .attr('title', 'actions').attr('data-width', '100px')
                                 //.val(pg.meta.action)
                                 .on('change', pg.exeAction)
                                 .prependTo(pg.pagerLayout['actions']);
@@ -3444,7 +3446,7 @@ jQuery.fn.extend({
                     if (typeof columns === 'undefined' && typeof value !== 'undefined') {
                         var key = dt.getGeneralSearchKey();
                         if (value != '') {
-                            query[key] = {like: value + '.*', "options": "i"};
+                            query[key] = {$like: value + '%'};
                         }else{
                             if (query.hasOwnProperty(key))
                                 delete  query[key]

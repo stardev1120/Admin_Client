@@ -4,6 +4,7 @@
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BaseModel } from "./base-model";
+import {environment} from "../../environments/environment";
 
 //import {AuthenticationService} from "./authentication/authentication.service";
 // import {Logger} from "../../core/logger.service";
@@ -12,7 +13,7 @@ import { BaseModel } from "./base-model";
 
 
 export class BaseApiService<T extends BaseModel> {
-    public baseUrl = 'https://localhost:3000/api/admin';
+    public baseUrl = environment.baseUrl;
     public url = "/";
 
 
@@ -21,13 +22,13 @@ export class BaseApiService<T extends BaseModel> {
     }
 
     private authorization(): HttpHeaders {
-        let token = JSON.parse(localStorage.getItem('currentUser'));
+        let token = (JSON.parse(localStorage.getItem('currentUser'))).token;
 
         if (token) {
             return new HttpHeaders()
                 .set("Content-Type", "application/json")
                 .set("Accept", "application/json")
-                .set('Authorization', token['id']);
+                .set('Authorization', "JWT "+token);
         } else {
             return new HttpHeaders()
                 .set("Content-Type", "application/json")
@@ -41,6 +42,7 @@ export class BaseApiService<T extends BaseModel> {
             .get<T>(this.baseUrl + this.url + `/${id}`, { headers: this.authorization() })
     }
     query(query: any) {
+
         return this.http
             .get<T[]>(this.baseUrl + this.url + '?filter=' + `${query}`, { headers: this.authorization() })
     }

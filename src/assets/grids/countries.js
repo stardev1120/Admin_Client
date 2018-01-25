@@ -2,18 +2,31 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/country'
+    var baseUrl = 'http://192.168.153.129:3000/api/admin/country'
     // basic demo
     var demo = function () {
+        var currentUserString = localStorage.getItem('currentUser');
+        var headers = {
+            "content-type": "application/json"
+        };
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                headers['country_id'] = currentUser.country_id ? currentUser.country_id : 1;
+            }
 
-        var datatable = $('.m_datatable').mDatatable({
+        }
+        var datatable = $('.m_datatable_countries').mDatatable({
             // datasource definition
             data: {
-                //type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
                         // sample GET method
                         method: 'GET',
+                        headers: headers,
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
                         map: function (raw) {
@@ -26,7 +39,7 @@ var DatatableRemoteAjaxDemo = function () {
                         },
                     },
                 },
-                pageSize: 2,
+                pageSize: 5,
                 saveState: {
                     cookie: true,
                     webstorage: true,
@@ -54,7 +67,7 @@ var DatatableRemoteAjaxDemo = function () {
                 // toolbar items
                 items: {
                     // pagination
-                    actions: {
+                    /*actions: {
                         delete: {
                             name: 'Delete All',
                             url: '/delete',
@@ -62,36 +75,36 @@ var DatatableRemoteAjaxDemo = function () {
                                 console.log(ids);
                             }
                         }
-                    },
+                    },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [1, 2, 5, 10, 20, 30, 50, 100]
+                        pageSizeSelect: [5, 10, 20, 50, 100]
                     }
                 }
             },
 
             search: {
-                input: $('#m_form_name')
+                input: $('#name')
             },
 
             // columns definition
             columns: [
-                {
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                    },
-                },
+                /* {
+                     field: 'select',
+                     width: 20,
+                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
+                     sortable: false,
+                     overflow: 'visible',
+                     template: function (row) {
+                         return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
+                     },
+                 },*/
                 {
                     field: 'name',
                     title: 'Name',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 50,
+                    //width: 50,
                     // basic templating support for column rendering,
                     //template: '{{OrderID}} - {{ShipCountry}}',
                 },
@@ -99,15 +112,15 @@ var DatatableRemoteAjaxDemo = function () {
                     field: 'country_code',
                     title: 'Code',
                     filterable: false, // disable or enable filtering
-                    width: 100
-                },{
+                    //width: 100
+                }, {
                     field: 'status',
                     title: 'Status',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 100,
+                    //width: 100,
                     template: function (row) {
-                        return row.currency ? row.currency.enCurrency : '';
+                        return row.status ? 'Active' : 'Inactive';
                     }
                     // basic templating support for column rendering,
                     //template: '{{OrderID}} - {{ShipCountry}}',
@@ -115,14 +128,14 @@ var DatatableRemoteAjaxDemo = function () {
 
                 {
                     field: 'Actions',
-                    width: 110,
+                    // width: 110,
                     title: 'Actions',
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
-                            <a href="#/countries/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                            <a href="#/countries/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -168,10 +181,14 @@ var DatatableRemoteAjaxDemo = function () {
         var query = datatable.getDataSourceQuery();
 
 
-        $('#m_form_name').on('change', function () {
+        $('#name').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.name = $(this).val();
+            if ($(this).val()) {
+                query.name = $(this).val();
+            } else {
+                delete query.name;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
@@ -188,7 +205,8 @@ var DatatableRemoteAjaxDemo = function () {
 
             $.ajax({
                 url: baseUrl + '/' + id,
-                method: 'delete'
+                method: 'delete',
+                headers: headers,
             }).done(datatable.load);
         });
     };

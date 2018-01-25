@@ -5,7 +5,7 @@ export function mockBackEndFactory(backend: MockBackend, options: BaseRequestOpt
     // array in local storage for registered users
     let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
     // fake token
-    let token: string = 'fake-jwt-token';
+    let token: string = '';
 
     // configure fake backend
     backend.connections.subscribe((connection: MockConnection) => {
@@ -186,11 +186,11 @@ export function mockBackEndFactory(backend: MockBackend, options: BaseRequestOpt
             });
             realHttp.request(connection.request.url, requestOptions)
                 .subscribe((response: Response) => {
-                    connection.mockRespond(response);
-                },
-                (error: any) => {
-                    connection.mockError(error);
-                });
+                        connection.mockRespond(response);
+                    },
+                    (error: any) => {
+                        connection.mockError(error);
+                    });
 
         }, 500);
 
@@ -199,9 +199,9 @@ export function mockBackEndFactory(backend: MockBackend, options: BaseRequestOpt
     return new Http(backend, options);
 }
 
-export let fakeBackendProvider = {
-    // use fake backend in place of Http service for backend-less development
-    provide: Http,
-    deps: [MockBackend, BaseRequestOptions, XHRBackend],
-    useFactory: mockBackEndFactory
-};
+// export let fakeBackendProvider = {
+//     // use fake backend in place of Http service for backend-less development
+//     provide: Http,
+//     deps: [MockBackend, BaseRequestOptions, XHRBackend],
+//     useFactory: mockBackEndFactory
+// };
