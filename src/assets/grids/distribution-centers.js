@@ -2,20 +2,38 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/distribution-center'
     // basic demo
     var demo = function () {
+        var baseUrl =  $('#basUrl').val()+'/distribution-center/company';//'http://localhost:3000/api/admin/distribution-center'
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountryString = localStorage.getItem('currentCountry');
+        var headers = {
+            "content-type": "application/json"
+        };
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                //headers['country_id'] = currentUser.country_id ? currentUser.country_id : 2;
+            }
 
-        var datatable = $('.m_datatable').mDatatable({
+        }
+        var currentCountry = currentCountryString ? currentCountryString * 1 : 1;
+        var datatable = $('.m_datatable_centers').mDatatable({
             // datasource definition
             data: {
-                //type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
                         // sample GET method
                         method: 'GET',
+                        headers: headers,
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
+                        params: {
+                            query: {"company_id": $('#company_id_1').val()}
+                        },
                         map: function (raw) {
                             // sample data mapping
                             var dataSet = raw;
@@ -26,7 +44,7 @@ var DatatableRemoteAjaxDemo = function () {
                         },
                     },
                 },
-                pageSize: 2,
+                pageSize: 5,
                 saveState: {
                     cookie: true,
                     webstorage: true,
@@ -54,7 +72,7 @@ var DatatableRemoteAjaxDemo = function () {
                 // toolbar items
                 items: {
                     // pagination
-                    actions: {
+                    /*actions: {
                         delete: {
                             name: 'Delete All',
                             url: '/delete',
@@ -62,21 +80,21 @@ var DatatableRemoteAjaxDemo = function () {
                                 console.log(ids);
                             }
                         }
-                    },
+                    },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [1, 2, 5, 10, 20, 30, 50, 100]
+                        pageSizeSelect: [5, 10, 20, 50, 100]
                     }
                 }
             },
 
-            search: {
+           /* search: {
                 input: $('#m_form_name')
-            },
+            },*/
 
             // columns definition
             columns: [
-                {
+               /* {
                     field: 'select',
                     width: 20,
                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
@@ -85,63 +103,60 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         return '<input type="checkbox" id="select-' + row.id + '" data-value="' + row.id + '"/>';
                     },
-                },
+                },*/
                 {
                     field: 'address',
                     title: 'Address',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'lat',
-                    title: 'lat',
+                    title: 'GPS Location',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 50
-                },
-                {
-                    field: 'long',
-                    title: 'long',
-                    filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
+                    template: function (row) {
+                        return '<div>lat: ' + (row.lat?row.lat:"?") + '- long:' + (row.long?row.long:"?") + '</div>'
+                    }
                 },
                 {
                     field: 'contact_number',
                     title: 'Contact Number',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'country',
                     title: 'Country',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 100,
+                    //width: 100,
                     template: function (row) {
-                        return row.country.name;
+                        return row.Country.name;
                     }
-                },
+                }/*,
                 {
                     field: 'company',
                     title: 'Company',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 100,
+                    //width: 100,
                     template: function (row) {
-                        return row.company.name;
+                        return row.Company.name;
                     }
-                },
+                }*/,
 
                 {
                     field: 'Actions',
-                    width: 110,
+                    //width: 110,
                     title: 'Actions',
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
-                            <a href="#/distribution-centers/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                            <a href="#/distribution-centers/' + row.id +'/'+ $('#company_id_1').val()+ '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -184,7 +199,7 @@ var DatatableRemoteAjaxDemo = function () {
                 }],
         });
 
-        var query = datatable.getDataSourceQuery();
+        /*var query = datatable.getDataSourceQuery();
 
 
         $('#m_form_name').on('change', function () {
@@ -199,7 +214,7 @@ var DatatableRemoteAjaxDemo = function () {
         $('#selectall').change(function (e) {
             console.log($(e.target)[0].checked, 'e');
             $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });
+        });*/
         datatable.on('click', '[id^="delete-row-"]', function (e) {
             var id = $(e.target).prop('id');
             id = id.replace('delete-row-', '');
@@ -207,7 +222,8 @@ var DatatableRemoteAjaxDemo = function () {
 
             $.ajax({
                 url: baseUrl + '/' + id,
-                method: 'delete'
+                method: 'delete',
+                headers: headers
             }).done(datatable.load);
         });
     };

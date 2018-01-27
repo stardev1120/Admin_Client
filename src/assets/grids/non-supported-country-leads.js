@@ -1,14 +1,13 @@
 //== Class definition
 
 var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    var baseUrl = 'http://192.168.153.129:3000/api/admin/non-supported-country-lead';
-    // basic demo
     var demo = function () {
+        var baseUrl = $('#basUrl').val()+'/non-supported-country-lead';
         var currentUserString = localStorage.getItem('currentUser');
         var headers = {
             "content-type": "application/json"
         };
+
         if (currentUserString) {
             var currentUser = JSON.parse(currentUserString);
             if (currentUser) {
@@ -16,19 +15,15 @@ var DatatableRemoteAjaxDemo = function () {
                 headers['authorization'] = "JWT " + token;
                 headers['country_id'] = currentUser.country_id ? currentUser.country_id : 1;
             }
-
         }
 
         var datatable = $('.m_datatable').mDatatable({
-            // datasource definition
-
             data: {
                 type: 'remote',
                 source: {
                     read: {
                         // sample GET method
                         method: 'GET',
-                        //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
                         headers: headers,
                         map: function (raw) {
@@ -38,8 +33,8 @@ var DatatableRemoteAjaxDemo = function () {
                                 dataSet = raw.data;
                             }
                             return dataSet;
-                        },
-                    },
+                        }
+                    }
                 },
                 pageSize: 5,
                 saveState: {
@@ -71,7 +66,7 @@ var DatatableRemoteAjaxDemo = function () {
                     /*actions: {
                         delete: {
                             name: 'Delete All',
-                            url: 'http://192.168.153.129:3000/api/admin/non-supported-country-lead/delete',
+                            url: 'http://192.168.153.130:3000/api/admin/non-supported-country-lead/delete',
                             fn: function (ids) {
                                 console.log(ids);
                             }
@@ -115,14 +110,14 @@ var DatatableRemoteAjaxDemo = function () {
                 },
                 {
                     field: 'ip_address',
-                    title: 'Ip address',
+                    title: 'IP Address',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
                     //width: 150
                 },
                 {
                     field: 'gps_location',
-                    title: 'GPS location',
+                    title: 'GPS Location',
                     filterable: false, // disable or enable filtering
                     //width: 50,
                     template: function (row) {

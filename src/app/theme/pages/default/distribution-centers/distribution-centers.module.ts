@@ -22,7 +22,7 @@ const routes: Routes = [
                 "component": DistributionCentersComponent
             },
             {
-                "path": ":id",
+                "path": ":id/:countryId",
                 "component": DistributionCenterFormComponent,
                 resolve: {
                     distributionCenter: DistributionCenterResolver,

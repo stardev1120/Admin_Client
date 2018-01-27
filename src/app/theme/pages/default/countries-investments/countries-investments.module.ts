@@ -20,11 +20,10 @@ const routes: Routes = [
                 "component": CountriesInvestmentsComponent
             },
             {
-                "path": ":id",
+                "path": ":id/:countryId",
                 "component": CountryInvestmentFormComponent,
                 resolve: {
                     countryInvestment: CountryInvestmentResolver,
-                    countries: CountriesResolver
                 }
             }
         ]

@@ -11,5 +11,5 @@ export const environment = {
         'fr-FR',
         'ar-EG'
     ],
-    baseUrl: 'http://192.168.153.129:3000/api/admin'
+    baseUrl: 'http://192.168.153.130:3000/api/admin'
 };

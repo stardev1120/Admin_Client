@@ -22,7 +22,10 @@
                 </li>
                 <li class="m-nav__item">
                     <a href="" class="m-nav__link">
-						<span class="m-nav__link-text">
+						<span class="m-nav__link-text" *ngIf="!data.id">
+							New
+						</span>
+                        <span class="m-nav__link-text" *ngIf="data.id">
 							{{data.name}}
 						</span>
                     </a>
@@ -69,15 +72,15 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && address.hasError('required') || (address.touched && title.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && address1.hasError('required') || (address1.touched && address1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Address *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <input [(ngModel)]="data.address" type="text" class="form-control m-input"
-                               name="address"
-                               placeholder="Enter address" required #address="ngModel">
-                        <div *ngIf="mForm.submitted && address.hasError('required') || (address.touched && address.hasError('required'))"
+                               name="address1"
+                               placeholder="Enter address" required #address1="ngModel">
+                        <div *ngIf="mForm.submitted && address1.hasError('required') || (address1.touched && address1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -86,14 +89,14 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && lat.hasError('required') || (lat.touched && lat.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && lat1.hasError('required') || (lat1.touched && lat1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         lat *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.lat" type="text" class="form-control m-input" name="lat"
-                               placeholder="Enter lat" required #lat="ngModel">
-                        <div *ngIf="mForm.submitted && lat.hasError('required') || (lat.touched && lat.hasError('required'))"
+                        <input [(ngModel)]="data.lat" type="text" class="form-control m-input" name="lat1"
+                               placeholder="Enter lat" required #lat1="ngModel">
+                        <div *ngIf="mForm.submitted && lat1.hasError('required') || (lat1.touched && lat1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -102,36 +105,36 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && long.hasError('required') || (long.touched && long.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && long1.hasError('required') || (long1.touched && long1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         long *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.long" type="text" class="form-control m-input" name="long"
-                               placeholder="Enter long" required #long="ngModel">
-                        <div *ngIf="mForm.submitted && long.hasError('required') || (long.touched && long.hasError('required'))"
+                        <input [(ngModel)]="data.long" type="text" class="form-control m-input" name="long1"
+                               placeholder="Enter long" required #long1="ngModel">
+                        <div *ngIf="mForm.submitted && long1.hasError('required') || (long1.touched && long1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
                     </div>
 
                 </div>
-                
+
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && (contact_number.hasError('required')|| contact_number.hasError('tel')) ||
-                     (contact_number.touched && (title.hasError('required')|| contact_number.hasError('tel')))}">
+                     [ngClass]="{'has-danger':mForm.submitted && (contact_number1.hasError('required')|| contact_number1.hasError('tel')) ||
+                     (contact_number1.touched && (contact_number1.hasError('required')|| contact_number1.hasError('tel')))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Contact number *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <input [(ngModel)]="data.contact_number" type="tel" class="form-control m-input"
-                               name="contact_number"
-                               placeholder="Enter contact number" required #contact_number="ngModel">
-                        <div *ngIf="mForm.submitted && contact_number.hasError('required') || (contact_number.touched && contact_number.hasError('required'))"
+                               name="contact_number1"
+                               placeholder="Enter contact number" required #contact_number1="ngModel">
+                        <div *ngIf="mForm.submitted && contact_number1.hasError('required') || (contact_number1.touched && contact_number1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
-                        <div *ngIf="mForm.submitted && contact_number.hasError('tel') || (contact_number.touched && contact_number.hasError('tel'))"
+                        <div *ngIf="mForm.submitted && contact_number1.hasError('tel') || (contact_number1.touched && contact_number1.hasError('tel'))"
                              class="form-control-feedback">
                             contact number is not valid
                         </div>
@@ -139,18 +142,18 @@
 
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && country1.hasError('required') || (country1.touched && country1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Country *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <select placeholder="Select country" class="form-control m-input"
-                                [(ngModel)]="data.country_id" name="country" #country="ngModel" required>
+                                [(ngModel)]="data.country_id" name="country1" #country1="ngModel" required>
                             <option *ngFor="let country of countries" [ngValue]="country.id">
                                 {{country.name}}
                             </option>
                         </select>
-                        <div *ngIf="mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))"
+                        <div *ngIf="mForm.submitted && country1.hasError('required') || (country1.touched && country1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -161,10 +164,12 @@
                 <div class="m-form__actions m-form__actions">
                     <div class="row">
                         <div class="col-lg-9 ml-lg-auto">
+                            <input [(ngModel)]="data.company_id" type="hidden" [ngModelOptions]="{standalone: true}">
                             <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
                                 Save
                             </button>
-                            <button (click)="location.back()" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            <button (click)="location.back()" type="reset"
+                                    class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                                 Cancel
                             </button>
                         </div>

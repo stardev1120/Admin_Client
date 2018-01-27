@@ -16,7 +16,6 @@ import {Location} from "@angular/common";
 })
 export class CountryInvestmentFormComponent implements OnInit {
     data: CountryInvestment;
-    countries: any;
 
     statuses: any = [{
         id: 'status1',
@@ -40,7 +39,9 @@ export class CountryInvestmentFormComponent implements OnInit {
 
     ngOnInit() {
         this.data = this.route.snapshot.data.countryInvestment as CountryInvestment;
-        this.countries = this.route.snapshot.data.countries;
+        this.route.params
+            .map(params => params['countryId'])
+            .subscribe(countryId => this.data.country_id = countryId*1);
     }
 
     onSubmit(mForm: any) {
@@ -49,7 +50,8 @@ export class CountryInvestmentFormComponent implements OnInit {
             console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
-                    this.router.navigate(["/countries-investments"])
+                    //this.router.navigate(["/countries-investments"])
+                    this.location.back();
                 });
         }
     }

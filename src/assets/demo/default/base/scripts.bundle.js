@@ -1913,7 +1913,6 @@ jQuery.fn.extend({
 
 
                 ajaxCount.url += '/count'
-                console.log('ajaxCount ====> ', ajaxCount)
                 return $.ajax(ajaxCount).done(function (cData) {
                     API.setDataSourceParam('total', cData.count)
                 }).then(function (count) {

@@ -17,11 +17,11 @@ export class BaseApiService<T extends BaseModel> {
     public url = "/";
 
 
-    constructor(private http: HttpClient) {
+    constructor(protected http: HttpClient) {
 
     }
 
-    private authorization(): HttpHeaders {
+    protected authorization(): HttpHeaders {
         let token = (JSON.parse(localStorage.getItem('currentUser'))).token;
 
         if (token) {

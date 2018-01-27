@@ -68,14 +68,14 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && name.hasError('required') || (name.touched && name.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && name1.hasError('required') || (name1.touched && name1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Name *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.name" type="text" class="form-control m-input" name="name"
-                               placeholder="Enter name" required #name="ngModel">
-                        <div *ngIf="mForm.submitted && name.hasError('required') || (name.touched && name.hasError('required'))"
+                        <input [(ngModel)]="data.name" type="text" class="form-control m-input" name="name1"
+                               placeholder="Enter name" required #name1="ngModel">
+                        <div *ngIf="mForm.submitted && name1.hasError('required') || (name1.touched && name1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -84,14 +84,14 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && company_name.hasError('required') || (company_name.touched && company_name.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && company_name1.hasError('required') || (company_name1.touched && company_name1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Company name *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.company_name" type="text" class="form-control m-input" name="company_name"
-                               placeholder="Enter company name" required #company_name="ngModel">
-                        <div *ngIf="mForm.submitted && company_name.hasError('required') || (company_name.touched && company_name.hasError('required'))"
+                        <input [(ngModel)]="data.company_name" type="text" class="form-control m-input" name="company_name1"
+                               placeholder="Enter company name" required #company_name1="ngModel">
+                        <div *ngIf="mForm.submitted && company_name1.hasError('required') || (company_name1.touched && company_name1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -99,15 +99,15 @@
 
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && company_address.hasError('required') || (company_address.touched && title.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && company_address1.hasError('required') || (company_address1.touched && company_address1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Company address *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <input [(ngModel)]="data.company_address" type="text" class="form-control m-input"
-                               name="company_address"
-                               placeholder="Enter company address" required #company_address="ngModel">
-                        <div *ngIf="mForm.submitted && company_address.hasError('required') || (company_address.touched && company_address.hasError('required'))"
+                               name="company_address1"
+                               placeholder="Enter company address" required #company_address1="ngModel">
+                        <div *ngIf="mForm.submitted && company_address1.hasError('required') || (company_address1.touched && company_address1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -115,20 +115,20 @@
 
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && (contact_number.hasError('required')|| contact_number.hasError('tel')) ||
-                     (contact_number.touched && (title.hasError('required')|| contact_number.hasError('tel')))}">
+                     [ngClass]="{'has-danger':mForm.submitted && (contact_number1.hasError('required')|| contact_number1.hasError('tel')) ||
+                     (contact_number1.touched && (contact_number1.hasError('required')|| contact_number1.hasError('tel')))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Contact number *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <input [(ngModel)]="data.contact_number" type="tel" class="form-control m-input"
-                               name="contact_number"
-                               placeholder="Enter contact number" required #contact_number="ngModel">
-                        <div *ngIf="mForm.submitted && contact_number.hasError('required') || (contact_number.touched && contact_number.hasError('required'))"
+                               name="contact_number1"
+                               placeholder="Enter contact number" required #contact_number1="ngModel">
+                        <div *ngIf="mForm.submitted && contact_number1.hasError('required') || (contact_number1.touched && contact_number1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
-                        <div *ngIf="mForm.submitted && contact_number.hasError('tel') || (contact_number.touched && contact_number.hasError('tel'))"
+                        <div *ngIf="mForm.submitted && contact_number1.hasError('tel') || (contact_number1.touched && contact_number1.hasError('tel'))"
                              class="form-control-feedback">
                             contact number is not valid
                         </div>
@@ -136,44 +136,21 @@
 
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && country1.hasError('required') || (country1.touched && country1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Country *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <select placeholder="Select country" class="form-control m-input"
-                                [(ngModel)]="data.country_id" name="country" #country="ngModel" required>
+                                [(ngModel)]="data.country_id" name="country1" #country1="ngModel" required>
                             <option *ngFor="let country of countries" [ngValue]="country.id">
                                 {{country.name}}
                             </option>
                         </select>
-                        <div *ngIf="mForm.submitted && country.hasError('required') || (country.touched && country.hasError('required'))"
+                        <div *ngIf="mForm.submitted && country1.hasError('required') || (country1.touched && country1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
-                    </div>
-                </div>
-                <div class="row col-lg-12 align-items-center">
-                    <div class="col-xl-8 order-2 order-xl-1">
-
-                    </div>
-                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                        <a href="#/distribution-centers/new" class="btn btn-focus m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-							<span>
-								<i class="la la-cart-plus"></i>
-								<span>
-									New center
-								</span>
-							</span>
-                        </a>
-                        <div class="m-separator m-separator--dashed d-xl-none"></div>
-                    </div>
-                </div>
-                <br>
-
-                <div class="row col-lg-12">
-                    <div class="col-lg-12">
-                        <div class="m_datatable" id="json_data-settings"></div>
                     </div>
                 </div>
             </div>

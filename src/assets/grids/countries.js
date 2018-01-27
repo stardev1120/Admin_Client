@@ -2,9 +2,9 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://192.168.153.129:3000/api/admin/country'
     // basic demo
     var demo = function () {
+        var baseUrl = $('#basUrl').val()+'/country';//'http://192.168.153.130:3000/api/admin/country'
         var currentUserString = localStorage.getItem('currentUser');
         var headers = {
             "content-type": "application/json"
@@ -172,6 +172,9 @@ var DatatableRemoteAjaxDemo = function () {
 						  title="Delete"\
 						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
 							<i class="la la-trash"></i>\
+						</a>\
+						<a href="#/countries/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+						<i class="la la-folder-open"></i>\
 						</a>\
 					';
                     },

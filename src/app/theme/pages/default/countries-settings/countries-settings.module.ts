@@ -20,11 +20,10 @@ const routes: Routes = [
                 "component": CountriesSettingsComponent
             },
             {
-                "path": ":id",
+                "path": ":id/:countryId",
                 "component": CountrySettingFormComponent,
                 resolve: {
-                    countrySetting: CountrySettingResolver,
-                    countries: CountriesResolver
+                    countrySetting: CountrySettingResolver
                 }
             }
         ]

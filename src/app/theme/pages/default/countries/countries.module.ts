@@ -8,6 +8,7 @@ import { CountriesFormComponent } from "./countries-form/countries-form.componen
 import { CountryResolver } from "./country-resolver";
 
 import { FormsModule } from "@angular/forms";
+import {CountryViewComponent} from "./countries-view/country-view.component";
 
 const routes: Routes = [
     {
@@ -21,6 +22,13 @@ const routes: Routes = [
             {
                 "path": ":id",
                 "component": CountriesFormComponent,
+                resolve: {
+                    country: CountryResolver
+                }
+            },
+            {
+                "path": "view/:id",
+                "component": CountryViewComponent,
                 resolve: {
                     country: CountryResolver
                 }
@@ -44,7 +52,8 @@ const routes: Routes = [
 
     ], declarations: [
         CountrieslistComponent,
-        CountriesFormComponent
+        CountriesFormComponent,
+        CountryViewComponent
     ]
 })
 export class CountriesListModule {

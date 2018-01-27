@@ -13,7 +13,6 @@ import {CountriesSettingsService} from "../../../../../_services/apis/countries-
 })
 export class CountrySettingFormComponent implements OnInit {
     data: CountrySetting;
-    countries: any;
 
 
     constructor(private api: CountriesSettingsService,
@@ -25,7 +24,9 @@ export class CountrySettingFormComponent implements OnInit {
 
     ngOnInit() {
         this.data = this.route.snapshot.data.countrySetting as CountrySetting;
-        this.countries = this.route.snapshot.data.countries;
+        this.route.params
+            .map(params => params['countryId'])
+            .subscribe(countryId => this.data.country_id = countryId*1);
     }
 
     onSubmit(mForm: any) {
@@ -34,7 +35,8 @@ export class CountrySettingFormComponent implements OnInit {
             console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
-                    this.router.navigate(["/countries-settings"])
+                    //this.router.navigate(["/countries-settings"])
+                    this.location.back();
                 });
         }
     }

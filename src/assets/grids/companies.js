@@ -2,9 +2,9 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://192.168.153.129:3000/api/admin/company'
     // basic demo
     var demo = function () {
+        var baseUrl =  $('#basUrl').val()+'/company';//'http://192.168.153.130:3000/api/admin/company'
         var currentUserString = localStorage.getItem('currentUser');
         var currentCountryString = localStorage.getItem('currentCountry');
         var headers = {
@@ -32,9 +32,9 @@ var DatatableRemoteAjaxDemo = function () {
                         headers: headers,
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
-                        params: {
-                            query: {"country_id": currentCountry}
-                        },
+                        /*params: {
+                            query: {"country_id": currentCountry} // todo : un commented it
+                        },*/
                         map: function (raw) {
                             // sample data mapping
                             var dataSet = raw;
@@ -84,7 +84,7 @@ var DatatableRemoteAjaxDemo = function () {
                     },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [1, 2, 5, 10, 20, 50, 100]
+                        pageSizeSelect: [5, 10, 20, 50, 100]
                     }
                 }
             },
@@ -186,6 +186,9 @@ var DatatableRemoteAjaxDemo = function () {
 						  title="Delete"\
 						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
 							<i class="la la-trash"></i>\
+						</a>\
+						<a href="#/companies/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
+						<i class="la la-folder-open"></i>\
 						</a>\
 					';
                     },

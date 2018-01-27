@@ -2,8 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { BaseApiService } from "../baseAPI";
-import { NonSupportedCountryLead } from "../../models/non-supported-country-lead";
-import { Company } from "../../models/company";
 import { DistributionCenter } from "../../models/distribution-center";
 
 
@@ -13,6 +11,11 @@ export class DistributionCentersService extends BaseApiService<DistributionCente
     constructor(http: HttpClient) {
         super(http);
         this.url = '/distribution-center';
+    }
+
+    getCentersByCompanyId(companyId: string){
+        return this.http
+            .get<DistributionCenter>(this.baseUrl + this.url + `/company/${companyId}`, { headers: this.authorization() })
     }
 
 }
