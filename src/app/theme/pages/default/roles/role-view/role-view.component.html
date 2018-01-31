@@ -1,0 +1,178 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="#/roles" class="m-nav__link">
+						<span class="m-nav__link-text">
+							roles
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.role_name}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text" *ngIf="data.id">
+                        View : {{data.role_name}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <label class="m--font-bolder col-form-label col-lg-3 col-sm-12">
+                    Role
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.role_id}}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="m--font-bolder col-form-label col-lg-3 col-sm-12">
+                    Role name
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.role_name}}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="m--font-bolder col-form-label col-lg-3 col-sm-12">
+                    Max session time
+                </label>
+
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.max_session_time}}
+                </div>
+            </div>
+            <div class="row col-lg-12 align-items-center">
+                <div class="col-xl-4 order-1 order-xl-2">
+                    <h4 class="m-portlet__head-text">
+                        Features ACL
+                    </h4>
+                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="m-portlet__body" style="padding: 0 !important;">
+                    <!--begin::Section-->
+                    <div class="m-section">
+                        <div class="m-section__content">
+                            <table class="table table-lg m-table m-table--head-bg-brand">
+                                <thead class="thead-inverse">
+                                <tr>
+                                    <th>
+                                        Module
+                                    </th>
+                                    <th>
+                                        Actions
+                                    </th>
+                                    <th>
+                                        Fields
+                                    </th>
+                                    <th>
+                                        Other
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let featureACL of data.FeatureACLs">
+                                    <th scope="row">
+                                        {{featureACL.module}}
+                                    </th>
+                                    <td>
+                                        <form class="m-form">
+                                            <div class="m-form__group form-group row">
+                                                <div class="m-checkbox-list">
+                                                    <label class="m-checkbox"
+                                                           *ngFor="let action of getJSONKeys(featureACL.actions)">
+                                                        <input type="checkbox" [checked]="featureACL.actions[action]"
+                                                               (change)="featureACL.actions[action] = !featureACL.actions[action];onFeatureACL(featureACL);">
+                                                        {{action}}
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form class="m-form">
+                                            <div class="m-form__group form-group row">
+                                                <div class="m-checkbox-list">
+                                                    <label class="m-checkbox"
+                                                           *ngFor="let field of getJSONKeys(featureACL.fields)">
+                                                        <input type="checkbox" [checked]="featureACL.fields[field]"
+                                                               (change)="featureACL.fields[field] = !featureACL.fields[field];onFeatureACL(featureACL);">
+                                                        {{field}}
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+
+                                        <form class="m-form">
+                                            <div class="m-form__group form-group row">
+                                                <div class="m-checkbox-list">
+                                                    <label class="m-checkbox"
+                                                           *ngFor="let other of getJSONKeys(featureACL.other)">
+                                                        <input type="checkbox" [checked]="featureACL.other[other]"
+                                                               (change)="featureACL.other[other] = !featureACL.other[other];onFeatureACL(featureACL);">
+                                                        {{other}}
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class="row" style="padding: 10px">
+                    <div class="col-lg-9 ml-lg-auto">
+                        <button routerLink="/roles" type="reset"
+                                class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
