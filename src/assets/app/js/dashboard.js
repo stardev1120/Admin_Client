@@ -2323,7 +2323,7 @@ var Dashboard = function() {
             daterangepicker2Init();
 
             // datatables
-            datatableLatestOrders();
+            //datatableLatestOrders();
 
             // calendar
             calendarInit();

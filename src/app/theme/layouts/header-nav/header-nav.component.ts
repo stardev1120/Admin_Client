@@ -3,6 +3,9 @@ import {Helpers} from '../../../helpers';
 import {CountriesService} from "../../../_services/apis/countries.service";
 import {Country} from "../../../models/country";
 import {environment} from '../../../../environments/environment'
+import {AdminUser} from "../../../models/admin-user";
+import {Role} from "../../../models/role";
+import {AdminUsersService} from "../../../_services/apis/admin-users.service";
 
 declare let mLayout: any;
 
@@ -17,7 +20,6 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     baseUrl = environment.baseUrl;
 
     constructor(private countries: CountriesService) {
-        this.currentUser = (JSON.parse(localStorage.getItem('currentUser'))).adminUser;
         this.countries.query('{"where":{}}').subscribe((countries: Country[]) => {
             this.userCountries = countries;
         })

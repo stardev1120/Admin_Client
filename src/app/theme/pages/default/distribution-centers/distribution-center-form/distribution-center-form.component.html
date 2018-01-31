@@ -46,7 +46,7 @@
                         Edit : {{data.name}}
                     </h3>
                     <h3 class="m-portlet__head-text" *ngIf="!data.id">
-                        New company
+                        New Distributor Center
                     </h3>
                 </div>
             </div>
@@ -64,6 +64,18 @@
                         </div>
                         <div class="m-alert__text">
                             Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="isRequestError"
+                         role="alert" id="m_form_2_msg2">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            {{errorMessage}}
                         </div>
                         <div class="m-alert__close">
                             <button type="button" class="close" data-close="alert" aria-label="Close"></button>

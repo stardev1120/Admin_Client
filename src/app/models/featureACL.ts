@@ -8,5 +8,7 @@ export class FeatureACL implements BaseModel {
     public feature_api_url: String;
     public actions: any;
     public fields: any;
+    public other: any;
+    public module: string;
     public id?: String;
 }

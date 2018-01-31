@@ -16,7 +16,7 @@ export class RolesResolver implements Resolve<Role[]> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Role[]> | Promise<Role[]> | Role[] {
-        return [];//this.api.query();
+        return this.api.query('{"where":{}, "fields": ["id", "role_name"]}');
     }
 
 }

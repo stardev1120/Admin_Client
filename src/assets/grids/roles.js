@@ -2,20 +2,36 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/role'
     // basic demo
     var demo = function () {
+        var baseUrl = $('#basUrl').val() + '/role';//'http://192.168.153.130:3000/api/admin/country'
+        var currentUserString = localStorage.getItem('currentUser');
+        var actionsRights = JSON.parse($('#roles_id_actions').val());
+        var headers = {
+            "content-type": "application/json"
+        };
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentUser.country_id) {
+                    headers['country_id'] = currentUser.country_id;
+                }
+            }
 
-        var datatable = $('.m_datatable').mDatatable({
+        }
+        var datatable = $('.m_datatable_roles').mDatatable({
             // datasource definition
             data: {
-                //type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
                         // sample GET method
                         method: 'GET',
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
+                        headers: headers,
                         map: function (raw) {
                             // sample data mapping
                             var dataSet = raw;
@@ -54,7 +70,7 @@ var DatatableRemoteAjaxDemo = function () {
                 // toolbar items
                 items: {
                     // pagination
-                    actions: {
+                    /*actions: {
                         delete: {
                             name: 'Delete All',
                             url: '/delete',
@@ -62,21 +78,21 @@ var DatatableRemoteAjaxDemo = function () {
                                 console.log(ids);
                             }
                         }
-                    },
+                    },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [1, 2, 5, 10, 20, 30, 50, 100]
+                        pageSizeSelect: [5, 10, 20, 50, 100]
                     }
                 }
             },
 
             search: {
-                input: $('#m_form_name')
+                input: $('#role_name')
             },
 
             // columns definition
             columns: [
-                {
+                /*{
                     field: 'select',
                     width: 20,
                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
@@ -85,67 +101,41 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
                     },
-                },{
+                },*/{
+                    field: 'role_id',
+                    title: 'Role',
+                    // sortable: 'asc', // default sort
+                    filterable: false, // disable or enable filtering
+                    //width: 200
+                }, {
                     field: 'role_name',
                     title: 'Role name',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 200
+                    //width: 200
                 },
                 {
                     field: 'max_session_time',
                     title: 'Max session time',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 150
+                    //width: 150
                 },
 
                 {
                     field: 'Actions',
-                    width: 70,
+                    //width: 70,
                     title: 'Actions',
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
-                            <a href="#/roles/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                            <a href="#/roles/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
+						\
+						<a href="#/roles/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+						<i class="la la-folder-open"></i>\
 						</a>\
 					';
                     },
@@ -155,14 +145,14 @@ var DatatableRemoteAjaxDemo = function () {
         var query = datatable.getDataSourceQuery();
 
 
-        $('#m_form_name').on('change', function () {
+        $('#role_name').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.name = $(this).val();
+            query.role_name = $(this).val();
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.name !== 'undefined' ? query.name : '');
+        }).val(typeof query.role_name !== 'undefined' ? query.role_name : '');
 
         $('#selectall').change(function (e) {
             console.log($(e.target)[0].checked, 'e');
@@ -175,7 +165,8 @@ var DatatableRemoteAjaxDemo = function () {
 
             $.ajax({
                 url: baseUrl + '/' + id,
-                method: 'delete'
+                method: 'delete',
+                headers: headers
             }).done(datatable.load);
         });
     };

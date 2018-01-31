@@ -13,7 +13,7 @@ export class CompaniesResolver implements Resolve<Company[]> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Company[]> | Promise<Company[]> | Company[] {
-        return [];//this.api.query();
+        return this.api.query('{"where":{}, "fields": ["id", "company_name"]}');
     }
 
 }

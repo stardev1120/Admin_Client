@@ -18,7 +18,8 @@ export class AdminUser implements BaseModel {
     public FAfield: number;
     public last_login: Date;
     public company: Company;
-    public role: Role;
+    public Role: Role;
+    public AdminuserCountries: any = [];
     public countries: AdminUserCountry[];
     public id?: string;
 }

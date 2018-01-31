@@ -10,11 +10,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from "@angular/forms";
 import { CollectionHistoryResolver } from "./collection-history-resolver";
 import { LoansResolver } from "../loans/loans-resolver";
+import {AuthGuard} from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
+        "canActivate": [AuthGuard],
+        data: {module: 'collection-history'},
         "children": [
             {
                 "path": "",
@@ -23,6 +26,8 @@ const routes: Routes = [
             {
                 "path": ":id",
                 "component": CollectionHistoryFormComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'collection-history', action: 'PUT'},
                 resolve: {
                     collectionHistory: CollectionHistoryResolver,
                     loans: LoansResolver

@@ -27,8 +27,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/app/js/dashboard.js');
 
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/grids/users-activity-log.js');
+/*        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/grids/users-activity-log.js');*/
 
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             '//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js');

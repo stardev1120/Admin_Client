@@ -11,19 +11,24 @@ import { DistributionCenterFormComponent } from "./distribution-center-form/dist
 import { CompaniesResolver } from "../companies/companies-resolver";
 import { CountriesResolver } from "../countries/countries-resolver";
 import { DistributionCenterResolver } from "./distribution-center-resolver";
+import {AuthGuard} from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
+        "canActivate": [AuthGuard],
+        data: {module: 'distribution-centers'},
         "children": [
             {
                 "path": "",
                 "component": DistributionCentersComponent
             },
             {
-                "path": ":id/:countryId",
+                "path": ":id/:companyId",
                 "component": DistributionCenterFormComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'distribution-centers', action: 'PUT'},
                 resolve: {
                     distributionCenter: DistributionCenterResolver,
                     countries: CountriesResolver,

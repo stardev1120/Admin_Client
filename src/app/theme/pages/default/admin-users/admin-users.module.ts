@@ -11,12 +11,15 @@ import { AdminUserFormComponent } from "./admin-user-form/admin-user-form.compon
 import { CompaniesResolver } from "../companies/companies-resolver";
 import { RolesResolver } from "../roles/roles-resolver";
 import { AdminUserResolver } from "./admin-user-resolver";
-
+import { CountriesResolver } from "../countries/countries-resolver";
+import {AuthGuard} from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
+        "canActivate": [AuthGuard],
+        data:{module: 'admin-users'},
         "children": [
             {
                 "path": "",
@@ -25,10 +28,13 @@ const routes: Routes = [
             {
                 "path": ":id",
                 "component": AdminUserFormComponent,
+                "canActivate": [AuthGuard],
+                data:{module: 'admin-users', action: 'PUT'},
                 resolve: {
                     adminUser: AdminUserResolver,
                     companies: CompaniesResolver,
-                    roles: RolesResolver
+                    roles: RolesResolver,
+                    countries: CountriesResolver,
                 }
             }
         ]
@@ -45,7 +51,8 @@ const routes: Routes = [
     providers: [
         CompaniesResolver,
         RolesResolver,
-        AdminUserResolver
+        AdminUserResolver,
+        CountriesResolver
     ],
 
     exports: [

@@ -10,7 +10,7 @@ import {CountriesService} from "../../../../../_services/apis/countries.service"
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: "./Company-form.component.html",
+    templateUrl: "./company-form.component.html",
     encapsulation: ViewEncapsulation.None,
 })
 export class CompanyFormComponent implements OnInit {

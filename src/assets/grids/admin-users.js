@@ -2,21 +2,34 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/admin-user'
     // basic demo
     var demo = function () {
+        var baseUrl = $('#basUrl').val()+'/admin-user';//'http://192.168.153.130:3000/api/admin/admin-user'
+        var currentUserString = localStorage.getItem('currentUser');
+        var headers = {
+            "content-type": "application/json"
+        };
+
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                headers['country_id'] = currentUser.country_id ? currentUser.country_id : 1;
+            }
+        }
 
         var datatable = $('.m_datatable').mDatatable({
             // datasource definition
             data: {
-                //type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
                         // sample GET method
                         method: 'GET',
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
-                        headers: {"Authorization": JSON.parse(localStorage.getItem('currentUser'))['id']},
+                        headers: headers,
                         map: function (raw) {
                             // sample data mapping
                             var dataSet = raw;
@@ -27,7 +40,7 @@ var DatatableRemoteAjaxDemo = function () {
                         },
                     },
                 },
-                pageSize: 10,
+                pageSize: 5,
                 saveState: {
                     cookie: true,
                     webstorage: true,
@@ -72,27 +85,27 @@ var DatatableRemoteAjaxDemo = function () {
                     // },
                     pagination: {
                         // page size select
-                        pageSizeSelect: [ 10, 20, 30, 50, 100],
+                        pageSizeSelect: [5, 10, 20, 50, 100],
                     },
                 },
             },
 
             search: {
-                input: $('#m_form_email'),
+                //input: $('#m_form_email'),
             },
 
             // columns definition
             columns: [
-                {
+                /*{
                     field: 'select',
                     width: 20,
                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
+                    //sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
                     }
-                },
+                },*/
                 {
                     field: 'name',
                     title: 'Name',
@@ -110,23 +123,25 @@ var DatatableRemoteAjaxDemo = function () {
                     title: 'Phone',
                     filterable: false, // disable or enable filtering
                     width: 50
-                },{
+                },
+                {
                     field: 'company',
                     title: 'Company',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
                     width: 100,
                     template: function (row) {
-                        return row.company.name;
+                        return row.Company.company_name;
                     }
-                },{
+                },
+                {
                     field: 'role',
                     title: 'Role',
-                    // sortable: 'asc', // default sort
+                    sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
                     width: 100,
                     template: function (row) {
-                        return row.role.role_name;
+                        return row.Role.role_name;
                     }
                 },
                 {
@@ -139,7 +154,7 @@ var DatatableRemoteAjaxDemo = function () {
                     field: 'Actions',
                     width: 110,
                     title: 'Actions',
-                    sortable: false,
+                   // sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
@@ -188,29 +203,41 @@ var DatatableRemoteAjaxDemo = function () {
         });
 
         var query = datatable.getDataSourceQuery();
-        $('#m_form_email').on('change', function () {
+        $('#email').on('change', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.email = $(this).val();
+            if ($(this).val()) {
+                query.email = $(this).val();
+            } else {
+                delete query.email;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.email !== 'undefined' ? query.email : '');
 
 
-        $('#m_form_name').on('change', function () {
+        $('#name').on('change', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.name = $(this).val();
+            if ($(this).val()) {
+                query.name = $(this).val();
+            } else {
+                delete query.name;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.name !== 'undefined' ? query.name : '');
 
-        $('#m_form_phone_number').on('change', function () {
+        $('#phone_number').on('change', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.phone_number = $(this).val();
+            if ($(this).val()) {
+                query.phone_number = $(this).val();
+            } else {
+                delete query.phone_number;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
@@ -226,7 +253,8 @@ var DatatableRemoteAjaxDemo = function () {
 
             $.ajax({
                 url: baseUrl + '/' + id,
-                method: 'delete'
+                method: 'delete',
+                headers: headers
             }).done(datatable.load);
 
 

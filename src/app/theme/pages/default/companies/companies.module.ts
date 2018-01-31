@@ -1,3 +1,4 @@
+
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
@@ -5,16 +6,19 @@ import { FormsModule } from "@angular/forms";
 
 import { DefaultComponent } from "../default.component";
 import { LayoutModule } from "../../../layouts/layout.module";
-import { CompaniesComponent } from "./list/Companies.component";
-import { CompanyFormComponent } from "./Company-form/Company-form.component";
-import { CompanyViewComponent } from "./Company-view/Company-view.component";
-import { CompanyResolver } from "./Company-resolver";
+import { CompaniesComponent } from "./list/companies.component";
+import { CompanyFormComponent } from "./company-form/company-form.component";
+import { CompanyViewComponent } from "./company-view/company-view.component";
+import { CompanyResolver } from "./company-resolver";
 import { CountriesResolver } from "../countries/countries-resolver";
+import {AuthGuard} from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
+        "canActivate": [AuthGuard],
+        data:{module: 'companies'},
         "children": [
             {
                 "path": "",
@@ -23,6 +27,8 @@ const routes: Routes = [
             {
                 "path": ":id",
                 "component": CompanyFormComponent,
+                "canActivate": [AuthGuard],
+                data:{module: 'companies', action: 'PUT'},
                 resolve: {
                     company: CompanyResolver,
                     countries: CountriesResolver
@@ -31,6 +37,8 @@ const routes: Routes = [
             {
                 "path": "view/:id",
                 "component": CompanyViewComponent,
+                "canActivate": [AuthGuard],
+                data:{module: 'companies', action: 'GET'},
                 resolve: {
                     company: CompanyResolver
                 }
@@ -60,7 +68,5 @@ const routes: Routes = [
         CompanyViewComponent
     ]
 })
-export class CompaniesModule {
+export class CompaniesModule {}
 
-
-}

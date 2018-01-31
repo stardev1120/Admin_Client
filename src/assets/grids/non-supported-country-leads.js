@@ -127,7 +127,7 @@ var DatatableRemoteAjaxDemo = function () {
                     }
                 },
 
-                {
+                /*{
                     field: 'Actions',
                     //width: 50,
                     title: 'Actions',
@@ -176,7 +176,7 @@ var DatatableRemoteAjaxDemo = function () {
 						</a>\
 					';
                     },
-                }],
+                }*/],
         });
 
         var query = datatable.getDataSourceQuery();

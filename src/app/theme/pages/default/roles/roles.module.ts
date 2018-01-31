@@ -1,19 +1,23 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RouterModule, Routes } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {RouterModule, Routes} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 
-import { DefaultComponent } from "../default.component";
-import { LayoutModule } from "../../../layouts/layout.module";
-import { RolesComponent } from "./list/roles.component";
-import { RoleFormComponent } from "./role-form/role-form.component";
-import { RoleResolver } from "./role-resolver";
+import {DefaultComponent} from "../default.component";
+import {LayoutModule} from "../../../layouts/layout.module";
+import {RolesComponent} from "./list/roles.component";
+import {RoleFormComponent} from "./role-form/role-form.component";
+import {RoleResolver} from "./role-resolver";
+import {AuthGuard} from "../../../../auth/_guards";
+import {RoleViewComponent} from "./role-view/role-view.component";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
+        "canActivate": [AuthGuard],
+        data: {module: 'roles'},
         "children": [
             {
                 "path": "",
@@ -22,6 +26,17 @@ const routes: Routes = [
             {
                 "path": ":id",
                 "component": RoleFormComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'roles', action: 'PUT'},
+                resolve: {
+                    role: RoleResolver
+                }
+            },
+            {
+                "path": "view/:id",
+                "component": RoleViewComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'roles', action: 'GET'},
                 resolve: {
                     role: RoleResolver
                 }
@@ -46,7 +61,8 @@ const routes: Routes = [
 
     ], declarations: [
         RolesComponent,
-        RoleFormComponent
+        RoleFormComponent,
+        RoleViewComponent
     ]
 })
 export class RolesModule {

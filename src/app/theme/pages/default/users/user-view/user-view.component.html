@@ -144,7 +144,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group row">
+                            <div class="form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfPhone')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Phone Status
                                 </label>
@@ -157,7 +157,7 @@
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfFacebook')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Facebook Account
                                 </label>
@@ -170,7 +170,7 @@
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfID')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     ID Status
                                 </label>
@@ -183,7 +183,7 @@
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfAddress')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Address Status
                                 </label>
@@ -212,7 +212,7 @@
                                 </div>
                             </div>-->
                             <br>
-                            <div class=" form-group row">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatusOfDocument')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     View Documents
                                 </label>
@@ -225,7 +225,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" form-group row">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatusOfUser')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Block Account
                                 </label>
@@ -240,10 +240,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'LOAN')">
                         <h4><i class="m-menu__link-icon flaticon-attachment"></i> Loans</h4>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'LOAN')">
                         <!--end: Search Form -->        <!--begin: Datatable -->
                         <div class="m_datatable_loans" id="json_data_loans"></div>
                         <!--end: Datatable -->

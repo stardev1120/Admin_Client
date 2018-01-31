@@ -28,6 +28,7 @@ export class AuthenticationService {
                     console.log('user', user);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
+                return user;
             });
     }
 

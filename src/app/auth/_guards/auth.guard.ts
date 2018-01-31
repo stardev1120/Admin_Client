@@ -1,55 +1,61 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { UserService } from "../_services/user.service";
-import { Observable } from "rxjs/Rx";
-import _ from 'lodash'
+import {Injectable} from "@angular/core";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import {UserService} from "../_services/user.service";
+import {Observable} from "rxjs/Rx";
+import * as _ from 'lodash'
+import {AdminUsersService} from "../../_services/apis/admin-users.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private _router: Router, private _userService: UserService) {
+    constructor(private _router: Router, private _adminUserService: AdminUsersService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (!currentUser) {
-            this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-            return false;
-        }
-
-        if (_.startsWith(state.url, '/issue-collect-money/issue/user_id')) {
-            // todo we need to check back end otp table with the current admin user and user id
-            this._router.navigate(['/admin-user-access', state.url]);
-            return false;
-        }
-
-        if (_.startsWith(state.url, '/issue-collect-money/collect/user_id')) {
-            // todo we need to check back end otp table with the current admin user and user id
-            this._router.navigate(['/admin-user-access', state.url]);
-            return false;
-        }
-
-        if (_.startsWith(state.url, '/users/view/user_id')) {
-            // todo we need to check back end otp table with the current admin user and user id
-            this._router.navigate(['/admin-user-access', state.url]);
-            return false;
-        }
-        return true;/* this._userService.verify().map(
-            data => {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+        return this._adminUserService.verify().toPromise().then(
+            (data) => {
                 if (data !== null) {
-                    // logged in so return true
+                    if (route.data['module']) {
+
+                        if(route.data['other']){
+                            if(!this._adminUserService.checkModuleOtherRight(route.data['module'], route.data['other'])){
+                                this._router.navigate(['/index'], {queryParams: {returnUrl: state.url}});
+                                return false;
+                            }
+                        }
+
+                        if (route.data['checkOTP']) {
+                            if (this._adminUserService.checkModuleOtherRight('users', 'viewWithoutOTP')) {
+                                return true
+                            } else if (this._adminUserService.checkModuleOtherRight('users', 'viewWithOTP')) {
+                                this._router.navigate(['/admin-user-access', state.url]);
+                                return false
+                            }
+                            this._router.navigate(['/index'], {queryParams: {returnUrl: state.url}});
+                            return false;
+                        }
+                        if (!route.data['action']) {
+                            if (!this._adminUserService.checkModuleRight(route.data['module'])) {
+                                this._router.navigate(['/index'], {queryParams: {returnUrl: state.url}});
+                                return false;
+                            }
+                        } else if (route.data['action']) {
+                            if (!this._adminUserService.checkModuleActionRight(route.data['module'], route.data['action'])) {
+                                this._router.navigate(['/index'], {queryParams: {returnUrl: state.url}});
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 }
                 // error when verify so redirect to login page with the return url
-                this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+                this._router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
                 return false;
-            },
-            error => {
-                // error when verify so redirect to login page with the return url
-                console.error(error, "erroooor")
-                this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-                return false;
-            });*/
+            }).catch(error => {
+            // error when verify so redirect to login page with the return url
+            console.error(error, "erroooor")
+            this._router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+            return false;
+        });
     }
 }

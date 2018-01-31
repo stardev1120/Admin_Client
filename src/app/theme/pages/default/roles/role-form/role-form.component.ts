@@ -39,6 +39,7 @@ export class RoleFormComponent implements OnInit {
 
         if (mForm.valid) {
             console.log(mForm.valid, mForm)
+            this.data.role_id = this.data.role_name.split(' ').join('_')
             this.api.save(this.data)
                 .subscribe(r => {
                     this.router.navigate(["/roles"])

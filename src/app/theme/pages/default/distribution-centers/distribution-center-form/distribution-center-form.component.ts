@@ -16,7 +16,8 @@ export class DistributionCenterFormComponent implements OnInit {
     data: DistributionCenter;
     countries: any;
     companies: any;
-
+    isRequestError = false;
+    errorMessage: string;
     constructor(private api: DistributionCentersService,
                 private router: Router,
                 private route: ActivatedRoute,
@@ -34,13 +35,18 @@ export class DistributionCenterFormComponent implements OnInit {
     }
 
     onSubmit(mForm: any) {
-
+        this.isRequestError = false;
+        this.errorMessage = '';
         if (mForm.valid) {
             console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
                     //this.router.navigate(["/distribution-centers"]).then();
                     this.location.back();
+                }, error => {
+                    console.log(error)
+                    this.isRequestError = true;
+                    this.errorMessage = error.error;
                 });
         }
     }

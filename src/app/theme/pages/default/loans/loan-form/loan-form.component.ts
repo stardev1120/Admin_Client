@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LoansService } from "../../../../../_services/apis/loans.service";
-import { Loan } from "../../../../../models/Loan";
+import { Loan } from "../../../../../models/loan";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/forkJoin';
 

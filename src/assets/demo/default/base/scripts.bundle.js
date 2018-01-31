@@ -1916,7 +1916,6 @@ jQuery.fn.extend({
                 return $.ajax(ajaxCount).done(function (cData) {
                     API.setDataSourceParam('total', cData.count)
                 }).then(function (count) {
-                    console.log('params ===> ', params);
                     return $.ajax(params).done(function (data, textStatus, jqXHR) {
                         // extendible data map callback for custom datasource
                         datatable.dataSet = datatable.originalDataSet
