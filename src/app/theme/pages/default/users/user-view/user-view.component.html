@@ -23,7 +23,7 @@
                 <li class="m-nav__item">
                     <a href="" class="m-nav__link">
 						<span class="m-nav__link-text">
-							Test
+							{{data.email}}
 						</span>
                     </a>
                 </li>
@@ -39,7 +39,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Test
+                        {{data.email}}
                     </h3>
                 </div>
             </div>
@@ -56,64 +56,64 @@
                                 <label class="m--font-boldest">
                                     User ID :
                                 </label>
-                                <span class="m--font-normal">Test</span>
+                                <span class="m--font-normal">{{data.id}}</span>
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Full name:
                                 </label>
-                                <span class="m--font-normal">Test</span>
+                                <span class="m--font-normal">{{data.fname}}</span>
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Phone:
                                 </label>
-                                <span class="m--font-normal">1111111111</span>
+                                <span class="m--font-normal">{{data.phone_number}}</span>
 
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Email:
                                 </label>
-                                <span class="m--font-normal">Test@test.com</span>
+                                <span class="m--font-normal">{{data.email}}</span>
 
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Date of Birth:
                                 </label>
-                                <span class="m--font-normal">5th Jan 2000</span>
+                                <span class="m--font-normal">{{data.dob | date:'mediumDate'}}</span>
 
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Country:
                                 </label>
-                                <span class="m--font-normal">Test</span>
+                                <span class="m--font-normal">{{data.country_id}}</span>
 
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Sex:
                                 </label>
-                                <span class="m--font-normal">Male</span>
+                                <span class="m--font-normal">{{data.sex}}</span>
 
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
                                     Relation Status:
                                 </label>
-                                <span class="m--font-normal">Married</span>
+                                <span class="m--font-normal">{{data.relationship}}</span>
 
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-8 col-xs-12">
                             <div class="">
                                 <img style="border: 1px solid #575962;margin: 5px;"
-                                     src="../../../../../../assets/app/media/img/users/300_3.jpg" height="200"
+                                     [src]="data.profilepic" height="200"
                                      width="200"/>
                                 <img style="border: 1px solid #575962;margin: 5px;"
-                                     src="../../../../../../assets/app/media/img/users/300_3.jpg" height="200"
+                                     [src]="data.profilepic" height="200"
                                      width="200"/>
                             </div>
                             <br>
@@ -123,14 +123,14 @@
                                         <label class="m--font-boldest">
                                             U Score:
                                         </label>
-                                        <span class="m--font-normal">Test</span>
+                                        <span class="m--font-normal">{{data.uScore_status}}</span>
 
                                     </div>
                                     <div class="">
                                         <label class="m--font-boldest">
                                             No Of Active Loans:
                                         </label>
-                                        <span class="m--font-normal">5</span>
+                                        <span class="m--font-normal">{{data.no_of_active_loans}}</span>
                                     </div>
                                     <div class="">
                                         <label class="m--font-boldest">
@@ -144,53 +144,44 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfPhone')">
+                            <div class="form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'verified')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Phone Status
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" checked="checked" name="">
+														<input type="checkbox" [checked]="data.verified" name=""
+                                                               (change)="onChangePhoneStatus()">
 														<span></span>
 													</label>
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfFacebook')">
-                                <label class="col-5 col-form-label m--font-boldest">
-                                    Facebook Account
-                                </label>
-                                <div class="col-3">
-												<span class="m-switch m-switch--lg">
-													<label>
-														<input type="checkbox" checked="checked" name="">
-														<span></span>
-													</label>
-												</span>
-                                </div>
-                            </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfID')">
+
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     ID Status
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" checked="checked" name="">
+														<input type="checkbox" [checked]="data.id_verification_status == 'Verified'" name=""
+                                                               (change)="onChangeIdStatus()">
 														<span></span>
 													</label>
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatsOfAddress')">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'address_verification_status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Address Status
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" checked="checked" name="">
+														<input type="checkbox" [checked]="data.address_verification_status == 'Verified'" name=""
+                                                               (change)="onChangeAddressStatus()">
 														<span></span>
 													</label>
 												</span>
@@ -212,42 +203,60 @@
                                 </div>
                             </div>-->
                             <br>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatusOfDocument')">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'address_proof_file')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     View Documents
                                 </label>
                                 <div class="col-6">
                                     <div class="row">
-                                        <div style="text-decoration: underline" class="m--font-normal">document 1</div>
+                                        <div style="text-decoration: underline" class="m--font-normal">
+                                            <a target="_blank" [attr.href]="'http://' + data.id_proof_file">Id Proof Document</a>
+                                        </div>
                                     </div>
                                     <div class="row">
-                                        <div style="text-decoration: underline" class="m--font-normal">document 2</div>
+                                        <div style="text-decoration: underline" class="m--font-normal">
+                                            <a target="_blank" [attr.href]="'http://' + data.address_proof_file">Address Proof Document</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'updateStatusOfUser')">
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Block Account
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" checked="checked" name="">
+														<input type="checkbox" [checked]="data.status == 'Active'" name=""
+                                                               (change)="onChangeAccountStatus()">
 														<span></span>
 													</label>
 												</span>
                                 </div>
                             </div>
+                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleOtherRight('users', 'triggerCreditStore')">
+                                <label class="col-5 col-form-label m--font-boldest">
+                                    Trigger Credit Score
+                                </label>
+                                <div class="col-3">
+												<span class="m-switch m-switch--lg">
+													<label>
+                                                        <input type="checkbox" [checked]="data.criditScore == 'Active'" name=""
+                                                               (change)="onTriggerCediteScore()">
+                                                        <span></span>
+                                                    </label>
+												</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'LOAN')">
+                    <input type="hidden" id="user_id_1" [value]="data.id">
+                    <div class="row">
                         <h4><i class="m-menu__link-icon flaticon-attachment"></i> Loans</h4>
-                    </div>
-                    <div class="row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'LOAN')">
-                        <!--end: Search Form -->        <!--begin: Datatable -->
-                        <div class="m_datatable_loans" id="json_data_loans"></div>
-                        <!--end: Datatable -->
-                    </div>
+                    </div>  <!--end: Search Form -->        <!--begin: Datatable -->
+                    <input type="hidden" id="adminUsers_id_other" [value]="_adminUserService.getModuleOther('loans')">
+                    <div class="m_datatable_loans" id="json_data_loans"></div>
+                    <!--end: Datatable -->
                     <!--<div class="row">
                         <h4><i class="m-menu__link-icon flaticon-coins"></i> Collection</h4>
                     </div>
@@ -260,9 +269,9 @@
                 <div class="m-portlet__foot m-portlet__foot fit">
                     <div class="m-form__actions m-form__actions">
                         <div class="row">
-                            <div class="col-lg-11 ml-lg-auto">
+                            <div class="col-lg-10 ml-lg-auto">
                             </div>
-                            <div class="col-lg-1 ml-lg-auto">
+                            <div class="col-lg-2 ml-lg-auto">
                                 <button href="#/users" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                                     Cancel
                                 </button>

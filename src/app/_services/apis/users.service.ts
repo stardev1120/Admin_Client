@@ -11,7 +11,14 @@ export class UsersService extends BaseApiService<User> {
 
     constructor(http: HttpClient) {
         super(http);
-        this.url = '/users';
+        this.url = '/user';
+    }
+    updateTrigerCreditScore(user: User) {
+        this.url = '/user/updateTrigerCreditScore';
+        this.save(user).subscribe((res) => {
+            console.log(res)
+            this.url = '/user'
+        })
     }
 
 }

@@ -1864,7 +1864,6 @@ jQuery.fn.extend({
                     data: {},
                     timeout: 30000,
                 };
-                console.log('start url issue')
                 if (options.data.type === 'local') {
                     params.url = options.data.source;
                 }
@@ -1878,7 +1877,6 @@ jQuery.fn.extend({
                     if (typeof params.url !== 'string')
                         params.url = API.getOption('data.source');
 
-                    console.log('end url issue');
                     params.headers = API.getOption('data.source.read.headers');
                     var dsParams = API.getDataSourceParam()
                         , size = dsParams.pagination.perpage || API.getPageSize()
@@ -1929,9 +1927,11 @@ jQuery.fn.extend({
                         $(datatable).addClass('m-datatable--error');
                     }).always(function () {
                     });
+                }).catch(function(error){
+                    if(error.status == 401 || error.responseText == 'jwt expired'){
+                        location.reload();
+                    }
                 })
-
-
             },
 
             /**
@@ -3489,7 +3489,6 @@ jQuery.fn.extend({
              * @param value
              */
             setDataSourceParam: function (param, value) {
-                console.log('setDataSourceParam', param, value)
                 var defaultSort = dt.getDefaultSortColumn();
                 datatable.API.params = $.extend({}, {
                     pagination: {page: 1, perpage: API.getOption('data.pageSize')},

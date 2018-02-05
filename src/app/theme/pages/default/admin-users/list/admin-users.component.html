@@ -98,7 +98,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+					<div class="col-xl-4 order-1 order-xl-2 m--align-right"
+						 *ngIf="_adminUserService.checkModuleActionRight('admin-users', 'POST')">
 						<a href="#/admin-users/new" class="btn btn-focus m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
 							<span>
 								<i class="la la-cart-plus"></i>
@@ -112,6 +113,7 @@
 				</div>
 			</div>
 			<!--end: Search Form -->  		<!--begin: Datatable -->
+			<input type="hidden" id="adminUsers_id_actions" [value]="_adminUserService.getModuleAction('admin-users')">
 			<div class="m_datatable" id="json_data"></div>
 			<!--end: Datatable -->
 		</div>

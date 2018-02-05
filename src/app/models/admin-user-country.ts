@@ -5,7 +5,7 @@ import { AdminUser } from "./admin-user";
 export class AdminUserCountry implements BaseModel {
     public admin_user_id: number;
     public country_id: number;
-    public country: Country;
+    public Country: Country;
     public adminUser: AdminUser;
     public id?: string;
 }

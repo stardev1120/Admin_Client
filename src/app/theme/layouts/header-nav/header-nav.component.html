@@ -52,7 +52,7 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                     <div id="m_header_menu"
                          class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark">
-                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow" *ngIf="userCountries">
+                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow" *ngIf="adminUserCountries">
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"
                                 data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
                                 <a href="#" class="m-menu__link m-menu__toggle">
@@ -60,21 +60,22 @@
                                     <span class="m-menu__link-title">
 									<span class="m-menu__link-wrap">
 										<span class="m-menu__link-text">
-											{{userCountries[0].name}}
+											{{currentCountry.name}}
 										</span>
 									</span>
 								</span>
-                                    <i class="m-menu__hor-arrow la la-angle-down"></i>
-                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    <i class="m-menu__hor-arrow la la-angle-down" *ngIf="adminUserCountries.length > 1"></i>
+                                    <i class="m-menu__ver-arrow la la-angle-right" *ngIf="adminUserCountries.length > 1"></i>
                                 </a>
-                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left"
+                                     *ngIf="adminUserCountries.length > 1">
                                     <span class="m-menu__arrow m-menu__arrow--adjust"></span>
                                     <ul class="m-menu__subnav">
-                                        <li *ngFor="let country of userCountries" class="m-menu__item"
+                                        <li *ngFor="let adminUserCountry of adminUserCountries" class="m-menu__item"
                                             data-redirect="true" aria-haspopup="true">
-                                            <a href="#" class="m-menu__link">
+                                            <a (click)="onChangeCountry(adminUserCountry.Country)" class="m-menu__link">
 											<span class="m-menu__link-text">
-												{{country.name}}
+												{{adminUserCountry.Country.name}}
 											</span>
                                             </a>
                                         </li>
@@ -116,7 +117,7 @@
                                                         {{currentUser.email}}
                                                     </a>
                                                     <span class="m-card-user__last-login m--font-weight-300">
-														last login: {{currentUser.last_login}}
+														last login: {{currentUser.last_login | date:'medium'}}
 													</span>
                                                 </div>
                                             </div>
@@ -130,7 +131,7 @@
 														</span>
                                                     </li>
                                                     <li class="m-nav__item">
-                                                        <a routerLink="/header/profile" class="m-nav__link">
+                                                        <a routerLink="/profile" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                             <span class="m-nav__link-title">
 																<span class="m-nav__link-wrap">

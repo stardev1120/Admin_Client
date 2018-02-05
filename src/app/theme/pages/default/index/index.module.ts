@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './index.component';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
+import { BarChartDirective, DateRangeDirective } from "../../../../_directives";
 
 const routes: Routes = [
     {
@@ -17,17 +18,19 @@ const routes: Routes = [
         ]
     }
 ];
+
 @NgModule({
     imports: [
         CommonModule, RouterModule.forChild(routes), LayoutModule
     ], exports: [
         RouterModule
     ], declarations: [
-        IndexComponent
+        IndexComponent,
+        BarChartDirective,
+        DateRangeDirective
     ]
 })
 export class IndexModule {
-
 
 
 }

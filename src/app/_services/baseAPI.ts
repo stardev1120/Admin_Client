@@ -1,8 +1,10 @@
-
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BaseModel} from "./base-model";
-import {environment} from "../../environments/environment";
+/**
+ * Created by iAboShosha on 7/13/17.
+ */
+import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BaseModel } from "./base-model";
+import { environment } from "../../environments/environment";
 
 //import {AuthenticationService} from "./authentication/authentication.service";
 // import {Logger} from "../../core/logger.service";
@@ -23,27 +25,43 @@ export class BaseApiService<T extends BaseModel> {
         let token = (JSON.parse(localStorage.getItem('currentUser'))) ?
             (JSON.parse(localStorage.getItem('currentUser'))).token : null;
 
+        let currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+
         if (token) {
-            return new HttpHeaders()
-                .set("Content-Type", "application/json")
-                .set("Accept", "application/json")
-                .set('Authorization', "JWT " + token);
+            if (currentCountry)
+                return new HttpHeaders()
+                    .set("Content-Type", "application/json")
+                    .set("Accept", "application/json")
+                    .set("country_id", currentCountry.toString())
+                    .set('Authorization', "JWT " + token);
+            else
+                return new HttpHeaders()
+                    .set("Content-Type", "application/json")
+                    .set("Accept", "application/json")
+                    .set('Authorization', "JWT " + token);
         } else {
-            return new HttpHeaders()
-                .set("Content-Type", "application/json")
-                .set("Accept", "application/json");
+            if (currentCountry)
+                return new HttpHeaders()
+                    .set("Content-Type", "application/json")
+                    .set("Accept", "application/json")
+                    .set("country_id", currentCountry.toString());
+            else
+                return new HttpHeaders()
+                    .set("Content-Type", "application/json")
+                    .set("Accept", "application/json");
         }
 
     }
 
     get(id: string) {
         return this.http
-            .get<T>(this.baseUrl + this.url + `/${id}`, {headers: this.authorization()})
+            .get<T>(this.baseUrl + this.url + `/${id}`, { headers: this.authorization() })
     }
 
     query(query: any) {
         return this.http
-            .get<T[]>(this.baseUrl + this.url + '?filter=' + `${query}`, {headers: this.authorization()})
+            .get<T[]>(this.baseUrl + this.url + '?filter=' + `${query}`, { headers: this.authorization() })
     }
 
     save(item: T) {
@@ -51,17 +69,20 @@ export class BaseApiService<T extends BaseModel> {
     }
 
     add(item: T) {
-        return this.http.post<T>(this.baseUrl + this.url, item, {headers: this.authorization()})
+        return this.http.post<T>(this.baseUrl + this.url, item, { headers: this.authorization() })
     }
 
     update(item: T) {
-        return this.http.put<T>(this.baseUrl + this.url + `/${item.id}`, item, {headers: this.authorization()})
+        return this.http.put<T>(this.baseUrl + this.url + `/${item.id}`, item, { headers: this.authorization() })
     }
 
     destroy(id: String): Observable<any> {
         return this.http
-            .delete<T>(this.baseUrl + this.url + `/${id}`, {headers: this.authorization()})
+            .delete<T>(this.baseUrl + this.url + `/${id}`, { headers: this.authorization() })
 
+    }
+    updateWithoutId(item: any): Observable<any> {
+        return this.http.put<T>(this.baseUrl + this.url, item, { headers: this.authorization() })
     }
 
     upload(file: File): Observable<any> {

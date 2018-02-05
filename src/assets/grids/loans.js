@@ -1,22 +1,49 @@
 //== Class definition
-(function () {
-    var DatatableRemoteAjaxDemo = function () {
-        //== Private functions
-        var baseUrl = 'http://localhost:3000/api/admin/loans'
-        // basic demo
+
+var DatatableChildRemoteDataDemo = function() {
+    //== Private functions
+
+    // demo initializer
+
+
         var demo = function () {
+            var baseUrl = $('#basUrl').val();//'http://192.168.153.130:3000/api/admin/admin-user'
+            var actionsRights = JSON.parse($('#adminUsers_id_other').val());
+            var currentUserString = localStorage.getItem('currentUser');
+            var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+                (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+            var headers = {
+                "content-type": "application/json"
+            };
+
+            if (currentUserString) {
+                var currentUser = JSON.parse(currentUserString);
+                if (currentUser) {
+                    var token = currentUser.token;
+                    headers['authorization'] = "JWT " + token;
+                    headers['user_id'] = currentUser.id;
+                    if (currentCountry) {
+                        headers['country_id'] = currentCountry;
+                    }
+                }
+            }
 
             var datatable = $('.m_datatable_loans').mDatatable({
                 // datasource definition
                 data: {
-                    //type: 'remote',
+                    type: 'remote',
                     source: {
+
                         read: {
                             // sample GET method
-                            method: 'get',
+                            // sample GET method
+                            method: 'GET',
                             //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                            url: baseUrl,
-                            headers: {"authorization": localStorage.getItem('token')},
+                            url: baseUrl  + '/loan',
+                            params: {
+                                query: {user_id: $('#user_id_1').val() * 1}
+                            },
+                            headers: headers,
                             map: function (raw) {
                                 // sample data mapping
                                 var dataSet = raw;
@@ -27,7 +54,7 @@
                             },
                         },
                     },
-                    pageSize: 10,
+                    pageSize: 10, // display 20 records per page
                     saveState: {
                         cookie: true,
                         webstorage: true,
@@ -39,17 +66,16 @@
 
                 // layout definition
                 layout: {
-                    theme: 'default', // datatable theme
-                    class: '', // custom wrapper class
-                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-                    footer: false // display/hide footer
+                    theme: 'default',
+                    scroll: false,
+                    height: null,
+                    footer: false,
                 },
 
                 // column sorting
                 sortable: true,
 
                 pagination: true,
-
                 toolbar: {
                     // toolbar items
                     items: {
@@ -77,248 +103,232 @@
                     },
                 },
 
-                search: {
-                    input: $('#m_form_user_name'),
-                },
                 detail: {
-                    title: "Load sub table", content: function (t) {
-                        $("<div/>").attr("id", "child_data_ajax_" + t.data.RecordID).appendTo(t.detailCell).mDatatable({
-                            data: {
-                                //type: "remote",
-                                source: {
-                                    read: {
-                                        url: "inc/api/datatables/demos/orders.php",
-                                        headers: {"x-my-custom-header": "some value", "x-test-header": "the value"},
-                                        params: {query: {generalSearch: "", CustomerID: t.data.RecordID}}
-                                    }
-                                },
-                                pageSize: 10,
-                                serverPaging: !0,
-                                serverFiltering: !1,
-                                serverSorting: !0
-                            },
-                            layout: {
-                                theme: "default",
-                                scroll: !0,
-                                height: 300,
-                                footer: !1,
-                                spinner: {type: 1, theme: "default"}
-                            },
-                            sortable: !0,
-                            columns: [{
-                                field: "RecordID",
-                                title: "#",
-                                sortable: !1,
-                                width: 20,
-                                responsive: {hide: "xl"}
-                            }, {
-                                field: "OrderID", title: "Order ID", template: function (t) {
-                                    return "<span>" + t.OrderID + " - " + t.ShipCountry + "</span>"
-                                }
-                            }, {field: "ShipCountry", title: "Country", width: 100}, {
-                                field: "ShipAddress",
-                                title: "Ship Address"
-                            }, {field: "ShipName", title: "Ship Name"}, {
-                                field: "TotalPayment",
-                                title: "Payment",
-                                type: "number"
-                            }, {
-                                field: "Status", title: "Status", template: function (t) {
-                                    var e = {
-                                        1: {title: "Pending", class: "m-badge--brand"},
-                                        2: {title: "Delivered", class: " m-badge--metal"},
-                                        3: {title: "Canceled", class: " m-badge--primary"},
-                                        4: {title: "Success", class: " m-badge--success"},
-                                        5: {title: "Info", class: " m-badge--info"},
-                                        6: {title: "Danger", class: " m-badge--danger"},
-                                        7: {title: "Warning", class: " m-badge--warning"}
-                                    };
-                                    return '<span class="m-badge ' + e[t.Status].class + ' m-badge--wide">' + e[t.Status].title + "</span>"
-                                }
-                            }, {
-                                field: "Type", title: "Type", template: function (t) {
-                                    var e = {
-                                        1: {title: "Online", state: "danger"},
-                                        2: {title: "Retail", state: "primary"},
-                                        3: {title: "Direct", state: "accent"}
-                                    };
-                                    return '<span class="m-badge m-badge--' + e[t.Type].state + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + e[t.Type].state + '">' + e[t.Type].title + "</span>"
-                                }
-                            }]
-                        })
-                    }
+                    title: 'Load sub table',
+                    content: subTableInit,
                 },
+
 
                 // columns definition
                 columns: [
                     {
-                        field: 'select',
-                        width: 20,
-                        title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                        sortable: false,
-                        overflow: 'visible',
-                        template: function (row) {
-                            return '<input type="checkbox" id="select-' + row.id + '" data-value="' + row.id + '"/>';
-                        },
-                    },
-                    {
                         field: 'id',
-                        title: 'Loan ID',
+                        title: '',
                         filterable: false, // disable or enable filtering
-                        width: 80
+                        //width: 20
                     },
                     {
                         field: 'date_taken',
                         title: 'Date Taken',
                         filterable: false, // disable or enable filtering
-                        width: 80
+                        //width: 80
                     },
                     {
                         field: 'amount_taken',
                         title: 'Amount Taken',
                         filterable: false, // disable or enable filtering
-                        width: 70
+                        //width: 70
                     },
                     {
                         field: 'service_fee',
                         title: 'Service Fee',
                         filterable: false, // disable or enable filtering
-                        width: 70
+                        //width: 70
                     },
                     {
                         field: 'interest_rate',
                         title: 'Interest Rate',
-                        filterable: false, // disable or enable filtering
+                        //filterable: false, // disable or enable filtering
                         width: 70
                     },
                     {
                         field: 'duration_of_loan',
                         title: 'Duration Of Loan',
                         filterable: false, // disable or enable filtering
-                        width: 70
-                    }, /*
-                {
-                    field: 'status',
-                    title: 'status',
-                    filterable: false, // disable or enable filtering
-                    width: 50
-                },*/
+                        //width: 70
+                    },
+                     {
+                     field: 'status',
+                     title: 'status',
+                     filterable: false, // disable or enable filtering
+                     //width: 50
+                     },
                     {
                         field: 'amount_pending',
                         title: 'Amount Pending',
                         filterable: false, // disable or enable filtering
-                        width: 70
+                       // width: 70
                     }/*,
-                {
-                    field: 'bank_credit_transaction',
-                    title: 'bank_credit_transaction',
-                    filterable: false, // disable or enable filtering
-                    width: 50
-                },
-                {
-                    field: 'bank_credit_status',
-                    title: 'bank_credit_status',
-                    filterable: false, // disable or enable filtering
-                    width: 50
-                }*/,
+                     {
+                     field: 'bank_credit_transaction',
+                     title: 'bank_credit_transaction',
+                     filterable: false, // disable or enable filtering
+                     width: 50
+                     },
+                     {
+                     field: 'bank_credit_status',
+                     title: 'bank_credit_status',
+                     filterable: false, // disable or enable filtering
+                     width: 50
+                     }*/,
                     {
                         field: 'currency',
                         title: 'Currency',
                         filterable: false, // disable or enable filtering
-                        width: 70
+                       // width: 70
                     },
                     {
                         field: 'Actions',
-                        width: 100,
+                        //width: 100,
                         title: 'Actions',
                         sortable: false,
                         overflow: 'visible',
                         template: function (row) {
-                            var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                            return '\
-                            <a href="#/loans/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
-						</a>\
-					';
-                        },
-                    }],
+                            var content = '';
+                            if (actionsRights && (actionsRights['cancelLoanBasedOnStatusNotGiven']||actionsRights['closeLoan']||actionsRights['cancelLoanBasedOnStatus'])) {
+                                content = content + '\
+                                    <div>\
+                                    <select id="abc" class="status-row-' + row.id + '">\
+                                      <option value="" disabled selected>Choose</option>\
+                                    \ '
+                                if (actionsRights['closeLoan']) {
+
+                                    content = content + '\
+                                <option class="status-row-' + row.id + '" value="close">Close</option>\
+                                \ '
+                                }
+                                if (row.status === 'not_given' && actionsRights['cancelLoanBasedOnStatusNotGiven']) {
+                                    content = content + '\
+                                <option class="status-row-' + row.id + '" value="cancel">Cancel</option>\
+                                \ '
+                                } else if (row.status !== 'not_given' && actionsRights['cancelLoanBasedOnStatus']) {
+                                    content = content + '\
+                                <option class="status-row-' + row.id + '" value="cancel">Cancel</option>\
+                                \ '
+                                }
+                                content = content + '\
+                                 </select>\
+                                </div>\
+                                \ '
+                               return content;
+                            } else {
+                                return
+                            }
+                        }
+                    }
+
+                ],
             });
 
-            var query = datatable.getDataSourceQuery();
+            datatable.on('change', '[class^="status-row-"]', function (e) {
 
-            $('#m_form_user_name').on('change', function () {
-                // shortcode to datatable.getDataSourceParam('query');
-                var query = datatable.getDataSourceQuery();
-                query.user.fname = $(this).val(); // todo: we need to do for mname and lname with or and like
-                // shortcode to datatable.setDataSourceParam('query', query);
-                datatable.setDataSourceQuery(query);
-                datatable.load();
-            }).val(typeof query.fname !== 'undefined' ? query.fname : '');
-
-            $('#selectall').change(function (e) {
-                console.log($(e.target)[0].checked, 'e');
-                $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-            });
-            datatable.on('click', '[id^="delete-row-"]', function (e) {
-                var id = $(e.target).prop('id');
-                id = id.replace('delete-row-', '');
-                console.log(id, 'e');
-
+                var id = $(e.target).prop('class');
+                var data = {status: ''}
+                data.status = $(e.target).prop('value')
+                id = id.replace('status-row-', '');
                 $.ajax({
-                    url: baseUrl + '/' + id,
-                    method: 'delete'
+                    url: baseUrl + '/loan/' + id,
+                    method: 'put',
+                    data: JSON.stringify(data),
+                    headers: headers
                 }).done(datatable.load);
 
 
             });
 
+            function subTableInit(e) {
+                $('<div/>').attr('id', 'child_data_ajax_' + e.data.id).appendTo(e.detailCell).mDatatable({
+                    data: {
 
+                        type: 'remote',
+                        source: {
+                            read: {
+                                method: 'GET',
+                                //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
+                                url: baseUrl  + '/collection',
+                                headers: headers,
+                                params: {
+                                    query: {loan_id: e.data.id}
+                                },
+                                map: function (raw) {
+                                    // sample data mapping
+                                    var dataSet = raw;
+                                    if (typeof raw.data !== 'undefined') {
+                                        dataSet = raw.data;
+                                    }
+                                    return dataSet;
+                                },
+                            },
+                        },
+                        pageSize: 10,
+                        serverPaging: true,
+                        serverFiltering: false,
+                        serverSorting: true,
+                    },
+
+                    // layout definition
+                    layout: {
+                        theme: 'default',
+                        scroll: true,
+                        height: 300,
+                        footer: false,
+
+                        // enable/disable datatable spinner.
+                        spinner: {
+                            type: 1,
+                            theme: 'default',
+                        },
+                    },
+
+                    sortable: true,
+
+                    // columns definition
+                    columns: [
+                        {
+                            field: 'amount',
+                            title: 'Amount',
+                            filterable: false, // disable or enable filtering
+                          //  width: 80
+                        },
+                        {
+                            field: 'date',
+                            title: 'Date',
+                            filterable: false, // disable or enable filtering
+                            //width: 80
+                        }/*,
+                         {
+                         field: 'currency',
+                         title: 'currency',
+                         filterable: false, // disable or enable filtering
+                         width: 50
+                         }*/,
+                        {
+                            field: 'retry_date',
+                            title: 'Retry Date (if notpaid)',
+                            filterable: false, // disable or enable filtering
+                           // width: 80
+                        },
+                        {
+                            field: 'status',
+                            title: 'status',
+                            filterable: false, // disable or enable filtering
+                            //width: 50
+                        },
+
+                        ],
+                });
+            }
         };
 
         return {
-            // public functions
+            //== Public functions
             init: function () {
+                // init dmeo
                 demo();
             },
         };
-    }();
 
+}();
     jQuery(document).ready(function () {
-        DatatableRemoteAjaxDemo.init();
+        DatatableChildRemoteDataDemo.init();
     });
-})();

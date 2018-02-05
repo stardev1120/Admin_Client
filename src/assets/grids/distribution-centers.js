@@ -4,9 +4,10 @@ var DatatableRemoteAjaxDemo = function () {
     //== Private functions
     // basic demo
     var demo = function () {
-        var baseUrl =  $('#basUrl').val()+'/distribution-center/company';//'http://localhost:3000/api/admin/distribution-center'
+        var baseUrl = $('#basUrl').val() + '/distribution-center/company';//'http://localhost:3000/api/admin/distribution-center'
         var currentUserString = localStorage.getItem('currentUser');
-        var currentCountryString = localStorage.getItem('currentCountry');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
         var headers = {
             "content-type": "application/json"
         };
@@ -15,11 +16,13 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                //headers['country_id'] = currentUser.country_id ? currentUser.country_id : 2;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
             }
 
         }
-        var currentCountry = currentCountryString ? currentCountryString * 1 : 1;
+
         var datatable = $('.m_datatable_centers').mDatatable({
             // datasource definition
             data: {
@@ -88,22 +91,22 @@ var DatatableRemoteAjaxDemo = function () {
                 }
             },
 
-           /* search: {
-                input: $('#m_form_name')
-            },*/
+            /* search: {
+                 input: $('#m_form_name')
+             },*/
 
             // columns definition
             columns: [
-               /* {
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="' + row.id + '"/>';
-                    },
-                },*/
+                /* {
+                     field: 'select',
+                     width: 20,
+                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
+                     sortable: false,
+                     overflow: 'visible',
+                     template: function (row) {
+                         return '<input type="checkbox" id="select-' + row.id + '" data-value="' + row.id + '"/>';
+                     },
+                 },*/
                 {
                     field: 'address',
                     title: 'Address',
@@ -117,7 +120,7 @@ var DatatableRemoteAjaxDemo = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50
                     template: function (row) {
-                        return '<div>lat: ' + (row.lat?row.lat:"?") + '- long:' + (row.long?row.long:"?") + '</div>'
+                        return '<div>lat: ' + (row.lat ? row.lat : "?") + '- long:' + (row.long ? row.long : "?") + '</div>'
                     }
                 },
                 {
@@ -156,7 +159,7 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
-                            <a href="#/distribution-centers/' + row.id +'/'+ $('#company_id_1').val()+ '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                            <a href="#/distribution-centers/' + row.id + '/' + $('#company_id_1').val() + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\

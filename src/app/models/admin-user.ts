@@ -15,7 +15,8 @@ export class AdminUser implements BaseModel {
     public phone_number: string;
     public number_password_attempt: number;
     public max_session_time: number;
-    public FAfield: number;
+    public two_factor_temp_secret: string;
+    public otpauth_url: string;
     public last_login: Date;
     public company: Company;
     public Role: Role;

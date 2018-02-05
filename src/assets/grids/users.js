@@ -2,21 +2,38 @@
 
 var DatatableRemoteAjaxDemo = function () {
     //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/users/search'
     // basic demo
     var demo = function () {
+        var baseUrl = $('#basUrl').val()+'/user';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
+        };
+
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if(currentCountry){
+                    headers['country_id'] = currentCountry;
+                }
+            }
+        }
 
         var datatable = $('.m_datatable').mDatatable({
             // datasource definition
             data: {
-               // type: 'remote',
+               type: 'remote',
                 source: {
                     read: {
                         // sample GET method
-                        method: 'post',
+                        method: 'GET',
                         //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                         url: baseUrl,
-                        headers: {"authorization": localStorage.getItem('token')},
+                        headers: headers,
                         map: function (raw) {
                             // sample data mapping
                             var dataSet = raw;
@@ -72,18 +89,18 @@ var DatatableRemoteAjaxDemo = function () {
                     // },
                     pagination: {
                         // page size select
-                        pageSizeSelect: [ 10, 20, 30, 50, 100],
+                        pageSizeSelect: [5, 10, 20, 50, 100],
                     },
                 },
             },
 
             search: {
-                input: $('#email'),
+                input: $('#email')
             },
 
             // columns definition
             columns: [
-                {
+                /*{
                     field: 'select',
                     width: 20,
                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
@@ -92,6 +109,12 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
                     },
+                },*/
+                {
+                    field: 'email',
+                    title: 'Email',
+                    filterable: false, // disable or enable filtering
+                    width: 100
                 },
                 {
                     field: 'fname',
@@ -101,12 +124,6 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         return row.fname+' '+row.mname+' '+row.lname;
                     }
-                },
-                {
-                    field: 'email',
-                    title: 'Email',
-                    filterable: false, // disable or enable filtering
-                    width: 100
                 },
                 {
                     field: 'phone_number',
@@ -134,8 +151,7 @@ var DatatableRemoteAjaxDemo = function () {
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return '\
-                            <a href="#/users/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                        return '\<a href="#/users/view/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -180,29 +196,41 @@ var DatatableRemoteAjaxDemo = function () {
 
         var query = datatable.getDataSourceQuery();
 
-        $('#m_form_email').on('change', function () {
+        $('#email').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.email = $(this).val();
+            if ($(this).val()) {
+                query.email = $(this).val();
+            } else {
+                delete query.email;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.email !== 'undefined' ? query.email : '');
 
 
-        $('#m_form_name').on('change', function () {
+        $('#fname').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.fname = $(this).val(); // todo: we need to do for mname and lname with or and like
+            if ($(this).val()) {
+                query.fname = $(this).val();
+            } else {
+                delete query.fname;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.fname !== 'undefined' ? query.fname : '');
 
-        $('#m_form_phone_number').on('change', function () {
+        $('#phone_number').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            query.phone_number = $(this).val();
+            if ($(this).val()) {
+                query.phone_number = $(this).val();
+            } else {
+                delete query.phone_number;
+            }
             // shortcode to datatable.setDataSourceParam('query', query);
             datatable.setDataSourceQuery(query);
             datatable.load();

@@ -68,14 +68,14 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && name.hasError('required') || (name.touched && name.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && name1.hasError('required') || (name1.touched && name1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Name *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.name" type="text" class="form-control m-input" name="name"
-                               placeholder="Enter name" required #name="ngModel">
-                        <div *ngIf="mForm.submitted && name.hasError('required') || (name.touched && name.hasError('required'))"
+                        <input [(ngModel)]="data.name" type="text" class="form-control m-input" name="name1"
+                               placeholder="Enter name" required #name1="ngModel">
+                        <div *ngIf="mForm.submitted && name1.hasError('required') || (name1.touched && name1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
@@ -84,19 +84,18 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && value.hasError('required') || (value.touched && title.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && value1.hasError('required') || (value1.touched && value1.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Value *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <input [(ngModel)]="data.value" type="text" class="form-control m-input"
-                               name="value"
-                               placeholder="Enter value" required #value="ngModel">
-                        <div *ngIf="mForm.submitted && value.hasError('required') || (value.touched && value.hasError('required'))"
+                               name="value1"
+                               placeholder="Enter value" required #value1="ngModel">
+                        <div *ngIf="mForm.submitted && value1.hasError('required') || (value1.touched && value1.hasError('required'))"
                              class="form-control-feedback">
                             required.
                         </div>
-
                     </div>
 
                 </div>

@@ -8,10 +8,14 @@
         </div>
         <div>
             <div class="m-portlet__head-tools">
-                <ul class="m-portlet__nav" style="margin-bottom:0;margin-right: 10px">
+                <ul class="m-portlet__nav" style="margin-bottom:0;margin-right: 10px" *ngIf="adminUserCountries">
                     <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                         data-dropdown-toggle="hover" aria-expanded="true">
-                        <a href="#" style="height: 40px !important;padding-top: 10px;"
+                        <a href="#" style="height: 40px !important;padding-top: 10px;" *ngIf="currentCountry"
+                           class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
+                            {{currentCountry.name}}
+                        </a>
+                        <a href="#" style="height: 40px !important;padding-top: 10px;" *ngIf="!currentCountry"
                            class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
                             All
                         </a>
@@ -23,23 +27,19 @@
                                     <div class="m-dropdown__content">
                                         <ul class="m-nav">
                                             <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
+                                                <a (click)="onChangeCountry()"
+                                                   class="m-nav__link" style="cursor: pointer">
                                                     <span class="m-nav__link-text">
-																Ukraine
+												All
 															</span>
                                                 </a>
                                             </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
+                                            <li class="m-nav__item" *ngFor="let adminUserCountry of adminUserCountries">
+                                                <a (click)="onChangeCountry(adminUserCountry.Country)"
+                                                   style="cursor: pointer"
+                                                   class="m-nav__link">
                                                     <span class="m-nav__link-text">
-																China
-															</span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-																Egypt
+												{{adminUserCountry.Country.name}}
 															</span>
                                                 </a>
                                             </li>
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div>
-			<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+			<span class="m-subheader__daterange" appDateRange (on-change)="onChangeDateRange($event)">
 				<span class="m-subheader__daterange-label">
 					<span class="m-subheader__daterange-title"></span>
 					<span class="m-subheader__daterange-date m--font-brand"></span>
@@ -73,33 +73,47 @@
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('users')"-->
+                        <div class="m-widget14"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_users')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Users
                                 </h3>
-                                <span class="m-widget14__desc">
-								15 User
+                                <span id="m_chart_daily_sales1_count" class="m-widget14__desc">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales1"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales1_count'"
+                                 [chart-color]="'#7FD6F6'"
+                                 [chart-api]="'/users-per-date'"
+                                 [chart-kpi-text]="'User'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'count'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
 
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('collections')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('collections')"-->
+                        <div class="m-widget14"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_amount_collected')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Amount Collected
                                 </h3>
-                                <span class="m-widget14__desc">
-								150,000.00 $
+                                <span class="m-widget14__desc" id="m_chart_daily_sales2_sum">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales2"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales2_sum'"
+                                 [chart-color]="'#34bfa3'"
+                                 [chart-api]="'/collected-amount-per-date'"
+                                 [chart-kpi-text]="'$'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'sum'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
@@ -112,33 +126,44 @@
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('loans')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('loans')"-->
+                        <div class="m-widget14"   *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_loans')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Loans
                                 </h3>
-                                <span class="m-widget14__desc">
-								50 Loan
+                                <span class="m-widget14__desc" id="m_chart_daily_sales3_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales3"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales3_count'"
+                                 [chart-color]="'#c4c5d6'"
+                                 [chart-api]="'/loans-per-date'"
+                                 [chart-kpi-text]="'Loan'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'count'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
-
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" style="background-color: white;margin-top: 10px;">
+                        <div class="m-widget14" style="background-color: white;margin-top: 10px;"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'average_uScore')">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Average uScore
                                 </h3>
-                                <span class="m-widget14__desc">
-								152.254
+                                <span class="m-widget14__desc" id="m_chart_daily_sales4_avg">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales4"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales4_avg'"
+                                 [chart-color]="'#00c5dc'"
+                                 [chart-api]="'/avg-uscore-per-date'"
+                                 [chart-kpi-text]="''"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'avg'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
@@ -151,33 +176,47 @@
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('collections')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('collections')"-->
+                        <div class="m-widget14"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_collections')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Collections
                                 </h3>
-                                <span class="m-widget14__desc">
-								108 Collection
+                                <span class="m-widget14__desc" id="m_chart_daily_sales5_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales5"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales5_count'"
+                                 [chart-color]="'#5867dd'"
+                                 [chart-api]="'/collections-per-date'"
+                                 [chart-kpi-text]="'Collection'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'count'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
-
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('users')"-->
+                        <div class="m-widget14"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_users_profile_viewed_by_otp_access')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Users viewed by OTP
                                 </h3>
-                                <span class="m-widget14__desc">
+                                <span class="m-widget14__desc" id="m_chart_daily_sales6_count">
 								34 User
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales6"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales6_count'"
+                                 [chart-color]="'#36a3f7'"
+                                 [chart-api]="'/otp-user-per-date'"
+                                 [chart-kpi-text]="'User'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'count'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
@@ -190,33 +229,47 @@
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('loans')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('loans')"-->
+                        <div class="m-widget14"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_given_out_loans')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
-                                    Amount Give Out Loans
+                                    Amount Given Out Loans
                                 </h3>
-                                <span class="m-widget14__desc">
-								15,000.00 $
+                                <span class="m-widget14__desc" id="m_chart_daily_sales7_sum">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales7"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales7_sum'"
+                                 [chart-color]="'#ffb822'"
+                                 [chart-api]="'/issued-amount-per-date'"
+                                 [chart-kpi-text]="'$'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'sum'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
 
                         <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" (click)="onNavigateToRoute('users')" style="cursor: pointer;background-color: white;margin-top: 10px;">
+                        <!--(click)="onNavigateToRoute('users')"-->
+                        <div class="m-widget14" *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_unverified_users')"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
-                                    Un-verified Users
+                                    Unverified Users
                                 </h3>
-                                <span class="m-widget14__desc">
-								10 User
+                                <span class="m-widget14__desc" id="m_chart_daily_sales8_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;">
-                                <canvas  id="m_chart_daily_sales8"></canvas>
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                                 [chart-kpi-id]="'m_chart_daily_sales8_count'"
+                                 [chart-color]="'#f4516c'"
+                                 [chart-api]="'/unverified-users-per-date'"
+                                 [chart-kpi-text]="'User'"
+                                 [country-id]="currentCountry"
+                                 [date-range]="selectedDateRange"
+                                 [chart-kpi-name]="'count'">
                             </div>
                         </div>
                         <!--end:: Widgets/Daily Sales-->
@@ -227,38 +280,49 @@
     </div>
     <div class="row">
         <div class="col-xl-6">
-            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'country_investment_money_left')">
                 <div class="m-widget14__header m--margin-bottom-30">
                     <h3 class="m-widget14__title">
                         Country Investment Money Left
                     </h3>
-                    <span class="m-widget14__desc">
-								670
+                    <span class="m-widget14__desc" id="m_chart_daily_sales9_sum">
+
 							</span>
                 </div>
-                <div class="m-widget14__chart" style="height:120px;">
-                    <canvas  id="m_chart_daily_sales9"></canvas>
+                <div class="m-widget14__chart" style="height:120px;" appBarChart
+                     [chart-kpi-id]="'m_chart_daily_sales9_sum'"
+                     [chart-color]="'#E4507E'"
+                     [chart-api]="'/left-money-per-date'"
+                     [chart-kpi-text]="'$'"
+                     [country-id]="currentCountry"
+                     [date-range]="selectedDateRange"
+                     [chart-kpi-name]="'sum'">
                 </div>
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'country_investment_status')">
                 <div class="m-widget14__header m--margin-bottom-30">
                     <h3 class="m-widget14__title">
                         Country Investment Status
                     </h3>
-                    <span class="m-widget14__desc">
-								340
+                    <span class="m-widget14__desc" id="m_chart_daily_sales10_count">
 							</span>
                 </div>
-                <div class="m-widget14__chart" style="height:120px;">
-                    <canvas  id="m_chart_daily_sales10"></canvas>
+                <div class="m-widget14__chart" style="height:120px;" appBarChart
+                     [chart-kpi-id]="'m_chart_daily_sales10_count'"
+                     [chart-color]="'#6f42c1'"
+                     [chart-api]="'/investment-status-per-date'"
+                     [chart-kpi-text]="''"
+                     [country-id]="currentCountry"
+                     [date-range]="selectedDateRange"
+                     [chart-kpi-name]="'count'">
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-12"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'duration_users_loans_collections')">
             <!--begin::Portlet-->
             <div class="m-portlet m-portlet--tab">
                 <div class="m-portlet__head">
@@ -281,7 +345,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-12"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'duration_users_amountOfLoans_amountOfCollections')">
             <!--begin::Portlet-->
             <div class="m-portlet m-portlet--tab">
                 <div class="m-portlet__head">
@@ -304,7 +368,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-12"  *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'revenue')">
             <!--begin::Portlet-->
             <div class="m-portlet m-portlet--tab">
                 <div class="m-portlet__head">
@@ -333,7 +397,7 @@
             <div class="m_datatable" id="json_data"></div>
             &lt;!&ndash;end: Datatable &ndash;&gt;
         </div>-->
-        <div class="col-xl-12">
+        <div class="col-xl-12" *ngIf="adminUserService.checkModuleActionRight('user-activities', 'GET')">
             <!--begin:: Widgets/Audit Log-->
             <div class="m-portlet m-portlet--full-height">
                 <div class="m-portlet__head">
@@ -362,8 +426,8 @@
                                 </a>
                             </li>
                         </ul>-->
-                        <span class="m-subheader__daterange" id="m_dashboard_daterangepicker2"
-                              style="border: 1px solid #ebedf2;">
+                        <span class="m-subheader__daterange" appDateRange
+                              (on-change)="onChangeDateRangeActivity($event)">
 				<span class="m-subheader__daterange-label">
 					<span class="m-subheader__daterange-title"></span>
 					<span class="m-subheader__daterange-date m--font-brand"></span>
@@ -381,193 +445,48 @@
                                  style="height: 400px; overflow: hidden;">
                                 <div class="m-list-timeline m-list-timeline--skin-light">
                                     <div class="m-list-timeline__items">
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                        <div class="m-list-timeline__item"
+                                             *ngFor="let activityLog of adminUserActivityLogs">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"
+                                                  *ngIf="activityLog.payload.method == 'GET'"></span>
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"
+                                                  *ngIf="activityLog.payload.method == 'POST'"></span>
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"
+                                                  *ngIf="activityLog.payload.method == 'PUT'"></span>
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"
+                                                  *ngIf="activityLog.payload.method == 'DELETE'"></span>
                                             <span class="m-list-timeline__text">
-												12 new users registered
+												{{activityLog.user_email}}
 											</span>
-                                            <span class="m-list-timeline__time">
-												Just now
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
                                             <span class="m-list-timeline__text">
-												System shutdown
-												<span class="m-badge m-badge--success m-badge--wide">
-													pending
+												{{activityLog.action.action}}
+											</span>
+                                            <span class="m-list-timeline__text">
+                                                <span class="m-badge m-badge--success m-badge--wide" *ngIf="activityLog.payload.method == 'GET'">
+													{{activityLog.payload.method}}
+												</span>
+                                                <span class="m-badge m-badge--brand m-badge--wide" *ngIf="activityLog.payload.method == 'POST'">
+													{{activityLog.payload.method}}
+												</span>
+                                                <span class="m-badge m-badge--accent m-badge--wide" *ngIf="activityLog.payload.method == 'PUT'">
+													{{activityLog.payload.method}}
+												</span>
+                                                <span class="m-badge m-badge--danger m-badge--wide" *ngIf="activityLog.payload.method == 'DELETE'">
+													{{activityLog.payload.method}}
 												</span>
 											</span>
-                                            <span class="m-list-timeline__time">
-												14 mins
+                                            <span class="m-list-timeline__text" *ngIf="activityLog.payload.body && isNotEmpty(activityLog.payload.body)">
+												{{activityLog.payload.body}}
 											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                            <span class="m-list-timeline__text">
-												New invoice received
+                                            <span class="m-list-timeline__text" *ngIf="activityLog.payload.params && isNotEmpty(activityLog.payload.body)">
+												{{activityLog.payload.params}}
 											</span>
-                                            <span class="m-list-timeline__time">
-												20 mins
+                                            <span class="m-list-timeline__text" *ngIf="!activityLog.payload.params || !isNotEmpty(activityLog.payload.body)">
 											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                            <span class="m-list-timeline__text">
-												DB overloaded 80%
-												<span class="m-badge m-badge--info m-badge--wide">
-													settled
-												</span>
+                                            <span class="m-list-timeline__text" *ngIf="!activityLog.payload.params || !isNotEmpty(activityLog.payload.body)">
 											</span>
                                             <span class="m-list-timeline__time">
-												1 hr
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                            <span class="m-list-timeline__text">
-												System error -
-												<a href="#" class="m-link">
-													Check
-												</a>
-											</span>
-                                            <span class="m-list-timeline__time">
-												2 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
-                                            <span class="m-list-timeline__text">
-												Production server down
-											</span>
-                                            <span class="m-list-timeline__time">
-												3 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                            <span class="m-list-timeline__text">
-												Production server up
-											</span>
-                                            <span class="m-list-timeline__time">
-												5 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                            <span href="" class="m-list-timeline__text">
-												New order received
-												<span class="m-badge m-badge--danger m-badge--wide">
-													urgent
-												</span>
-											</span>
-                                            <span class="m-list-timeline__time">
-												7 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                            <span class="m-list-timeline__text">
-												12 new users registered
-											</span>
-                                            <span class="m-list-timeline__time">
-												Just now
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                            <span class="m-list-timeline__text">
-												System shutdown
-												<span class="m-badge m-badge--success m-badge--wide">
-													pending
-												</span>
-											</span>
-                                            <span class="m-list-timeline__time">
-												14 mins
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                            <span class="m-list-timeline__text">
-												New invoice received
-											</span>
-                                            <span class="m-list-timeline__time">
-												20 mins
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                            <span class="m-list-timeline__text">
-												DB overloaded 80%
-												<span class="m-badge m-badge--info m-badge--wide">
-													settled
-												</span>
-											</span>
-                                            <span class="m-list-timeline__time">
-												1 hr
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                            <span class="m-list-timeline__text">
-												New invoice received
-											</span>
-                                            <span class="m-list-timeline__time">
-												20 mins
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                            <span class="m-list-timeline__text">
-												DB overloaded 80%
-												<span class="m-badge m-badge--info m-badge--wide">
-													settled
-												</span>
-											</span>
-                                            <span class="m-list-timeline__time">
-												1 hr
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                            <span class="m-list-timeline__text">
-												System error -
-												<a href="#" class="m-link">
-													Check
-												</a>
-											</span>
-                                            <span class="m-list-timeline__time">
-												2 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
-                                            <span class="m-list-timeline__text">
-												Production server down
-											</span>
-                                            <span class="m-list-timeline__time">
-												3 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                            <span class="m-list-timeline__text">
-												Production server up
-											</span>
-                                            <span class="m-list-timeline__time">
-												5 hrs
-											</span>
-                                        </div>
-                                        <div class="m-list-timeline__item">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                            <span href="" class="m-list-timeline__text">
-												New order received
-												<span class="m-badge m-badge--danger m-badge--wide">
-													urgent
-												</span>
-											</span>
-                                            <span class="m-list-timeline__time">
-												7 hrs
+												{{activityLog.created_at | date:'medium'}}
 											</span>
                                         </div>
                                     </div>

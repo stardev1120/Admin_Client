@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { UsersService } from "../../../../../_services/apis/users.service";
-import { User } from "../../../../../models/user";
-import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/forkJoin';
+
+import { Loan } from "../../../../../models/loan";
+import { LoansService } from "../../../../../_services/apis/loans.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -11,39 +12,30 @@ import 'rxjs/add/observable/forkJoin';
     encapsulation: ViewEncapsulation.None,
 })
 export class IssueMoneyComponent implements OnInit {
-    data: User;
-    countries: any = [];
-    statuses: any = [{
-        id: 'status1',
-        title: 'Status 1'
-    }, {
-        id: 'status2',
-        title: 'Status 2'
-    }, {
-        id: 'status3',
-        title: 'Status 3'
-    }, {
-        id: 'status4',
-        title: 'Status 4'
-    }];
-    constructor(private api: UsersService,
+    data: Loan;
+
+    constructor(private api: LoansService,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private modalService: NgbModal) {
 
     }
 
     ngOnInit() {
-        this.data = this.route.snapshot.data.user as User;
-        this.countries = this.route.snapshot.data.countries as any;
+        this.data = this.route.snapshot.data.loan as Loan;
     }
 
-    onSubmit(mForm: any) {
-        if (mForm.valid) {
-            console.log(mForm.valid, mForm)
-            this.api.save(this.data)
-                .subscribe(r => {
-                    this.router.navigate(["/users"])
+    onSubmit(content) {
+        this.data.status = 'Active';
+        this.api.save(this.data)
+            .subscribe(() => {
+                this.modalService.open(content).result.then((result) => {
+                    this.router.navigate(["/issue-collect-money"])
+                }, () => {
+                    this.router.navigate(["/issue-collect-money"])
                 });
-        }
+            }, error => {
+                console.log(error);
+            });
     }
 }

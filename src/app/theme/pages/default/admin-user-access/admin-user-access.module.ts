@@ -14,7 +14,7 @@ const routes: Routes = [
         "component": DefaultComponent,
         "children": [
             {
-                "path": ":stateUrl",
+                "path": ":stateUrl/:userId",
                 "component": AdminUserAccessComponent
             }
         ]

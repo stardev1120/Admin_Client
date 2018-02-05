@@ -12,7 +12,7 @@ export class UserResolver implements Resolve<User> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> | Promise<User> | User {
         let id = route.paramMap.get('id');
-        if (id == 'new' || id == 'user_id') { //todo remove user_id for testing
+        if (id == 'new') {
             return new User();
         }
         return this.api.get(route.paramMap.get('id'));

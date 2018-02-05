@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';
-import {AdminUsersService} from "../../../_services/apis/admin-users.service";
+import { AdminUsersService } from "../../../_services/apis/admin-users.service";
 
 declare let mLayout: any;
 @Component({
@@ -11,7 +11,7 @@ declare let mLayout: any;
 export class AsideNavComponent implements OnInit, AfterViewInit {
 
 
-    constructor(public adminUsersService:AdminUsersService) {
+    constructor(public adminUsersService: AdminUsersService) {
 
     }
     ngOnInit() {

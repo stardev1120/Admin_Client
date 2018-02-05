@@ -40,7 +40,7 @@
                         Scan Barcode or Enter Manually D1
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="D1" type="text" class="form-control m-input m--font-normal"
+                        <input [(ngModel)]="code" type="text" class="form-control m-input m--font-normal"
                                placeholder="Scan Barcode or Enter Manually D1">
                     </div>
 
@@ -49,12 +49,8 @@
                     <div class="col-lg-6 ml-lg-auto">
                     </div>
                     <div class="col-lg-6 ml-lg-auto">
-                        <button type="button" (click)="onIssueMoney()" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
-                            Issue Money
-                        </button>
-
-                        <button type="button" (click)="onCollectMoney()" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
-                            Collect Money
+                        <button type="button" (click)="onSubmit()" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                            Submit
                         </button>
                         <button routerLink="/index" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                             Cancel

@@ -46,122 +46,103 @@
             </div>
         </div>
         <!--begin::Form-->
-        <form class="m-form m-form state m-form fit m-form label-align-right"
-              (ngSubmit)="onSubmit(mForm)" #mForm="ngForm"
-              id="m_form_2">
-            <div class="m-portlet__body">
-                <div class="m-form__content">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    User ID:
-                                </label>
-                                <span class="m--font-normal">Test</span>
-                            </div>
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    Full name:
-                                </label>
-                                <span class="m--font-normal">Test</span>
-                            </div>
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    Phone:
-                                </label>
-                                <span class="m--font-normal">1111111111</span>
-
-                            </div>
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    Email:
-                                </label>
-                                <span class="m--font-normal">Test@test.com</span>
-
-                            </div>
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    Date of Birth:
-                                </label>
-
-                                <span class="m--font-normal">5th Jan 2000</span>
-
-                            </div>
-                            <div class="">
-                                <label class="m--font-boldest">
-                                    Country:
-                                </label>
-                                <span class="m--font-normal">Test</span>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <img style="border: 1px solid #575962;margin: 5px;"
-                                 src="../../../../../../assets/app/media/img/users/300_3.jpg" height="250" width="250"/>
-                            <img style="border: 1px solid #575962;margin: 5px;"
-                                 src="../../../../../../assets/app/media/img/users/300_3.jpg" height="250" width="250"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-form__content">
-                    <div class="m-alert m-alert icon alert alert-warning" *ngIf="mForm.submitted && mForm.invalid"
-                         role="alert" id="m_form_2_msg">
-                        <div class="m-alert__icon">
-                            <i class="la la-warning"></i>
-                        </div>
-                        <div class="m-alert__text">
-                            Oh snap! Change a few things up and try submitting again.
-                        </div>
-                        <div class="m-alert__close">
-                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
-                        Amount to be collected :
-                    </label>
-                    <div class="col-lg-4 col-md-9 col-sm-12">
-                        <div class="col-form-label m--font-normal">500</div>
-                        <!--<input [(ngModel)]="amount" type="number" class="form-control m-input" name="amount1"
-                               placeholder="Enter amount" required #amount1="ngModel">
-                        <div *ngIf="mForm.submitted && amount1.hasError('required') || (amount1.touched && amount1.hasError('required'))"
-                             class="form-control-feedback">
-                            required.
-                        </div>-->
-                    </div>
-
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
-                        Confirm amount collected :
-                    </label>
-                    <div class="col-lg-4 col-md-9 col-sm-12">
-                        <div class="col-form-label m--font-normal">1000</div>
-                        <!--<input [(ngModel)]="reamount" type="number" class="form-control m-input" name="reamount1"
-                               placeholder="Enter amount" required #reamount1="ngModel">
-                        <div *ngIf="mForm.submitted && reamount1.hasError('required') || (reamount1.touched && reamount1.hasError('required'))"
-                             class="form-control-feedback">
-                            required.
-                        </div>
-                        <div *ngIf="mForm.submitted && reamount!= amount || (reamount1.touched && reamount!= amount)"
-                             class="form-control-feedback">
-                            the amounts is not matched.
-                        </div>-->
-                    </div>
-                </div>
+        <div class="m-portlet__body">
+            <div class="m-form__content">
                 <div class="row">
-                    <div class="col-lg-9 ml-lg-auto">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="">
+                            <label class="m--font-boldest">
+                                User ID:
+                            </label>
+                            <span class="m--font-normal">{{data.User.fname}}</span>
+                        </div>
+                        <div class="">
+                            <label class="m--font-boldest">
+                                Full name:
+                            </label>
+                            <span class="m--font-normal">{{data.User.fname}} {{data.User.mname}} {{data.User.lname}}</span>
+                        </div>
+                        <div class="">
+                            <label class="m--font-boldest">
+                                Phone:
+                            </label>
+                            <span class="m--font-normal">{{data.User.phone_number}}</span>
+
+                        </div>
+                        <div class="">
+                            <label class="m--font-boldest">
+                                Email:
+                            </label>
+                            <span class="m--font-normal">{{data.User.email}}</span>
+
+                        </div>
+                        <div class="">
+                            <label class="m--font-boldest">
+                                Date of Birth:
+                            </label>
+
+                            <span class="m--font-normal">{{data.User.dob| date:'mediumDate'}}</span>
+
+                        </div>
+                        <div class="">
+                            <label class="m--font-boldest">
+                                Country:
+                            </label>
+                            <span class="m--font-normal">{{data.User.Country.name}}</span>
+                        </div>
                     </div>
-                    <div class="col-lg-3 ml-lg-auto">
-                        <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
-                            Issue Cash
-                        </button>
-                        <button routerLink="/issue-collect-money" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
-                            Cancel
-                        </button>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <img style="border: 1px solid #575962;margin: 5px;" src="{{data.User.profilepic}}" height="250"
+                             width="250"/>
+                        <img style="border: 1px solid #575962;margin: 5px;" src="{{data.User.selfie_proof_file}}"
+                             height="250" width="250"/>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="form-group row">
+                <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                    Amount to be issued :
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="col-form-label m--font-normal">{{data.amount_pending}}</div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                    Confirm amount issued :
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="col-form-label m--font-normal">{{data.amount_pending}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-9 ml-lg-auto">
+                </div>
+                <div class="col-lg-3 ml-lg-auto">
+                    <button type="button" (click)="onSubmit(content)"
+                            class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                        Issue Cash
+                    </button>
+                    <button routerLink="/issue-collect-money" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Issue Money</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>Please issue {{ data.amount_pending}} to the customer</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </ng-template>
 </div>

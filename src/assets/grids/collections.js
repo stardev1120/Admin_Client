@@ -2,21 +2,38 @@
 (function(){
     var DatatableRemoteAjaxDemo = function () {
         //== Private functions
-        var baseUrl = 'http://localhost:3000/api/admin/collections'
         // basic demo
         var demo = function () {
+            var baseUrl = $('#basUrl').val() + '/collection';
+            var currentUserString = localStorage.getItem('currentUser');
+            var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+                (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+            var headers = {
+                "content-type": "application/json"
+            };
+
+            if (currentUserString) {
+                var currentUser = JSON.parse(currentUserString);
+                if (currentUser) {
+                    var token = currentUser.token;
+                    headers['authorization'] = "JWT " + token;
+                    if (currentCountry) {
+                        headers['country_id'] = currentCountry;
+                    }
+                }
+            }
 
             var datatable = $('.m_datatable_collections').mDatatable({
                 // datasource definition
                 data: {
-                    //type: 'remote',
+                    type: 'remote',
                     source: {
                         read: {
                             // sample GET method
-                            method: 'get',
+                            method: 'GET',
                             //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
                             url: baseUrl,
-                            headers: {"authorization": localStorage.getItem('token')},
+                            headers: headers,
                             map: function (raw) {
                                 // sample data mapping
                                 var dataSet = raw;
@@ -147,9 +164,6 @@
                         template: function (row) {
                             var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                             return '\
-                            <a href="#/collections/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-edit"></i>\
-						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
                             <div class="modal-dialog" role="document">\
                             <div class="modal-content">\

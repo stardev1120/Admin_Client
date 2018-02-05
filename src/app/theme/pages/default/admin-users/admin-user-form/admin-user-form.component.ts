@@ -17,6 +17,7 @@ export class AdminUserFormComponent implements OnInit {
     countries: any = [];
     roles: any = [];
     selectedCountries: any = [];
+    currentAdminUser: any;
 
     constructor(private api: AdminUsersService,
         private router: Router,
@@ -26,16 +27,24 @@ export class AdminUserFormComponent implements OnInit {
 
     ngOnInit() {
         this.data = this.route.snapshot.data.adminUser as AdminUser;
-        if(this.data && this.data.AdminuserCountries) {
+        if (this.data && this.data.AdminuserCountries) {
             var that = this;
-            _.each(that.data.AdminuserCountries, function (country) {
+            _.each(that.data.AdminuserCountries, function(country) {
                 that.selectedCountries.push(country.country_id)
             })
-        } else{
+        } else {
             this.selectedCountries = []
         }
         this.companies = this.route.snapshot.data.companies as any;
         this.roles = this.route.snapshot.data.roles as any;
+
+        this.currentAdminUser = this.api.currentAdminUser;
+        if (this.currentAdminUser.Role.role_id != 'super_admin') {
+            this.roles = this.roles.filter(function(role) {
+                return role.role_id !== 'super_admin';
+            });
+        };
+
         this.countries = this.route.snapshot.data.countries as any;
     }
 
@@ -50,7 +59,7 @@ export class AdminUserFormComponent implements OnInit {
         }
     }
     onCheckboxChange(country, event) {
-        if(event.target.checked) {
+        if (event.target.checked) {
             this.selectedCountries.push(country.id);
         } else {
             for (var i = 0; i < this.countries.length; i++) {

@@ -4,8 +4,11 @@ var DatatableRemoteAjaxDemo = function () {
     //== Private functions
     // basic demo
     var demo = function () {
-        var baseUrl = $('#basUrl').val()+'/admin-user';//'http://192.168.153.130:3000/api/admin/admin-user'
+        var baseUrl = $('#basUrl').val() + '/admin-user';//'http://192.168.153.130:3000/api/admin/admin-user'
+        var actionsRights = JSON.parse($('#adminUsers_id_actions').val());
         var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
         var headers = {
             "content-type": "application/json"
         };
@@ -15,7 +18,9 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                headers['country_id'] = currentUser.country_id ? currentUser.country_id : 1;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
             }
         }
 
@@ -110,26 +115,26 @@ var DatatableRemoteAjaxDemo = function () {
                     field: 'name',
                     title: 'Name',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'email',
                     title: 'Email',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'phone_number',
                     title: 'Phone',
                     filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
                 },
                 {
                     field: 'company',
                     title: 'Company',
                     // sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 100,
+                    //width: 100,
                     template: function (row) {
                         return row.Company.company_name;
                     }
@@ -139,27 +144,80 @@ var DatatableRemoteAjaxDemo = function () {
                     title: 'Role',
                     sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                    width: 100,
+                   // width: 100,
                     template: function (row) {
                         return row.Role.role_name;
                     }
                 },
                 {
-                    field: 'status',
-                    title: 'Status',
-                    filterable: false, // disable or enable filtering
-                    width: 50
-                },
-                {
                     field: 'Actions',
-                    width: 110,
+                   // width: 110,
                     title: 'Actions',
-                   // sortable: false,
+                    // sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return '\
-                            <a href="#/admin-users/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                        var content = '';
+                        if (actionsRights) {
+                            if (actionsRights['PUT']) {
+                                content = content + '\
+                            <a href="#/admin-users/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						\
+						';
+                            }
+                            if (actionsRights['DELETE']) {
+                                content = content + ' \
+                                 <div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+                                                            <div class="modal-dialog" role="document"> \
+                                                            <div class="modal-content"> \
+                                                            <div class="modal-header"> \
+                                                            <h5 class="modal-title" id="exampleModalLabel">\
+                                                            Delete\
+                                                            </h5> \
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+                                                            <span aria-hidden="true"> \
+                                                            &times; \
+                                                        </span> \
+                                           </button> \
+                                           </div> \
+                                           <div class="modal-body">\
+                                               <p> \
+                                               Are you Sure ?\
+                                          </p> \
+                                           </div>\
+                                           <div class="modal-footer">\
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">\
+                                               Close \
+                                               </button>\
+                                               <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
+                                                Delete \
+                                               </button>\
+                                               </div> \
+                                               </div> \
+                                               </div> \
+                                               </div> \
+                                 <a href="javascript:void(0)"\
+                                   class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"\
+                                   title="Delete" \
+                                    data-target="#model-del-' + row.id + '" data-toggle="modal">\
+                                <i class="la la-trash"></i> \
+                                 </a> \
+                                 \
+                            '
+                            }
+                            /*if (actionsRights['GET']) {
+                                content = content + ' \
+                            \<a href="#/admin-users/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                                <i class="la la-folder-open"></i>\
+                                </a>\
+                            \
+                            '
+                            }*/
+                            return content;
+                        } else {
+                            return '\
+                            <a href="#/admin-users/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -198,6 +256,7 @@ var DatatableRemoteAjaxDemo = function () {
 							<i class="la la-trash"></i>\
 						</a>\
 					';
+                        }
                     }
                 }]
         });

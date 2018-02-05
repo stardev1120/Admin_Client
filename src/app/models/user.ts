@@ -33,7 +33,7 @@ export class User implements BaseModel {
     public profilepic: string;
     public relationship: string;
     public country_id: number;
-    public country: Country;
-    public loans: Loan[];
+    public Country: Country;
+    public Loans: Loan[];
     public id?: string;
 }

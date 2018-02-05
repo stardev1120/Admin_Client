@@ -7,6 +7,8 @@ var DatatableRemoteAjaxDemo = function () {
         var baseUrl = $('#basUrl').val() + '/role';//'http://192.168.153.130:3000/api/admin/country'
         var currentUserString = localStorage.getItem('currentUser');
         var actionsRights = JSON.parse($('#roles_id_actions').val());
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
         var headers = {
             "content-type": "application/json"
         };
@@ -15,8 +17,8 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                if (currentUser.country_id) {
-                    headers['country_id'] = currentUser.country_id;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
                 }
             }
 
@@ -129,7 +131,28 @@ var DatatableRemoteAjaxDemo = function () {
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        return '\
+                        var content = '';
+                        if (actionsRights) {
+                            if (actionsRights['PUT']) {
+                                content = content + '\
+                            <a href="#/roles/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						\
+						';
+                            }
+
+                            if (actionsRights['GET']) {
+                                content = content + ' \
+                            \<a href="#/roles/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                                <i class="la la-folder-open"></i>\
+                                </a>\
+                            \
+                            '
+                            }
+                            return content;
+                        } else {
+                            return '\
                             <a href="#/roles/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
@@ -138,6 +161,8 @@ var DatatableRemoteAjaxDemo = function () {
 						<i class="la la-folder-open"></i>\
 						</a>\
 					';
+                        }
+
                     },
                 }],
         });

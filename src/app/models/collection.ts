@@ -8,6 +8,6 @@ export class Collection implements BaseModel {
     public retry_date: Date;
     public status: string;
     public loan_id: number;
-    public loan: Loan;
+    public Loan: Loan;
     public id?: string;
 }

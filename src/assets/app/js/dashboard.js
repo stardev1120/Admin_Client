@@ -1,8 +1,8 @@
 //== Class definition
-var Dashboard = function() {
+var Dashboard = function () {
 
     //== Sparkline Chart helper function
-    var _initSparklineChart = function(src, data, color, border) {
+    var _initSparklineChart = function (src, data, color, border) {
         if (src.length == 0) {
             return;
         }
@@ -94,231 +94,299 @@ var Dashboard = function() {
 
     //== Daily Sales chart.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var dailySales1 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('brand'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales1 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales1');
-
-        if (chartContainer.length == 0) {
-            return;
-        }
-
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
-                        display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
-                    }
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
                 }
             }
-        });
-    }
-    var dailySales2 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('success'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
-        };
-
-        var chartContainer = $('#m_chart_daily_sales2');
-
-        if (chartContainer.length == 0) {
-            return;
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/users-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('brand'),
+                    data: t.data[1]
+                }]
+            };
+
+            var chartContainer = $('#m_chart_daily_sales1');
+            $('#m_chart_daily_sales1_count').text(t.count[0].count+' User');
+            if (chartContainer.length == 0) {
+                return;
+            }
+
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
+            });
         });
     }
-    var dailySales3 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('metal'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales2 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales3');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/collected-amount-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('success'),
+                    data: t.data[1]
+                }]
+            };
+
+
+            var chartContainer = $('#m_chart_daily_sales2');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales2_sum').text(t.sum[0].sum+ '$')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
+            });
+        })
+    }
+    var dailySales3 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
+        };
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
             }
+        }
+
+        $.ajax({
+            url: baseUrl + '/loans-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('metal'),
+                    data: t.data[1]
+                }]
+            };
+
+            var chartContainer = $('#m_chart_daily_sales3');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales3_count').text(t.count[0].count+' Loan')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
+                        display: false,
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
+                    }
+                }
+            });
         });
     }
-    var dailySales4 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('accent'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales4 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
+        }
+
+        $.ajax({
+            url: baseUrl + '/avg-uscore-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('accent'),
+                    data: t.data[1]
+                }]
+            };
 
         var chartContainer = $('#m_chart_daily_sales4');
 
         if (chartContainer.length == 0) {
             return;
         }
-
+            $('#m_chart_daily_sales4_avg').text(t.avg[0].avg);
         var chart = new Chart(chartContainer, {
             type: 'bar',
             data: chartData,
@@ -361,425 +429,526 @@ var Dashboard = function() {
                 }
             }
         });
-    }
-    var dailySales5 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('primary'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    })
+}
+    var dailySales5 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales5');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/collections-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('primary'),
+                    data: t.data[1]
+                }]
+            };
+            var chartContainer = $('#m_chart_daily_sales5');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales5_count').text(t.count[0].count+' Collection')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
-    var dailySales6 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('info'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales6 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales6');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/otp-user-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('info'),
+                    data: t.data[1]
+                }]
+            };
+
+            var chartContainer = $('#m_chart_daily_sales6');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales6').text(t.count[0].count+' User');
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
-    var dailySales7 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('warning'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales7 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales7');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/issued-amount-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    //label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('warning'),
+                    data: t.data[1]
+                }]
+            };
+            var chartContainer = $('#m_chart_daily_sales7');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales7_count').text(t.sum[0].sum+'$')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
-    var dailySales8 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: mUtil.getColor('danger'),
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales8 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales8');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/users-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                   // label: 'Dataset 1',
+                    backgroundColor: mUtil.getColor('danger'),
+                    data: t.data[1]
+                }]
+            };
+            var chartContainer = $('#m_chart_daily_sales8');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales8_count').text(t.count[0].count+ ' User')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
-    var dailySales9 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: '#E4507E',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales9 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales9');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/left-money-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                   // label: 'Dataset 1',
+                    backgroundColor: '#E4507E',
+                    data: t.data[1]
+                }]
+            };
+
+            var chartContainer = $('#m_chart_daily_sales9');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales9_sum').text(t.sum[0].sum?t.sum[0].sum:0+ '$')
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
-    var dailySales10 = function() {
-        var chartData = {
-            labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
-            datasets: [{
-                //label: 'Dataset 1',
-                backgroundColor: '#FED151',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }, {
-                //label: 'Dataset 2',
-                backgroundColor: '#f3f3fb',
-                data: [
-                    15, 20, 25, 30, 25, 20, 15, 20, 25, 30, 25, 20, 15, 10, 15, 20
-                ]
-            }]
+    var dailySales10 = function () {
+        var baseUrl = $('#basUrl').val() + '/dashboard';
+        var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+        var headers = {
+            "content-type": "application/json"
         };
-
-        var chartContainer = $('#m_chart_daily_sales10');
-
-        if (chartContainer.length == 0) {
-            return;
+        if (currentUserString) {
+            var currentUser = JSON.parse(currentUserString);
+            if (currentUser) {
+                var token = currentUser.token;
+                headers['authorization'] = "JWT " + token;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
+            }
         }
 
-        var chart = new Chart(chartContainer, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    intersect: false,
-                    mode: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                barRadius: 4,
-                scales: {
-                    xAxes: [{
+        $.ajax({
+            url: baseUrl + '/investment-status-per-date',
+            method: 'post',
+            headers: headers
+        }).done(function (t) {
+            console.log(t)
+            var chartData = {
+                labels: t.data[0],
+                datasets: [{
+                    // label: 'Dataset 1',
+                    backgroundColor: '#f3f3fb',
+                    data: t.data[1]
+                }]
+            };
+
+
+            var chartContainer = $('#m_chart_daily_sales10');
+
+            if (chartContainer.length == 0) {
+                return;
+            }
+            $('#m_chart_daily_sales10_count').text(t.count[0].count)
+            var chart = new Chart(chartContainer, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    title: {
                         display: false,
-                        gridLines: false,
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        display: false,
-                        stacked: true,
-                        gridLines: false
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barRadius: 4,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            display: false,
+                            stacked: true,
+                            gridLines: false
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
                     }
                 }
-            }
-        });
+            });
+        })
     }
 
     //== Profit Share Chart.
     //** Based on Chartist plugin - https://gionkunz.github.io/chartist-js/index.html
-    var profitShare = function() {
+    var profitShare = function () {
         if ($('#m_chart_profit_share').length == 0) {
             return;
         }
 
         var chart = new Chartist.Pie('#m_chart_profit_share', {
             series: [{
-                    value: 32,
-                    className: 'custom',
-                    meta: {
-                        color: mUtil.getColor('brand')
-                    }
-                },
+                value: 32,
+                className: 'custom',
+                meta: {
+                    color: mUtil.getColor('brand')
+                }
+            },
                 {
                     value: 32,
                     className: 'custom',
@@ -802,7 +971,7 @@ var Dashboard = function() {
             showLabel: false
         });
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'slice') {
                 // Get the total path length in order to use for dash array animation
                 var pathLength = data.element._node.getTotalLength();
@@ -845,7 +1014,7 @@ var Dashboard = function() {
         });
 
         // For the sake of the example we update the chart every time it's created with a delay of 8 seconds
-        chart.on('created', function() {
+        chart.on('created', function () {
             if (window.__anim21278907124) {
                 clearTimeout(window.__anim21278907124);
                 window.__anim21278907124 = null;
@@ -856,7 +1025,7 @@ var Dashboard = function() {
 
     //== Sales Stats.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var salesStats = function() {
+    var salesStats = function () {
         if ($('#m_chart_sales_stats').length == 0) {
             return;
         }
@@ -945,7 +1114,7 @@ var Dashboard = function() {
 
     //== Sales By mUtillication Stats.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var salesByApps = function() {
+    var salesByApps = function () {
         // Init chart instances
         _initSparklineChart($('#m_chart_sales_by_apps_1_1'), [10, 20, -5, 8, -20, -2, -4, 15, 5, 8], mUtil.getColor('accent'), 2);
         _initSparklineChart($('#m_chart_sales_by_apps_1_2'), [2, 16, 0, 12, 22, 5, -10, 5, 15, 2], mUtil.getColor('danger'), 2);
@@ -960,7 +1129,7 @@ var Dashboard = function() {
 
     //== Latest Updates.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var latestUpdates = function() {
+    var latestUpdates = function () {
         if ($('#m_chart_latest_updates').length == 0) {
             return;
         }
@@ -1043,7 +1212,7 @@ var Dashboard = function() {
 
     //== Trends Stats.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var trendsStats = function() {
+    var trendsStats = function () {
         if ($('#m_chart_trends_stats').length == 0) {
             return;
         }
@@ -1147,7 +1316,7 @@ var Dashboard = function() {
 
     //== Trends Stats 2.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var trendsStats2 = function() {
+    var trendsStats2 = function () {
         if ($('#m_chart_trends_stats_2').length == 0) {
             return;
         }
@@ -1247,7 +1416,7 @@ var Dashboard = function() {
 
     //== Trends Stats.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var latestTrendsMap = function() {
+    var latestTrendsMap = function () {
         if ($('#m_chart_latest_trends_map').length == 0) {
             return;
         }
@@ -1265,7 +1434,7 @@ var Dashboard = function() {
 
     //== Revenue Change.
     //** Based on Morris plugin - http://morrisjs.github.io/morris.js/
-    var revenueChange = function() {
+    var revenueChange = function () {
         if ($('#m_chart_revenue_change').length == 0) {
             return;
         }
@@ -1273,9 +1442,9 @@ var Dashboard = function() {
         Morris.Donut({
             element: 'm_chart_revenue_change',
             data: [{
-                    label: "New York",
-                    value: 10
-                },
+                label: "New York",
+                value: 10
+            },
                 {
                     label: "London",
                     value: 7
@@ -1295,7 +1464,7 @@ var Dashboard = function() {
 
     //== Support Tickets Chart.
     //** Based on Morris plugin - http://morrisjs.github.io/morris.js/
-    var supportTickets = function() {
+    var supportTickets = function () {
         if ($('#m_chart_support_tickets').length == 0) {
             return;
         }
@@ -1303,9 +1472,9 @@ var Dashboard = function() {
         Morris.Donut({
             element: 'm_chart_support_tickets',
             data: [{
-                    label: "Margins",
-                    value: 20
-                },
+                label: "Margins",
+                value: 20
+            },
                 {
                     label: "Profit",
                     value: 70
@@ -1327,19 +1496,19 @@ var Dashboard = function() {
 
     //== Support Tickets Chart.
     //** Based on Morris plugin - http://morrisjs.github.io/morris.js/
-    var supportTickets2 = function() {
+    var supportTickets2 = function () {
         if ($('#m_chart_support_tickets2').length == 0) {
             return;
         }
 
         var chart = new Chartist.Pie('#m_chart_support_tickets2', {
             series: [{
-                    value: 32,
-                    className: 'custom',
-                    meta: {
-                        color: mUtil.getColor('brand')
-                    }
-                },
+                value: 32,
+                className: 'custom',
+                meta: {
+                    color: mUtil.getColor('brand')
+                }
+            },
                 {
                     value: 32,
                     className: 'custom',
@@ -1362,7 +1531,7 @@ var Dashboard = function() {
             showLabel: false
         });
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'slice') {
                 // Get the total path length in order to use for dash array animation
                 var pathLength = data.element._node.getTotalLength();
@@ -1407,7 +1576,7 @@ var Dashboard = function() {
 
     //== Activities Charts.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var activitiesChart = function() {
+    var activitiesChart = function () {
         if ($('#m_chart_activities').length == 0) {
             return;
         }
@@ -1501,7 +1670,7 @@ var Dashboard = function() {
 
     //== Bandwidth Charts 1.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var bandwidthChart1 = function() {
+    var bandwidthChart1 = function () {
         if ($('#m_chart_bandwidth1').length == 0) {
             return;
         }
@@ -1595,7 +1764,7 @@ var Dashboard = function() {
 
     //== Bandwidth Charts 2.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var bandwidthChart2 = function() {
+    var bandwidthChart2 = function () {
         if ($('#m_chart_bandwidth2').length == 0) {
             return;
         }
@@ -1689,7 +1858,7 @@ var Dashboard = function() {
 
     //== Bandwidth Charts 2.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var adWordsStat = function() {
+    var adWordsStat = function () {
         if ($('#m_chart_adwords_stats').length == 0) {
             return;
         }
@@ -1795,7 +1964,7 @@ var Dashboard = function() {
 
     //== Bandwidth Charts 2.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var financeSummary = function() {
+    var financeSummary = function () {
         if ($('#m_chart_finance_summary').length == 0) {
             return;
         }
@@ -1883,14 +2052,14 @@ var Dashboard = function() {
     }
 
     //== Quick Stat Charts
-    var quickStats = function() {
+    var quickStats = function () {
         _initSparklineChart($('#m_chart_quick_stats_1'), [10, 14, 18, 11, 9, 12, 14, 17, 18, 14], mUtil.getColor('brand'), 3);
         _initSparklineChart($('#m_chart_quick_stats_2'), [11, 12, 18, 13, 11, 12, 15, 13, 19, 15], mUtil.getColor('danger'), 3);
         _initSparklineChart($('#m_chart_quick_stats_3'), [12, 12, 18, 11, 15, 12, 13, 16, 11, 18], mUtil.getColor('success'), 3);
         _initSparklineChart($('#m_chart_quick_stats_4'), [11, 9, 13, 18, 13, 15, 14, 13, 18, 15], mUtil.getColor('accent'), 3);
     }
 
-    var daterangepickerInit = function() {
+    var daterangepickerInit = function () {
         if ($('#m_dashboard_daterangepicker').length == 0) {
             return;
         }
@@ -1933,7 +2102,7 @@ var Dashboard = function() {
 
         cb(start, end, '');
     }
-    var daterangepicker2Init = function() {
+    var daterangepicker2Init = function () {
         if ($('#m_dashboard_daterangepicker2').length == 0) {
             return;
         }
@@ -1976,7 +2145,7 @@ var Dashboard = function() {
 
         cb(start, end, '');
     }
-    var datatableLatestOrders = function() {
+    var datatableLatestOrders = function () {
         if ($('#m_datatable_latest_orders').length === 0) {
             return;
         }
@@ -2044,7 +2213,7 @@ var Dashboard = function() {
                 title: "Status",
                 width: 100,
                 // callback function support for column rendering
-                template: function(row) {
+                template: function (row) {
                     var status = {
                         1: {
                             'title': 'Pending',
@@ -2082,7 +2251,7 @@ var Dashboard = function() {
                 title: "Type",
                 width: 100,
                 // callback function support for column rendering
-                template: function(row) {
+                template: function (row) {
                     var status = {
                         1: {
                             'title': 'Online',
@@ -2105,7 +2274,7 @@ var Dashboard = function() {
                 title: "Actions",
                 sortable: false,
                 overflow: 'visible',
-                template: function(row) {
+                template: function (row) {
                     var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
 
                     return '\
@@ -2131,11 +2300,11 @@ var Dashboard = function() {
         });
     }
 
-    var calendarInit = function() {
+    var calendarInit = function () {
         if ($('#m_calendar').length === 0) {
             return;
         }
-        
+
         var todayDate = moment().startOf('day');
         var YM = todayDate.format('YYYY-MM');
         var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
@@ -2160,7 +2329,7 @@ var Dashboard = function() {
                     className: "m-fc-event--light m-fc-event--solid-warning"
                 },
                 {
-                    title: 'Conference',                    
+                    title: 'Conference',
                     description: 'Lorem ipsum dolor incid idunt ut labore',
                     start: moment('2017-08-29T13:30:00'),
                     end: moment('2017-08-29T17:30:00'),
@@ -2179,7 +2348,7 @@ var Dashboard = function() {
                     className: "m-fc-event--danger m-fc-event--solid-focus"
                 },
                 {
-                    title: 'Reporting',                    
+                    title: 'Reporting',
                     description: 'Lorem ipsum dolor incid idunt ut labore',
                     start: moment('2017-09-03T13:30:00'),
                     end: moment('2017-09-04T17:30:00'),
@@ -2273,7 +2442,7 @@ var Dashboard = function() {
                 }
             ],
 
-            eventRender: function(event, element) {
+            eventRender: function (event, element) {
                 if (element.hasClass('fc-day-grid-event')) {
                     element.data('content', event.description);
                     element.data('placement', 'top');
@@ -2289,9 +2458,9 @@ var Dashboard = function() {
 
     return {
         //== Init demos
-        init: function() {
+        init: function () {
             // init charts
-            dailySales1();
+           // dailySales1();
             dailySales2();
             dailySales3();
             dailySales4();
@@ -2332,6 +2501,6 @@ var Dashboard = function() {
 }();
 
 //== Class initialization on page load
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     Dashboard.init();
 });

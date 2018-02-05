@@ -14,7 +14,7 @@ export class Loan implements BaseModel {
     public bank_credit_status: boolean;
     public currency: string;
     public user_id: number;
-    public user: User;
-    public collections: Collection[];
+    public User: User;
+    public Collections: Collection[];
     public id?: string;
 }

@@ -17,6 +17,18 @@ export class AdminUserAccessService extends BaseApiService<AdminUserAccess> {
         this.url = '/admin-user-access';
     }
 
+    public verifyOTP(otp: string, user_id: string) {
+        return this.http.put(this.baseUrl + this.url, {
+            otp: otp,
+            user_id: user_id
+        }, { headers: this.authorization() });
+    }
+
+    public checkAdminUserAccessValidation(user_id) {
+        return this.http.post(this.baseUrl + this.url + '/checkUser', {
+            user_id: user_id
+        }, { headers: this.authorization() });
+    }
 }
 
 

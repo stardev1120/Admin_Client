@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
 
-import {CompaniesService} from "../../../../../_services/apis/company.service";
-import {Company} from "../../../../../models/company";
-import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
-import {CountriesService} from "../../../../../_services/apis/countries.service";
+import { CompaniesService } from "../../../../../_services/apis/company.service";
+import { Company } from "../../../../../models/company";
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import { CountriesService } from "../../../../../_services/apis/countries.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -19,10 +19,10 @@ export class CompanyFormComponent implements OnInit {
 
 
     constructor(private _script: ScriptLoaderService,
-                private api: CompaniesService,
-                private country: CountriesService,
-                private router: Router,
-                private route: ActivatedRoute) {
+        private api: CompaniesService,
+        private country: CountriesService,
+        private router: Router,
+        private route: ActivatedRoute) {
 
     }
 
@@ -42,7 +42,7 @@ export class CompanyFormComponent implements OnInit {
             console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
-                    this.router.navigate(["/Companies"])
+                    this.router.navigate(["/companies"])
                 });
         }
     }

@@ -8,14 +8,14 @@ import { NonSupportedCountryLeadFormComponent } from "./non-supported-country-le
 import { NonSupportedCountryLeadResolver } from "./non-supported-country-lead-resolver";
 
 import { FormsModule } from "@angular/forms";
-import {AuthGuard} from "../../../../auth/_guards";
+import { AuthGuard } from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "canActivate": [AuthGuard],
-        data:{module: 'non-supported-country-leads'},
+        data: { module: 'non-supported-country-leads' },
         "children": [
             {
                 "path": "",
@@ -25,7 +25,7 @@ const routes: Routes = [
                 "path": ":id",
                 "component": NonSupportedCountryLeadFormComponent,
                 "canActivate": [AuthGuard],
-                data:{module: 'non-supported-country-leads', action:'PUT'},
+                data: { module: 'non-supported-country-leads', action: 'PUT' },
                 resolve: {
                     nonSupportedCountryLead: NonSupportedCountryLeadResolver,
                 }

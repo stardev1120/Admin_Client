@@ -6,6 +6,8 @@ var DatatableRemoteAjaxDemo = function () {
     var demo = function () {
         var baseUrl = $('#basUrl').val()+'/country-investment/country';
         var currentUserString = localStorage.getItem('currentUser');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
         var headers = {
             "content-type": "application/json"
         };
@@ -14,7 +16,9 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                headers['country_id'] = currentUser.country_id ? currentUser.country_id : 1;
+                if (currentCountry) {
+                    headers['country_id'] = currentCountry;
+                }
             }
         }
         var datatable = $('.m_datatable-countries-investments').mDatatable({

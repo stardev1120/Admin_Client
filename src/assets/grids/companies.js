@@ -6,7 +6,8 @@ var DatatableRemoteAjaxDemo = function () {
     var demo = function () {
         var baseUrl =  $('#basUrl').val()+'/company';//'http://192.168.153.130:3000/api/admin/company'
         var currentUserString = localStorage.getItem('currentUser');
-        var currentCountryString = localStorage.getItem('currentCountry');
+        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
         var actionsRights = JSON.parse($('#company_id_actions').val());
         var headers = {
             "content-type": "application/json"
@@ -16,11 +17,11 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                headers['country_id'] = currentUser.country_id ? currentUser.country_id : 2;
+                if(currentCountry){
+                    headers['country_id'] = currentCountry;
+                }
             }
-
         }
-        var currentCountry = currentCountryString ? currentCountryString * 1 : 1;
 
         var datatable = $('.m_datatable_companies').mDatatable({
             // datasource definition
@@ -160,7 +161,7 @@ var DatatableRemoteAjaxDemo = function () {
                             }
                             if (actionsRights['DELETE']) {
                                 content = content + ' \
-                                 <div class="modal fade" id="model-del-\' + row.id + \'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+                                 <div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
                                                             <div class="modal-dialog" role="document"> \
                                                             <div class="modal-content"> \
                                                             <div class="modal-header"> \
@@ -182,7 +183,7 @@ var DatatableRemoteAjaxDemo = function () {
                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">\
                                                Close \
                                                </button>\
-                                               <button id="delete-row-\' + row.id + \'" type="button" class="btn btn-danger" data-dismiss="modal">\
+                                               <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
                                                 Delete \
                                                </button>\
                                                </div> \
@@ -192,7 +193,7 @@ var DatatableRemoteAjaxDemo = function () {
                                  <a href="javascript:void(0)"\
                                    class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"\
                                    title="Delete" \
-                                    data-target="#model-del-\' + row.id + \'" data-toggle="modal">\
+                                    data-target="#model-del-' + row.id + '" data-toggle="modal">\
                                 <i class="la la-trash"></i> \
                                  </a> \
                                  \

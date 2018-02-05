@@ -14,18 +14,13 @@ export class UserFormComponent implements OnInit {
     data: User;
     countries: any = [];
     statuses: any = [{
-        id: 'status1',
-        title: 'Status 1'
+        id: '1',
+        title: 'Active'
     }, {
-        id: 'status2',
-        title: 'Status 2'
-    }, {
-        id: 'status3',
-        title: 'Status 3'
-    }, {
-        id: 'status4',
-        title: 'Status 4'
-    }];
+        id: '2',
+        title: 'Blocked'
+    }
+    ];
     constructor(private api: UsersService,
         private router: Router,
         private route: ActivatedRoute) {

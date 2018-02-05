@@ -7,7 +7,7 @@ import { Country } from "../../../../../models/country";
 import { CountriesService } from "../../../../../_services/apis/countries.service";
 import { CountryInvestment } from "../../../../../models/country-investment";
 import { CountriesInvestmentService } from "../../../../../_services/apis/countries-investment.service";
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -33,7 +33,7 @@ export class CountryInvestmentFormComponent implements OnInit {
     constructor(private api: CountriesInvestmentService,
         private router: Router,
         private route: ActivatedRoute,
-                public location: Location) {
+        public location: Location) {
 
     }
 
@@ -41,7 +41,7 @@ export class CountryInvestmentFormComponent implements OnInit {
         this.data = this.route.snapshot.data.countryInvestment as CountryInvestment;
         this.route.params
             .map(params => params['countryId'])
-            .subscribe(countryId => this.data.country_id = countryId*1);
+            .subscribe(countryId => this.data.country_id = countryId * 1);
     }
 
     onSubmit(mForm: any) {
