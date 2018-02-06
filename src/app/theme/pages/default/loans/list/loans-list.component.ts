@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
+import { AdminUsersService } from "../../../../../_services/apis/admin-users.service";
 // import { Helpers } from '../../../../../../../helpers';
 // import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 

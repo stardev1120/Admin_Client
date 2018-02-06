@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs/Observable";
 import * as _ from 'lodash';
-import {BaseApiService} from "../baseAPI";
-import {AdminUser} from "../../models/admin-user";
-import {FeatureACL} from "../../models/featureACL";
+import { BaseApiService } from "../baseAPI";
+import { AdminUser } from "../../models/admin-user";
+import { FeatureACL } from "../../models/featureACL";
 
 
 @Injectable()
@@ -40,7 +40,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.actions){
+            if (featureAcl && featureAcl.actions) {
                 return !!featureAcl.actions['GET'];
             }
             return false;
@@ -54,7 +54,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.actions){
+            if (featureAcl && featureAcl.actions) {
                 return !!featureAcl.actions[action];
             }
         }
@@ -67,7 +67,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.fields) {
+            if (featureAcl && featureAcl.fields) {
                 return !!featureAcl.fields[field];
             }
         }
@@ -81,39 +81,39 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.other) {
+            if (featureAcl && featureAcl.other) {
                 return !!featureAcl.other[other];
             }
         }
         return false;
     }
 
-    public getModuleAction(module:string){
+    public getModuleAction(module: string) {
         if (this._currentAdminUser) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.actions) {
+            if (featureAcl && featureAcl.actions) {
                 return JSON.stringify(featureAcl.actions);
             }
         }
         return JSON.stringify({});
     }
-    public getModuleOther(module:string){
+    public getModuleOther(module: string) {
         if (this._currentAdminUser) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
                 })[0];
-            if(featureAcl && featureAcl.other) {
+            if (featureAcl && featureAcl.other) {
                 return JSON.stringify(featureAcl.other);
             }
         }
         return JSON.stringify({});
     }
     public async changePassword(passwordModel: any) {
-        this.url = this.url +'/change-passoword';
+        this.url = this.url + '/change-passoword';
         let res = await this.updateWithoutId(passwordModel).toPromise()
         this.url = '/admin-user';
         return res

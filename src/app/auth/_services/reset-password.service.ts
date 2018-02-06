@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 
 export class ResetPassowrd {
     constructor(public newPassword?: String,
-                public id?: String
+        public id?: String
     ) {
     }
 
@@ -19,7 +19,7 @@ export class ResetPasswordService extends BaseApiService<ResetPassowrd> {
         this.url = '/admin-user/reset';
     }
 
-    reset(newPassword: string, token:string) {
+    reset(newPassword: string, token: string) {
         return this.update(new ResetPassowrd(newPassword, token))
             .map((data: any) => {
                 console.log(data)

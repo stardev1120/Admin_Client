@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {ThemeComponent} from './theme.component';
-import {Routes, RouterModule} from '@angular/router';
-import {AuthGuard} from '../auth/_guards';
-import {CountriesInvestmentsModule} from "./pages/default/countries-investments/countries-investments.module";
-import {NonSupportedCountryLeadsModule} from "./pages/default/non-supported-country-leads/non-supported-country-leads.module";
-import {DistributionCentersModule} from "./pages/default/distribution-centers/distribution-centers.module";
-import {AdminUserAccessModule} from "./pages/default/admin-user-access/admin-user-access.module";
-import {IssueCollectMoneyModule} from "./pages/default/issue-collect-money/issue-collect-money.module";
+import { NgModule } from '@angular/core';
+import { ThemeComponent } from './theme.component';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../auth/_guards';
+import { CountriesInvestmentsModule } from "./pages/default/countries-investments/countries-investments.module";
+import { NonSupportedCountryLeadsModule } from "./pages/default/non-supported-country-leads/non-supported-country-leads.module";
+import { DistributionCentersModule } from "./pages/default/distribution-centers/distribution-centers.module";
+import { AdminUserAccessModule } from "./pages/default/admin-user-access/admin-user-access.module";
+import { IssueCollectMoneyModule } from "./pages/default/issue-collect-money/issue-collect-money.module";
 
 const routes: Routes = [
     {

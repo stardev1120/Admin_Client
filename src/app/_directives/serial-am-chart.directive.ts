@@ -1,5 +1,5 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
-import {environment} from '../../environments/environment'
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { environment } from '../../environments/environment'
 
 //declare var $: JQueryStatic;
 declare var AmCharts: any;
@@ -61,7 +61,7 @@ export class SerialAmChartDirective implements OnChanges {
             method: 'post',
             data: JSON.stringify(body),
             headers: headers
-        }).done(function (t) {
+        }).done(function(t) {
             let chart = AmCharts.makeChart(that.el.nativeElement, {
                 "type": "serial",
                 "theme": "light",
@@ -104,7 +104,7 @@ export class SerialAmChartDirective implements OnChanges {
                     "valueField": that.chartSettings['axis_valueField_1'],
                     "valueAxis": that.chartSettings['axis_1']
                 }, {
-                    "balloonText": "[[value]] "+that.chartSettings['axis_legendValueText_2'],
+                    "balloonText": "[[value]] " + that.chartSettings['axis_legendValueText_2'],
                     "bullet": "round",
                     "bulletBorderAlpha": 1,
                     "useLineColorForBulletBorder": true,
@@ -114,7 +114,7 @@ export class SerialAmChartDirective implements OnChanges {
                     "descriptionField": "townName",
                     "labelPosition": "right",
                     "labelText": "[[townName2]]",
-                    "legendValueText": "[[value]] "+that.chartSettings['axis_legendValueText_2'],
+                    "legendValueText": "[[value]] " + that.chartSettings['axis_legendValueText_2'],
                     "title": that.chartSettings['axis_title_2'],
                     "fillAlphas": 0,
                     "valueField": that.chartSettings['axis_valueField_2'],
@@ -124,7 +124,7 @@ export class SerialAmChartDirective implements OnChanges {
                     "bulletBorderAlpha": 1,
                     "bulletBorderThickness": 1,
                     "dashLengthField": "dashLength",
-                    "legendValueText": "[[value]] "+that.chartSettings['axis_legendValueText_3'],
+                    "legendValueText": "[[value]] " + that.chartSettings['axis_legendValueText_3'],
                     "title": that.chartSettings['axis_title_3'],
                     "fillAlphas": 0,
                     "valueField": that.chartSettings['axis_valueField_3'],

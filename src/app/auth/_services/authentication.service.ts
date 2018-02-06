@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Http, Response, Headers} from "@angular/http";
+import { Injectable } from "@angular/core";
+import { Http, Response, Headers } from "@angular/http";
 import "rxjs/add/operator/map";
-import {environment} from '../../../environments/environment'
+import { environment } from '../../../environments/environment'
 
 
 @Injectable()
@@ -22,8 +22,8 @@ export class AuthenticationService {
             password: password,
             'g-recaptcha-response': recapcha
         }), {
-            headers: this.headers
-        })
+                headers: this.headers
+            })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 this._user = response.json();
@@ -51,11 +51,11 @@ export class AuthenticationService {
     faVerification(faCode: string, token: any) {
         this.headers.delete('Authorization');
         this.headers.append('Authorization', "JWT " + token.token);
-        return this.http.post(environment.baseUrl + '/admin-user/2-fa-verification', JSON.stringify({'faCode': faCode}), {
+        return this.http.post(environment.baseUrl + '/admin-user/2-fa-verification', JSON.stringify({ 'faCode': faCode }), {
             headers: this.headers
         }).map((response: any) => {
-            if(!response.json().verified){
-               localStorage.removeItem('currentUser');
+            if (!response.json().verified) {
+                localStorage.removeItem('currentUser');
             } else {
                 this._user = token;
                 if (token && token.token) {

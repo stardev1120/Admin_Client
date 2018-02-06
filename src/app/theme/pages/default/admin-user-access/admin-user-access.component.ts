@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
-import {ScriptLoaderService} from "../../../../_services/script-loader.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AdminUserAccessService} from "../../../../_services/apis/admin-user-access.service";
-import {AdminUserAccess} from "../../../../models/admin-user-access";
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { ScriptLoaderService } from "../../../../_services/script-loader.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AdminUserAccessService } from "../../../../_services/apis/admin-user-access.service";
+import { AdminUserAccess } from "../../../../models/admin-user-access";
 // import { Helpers } from '../../../../../../../helpers';
 // import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 
@@ -20,8 +20,8 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
     private sub: any;
 
     constructor(private _router: Router,
-                private route: ActivatedRoute,
-                private _adminUserAccessService: AdminUserAccessService) {
+        private route: ActivatedRoute,
+        private _adminUserAccessService: AdminUserAccessService) {
 
     }
 

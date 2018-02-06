@@ -6,18 +6,18 @@ import {
     ViewContainerRef,
     ViewEncapsulation
 } from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ScriptLoaderService} from "../_services/script-loader.service";
-import {AuthenticationService} from "./_services/authentication.service";
-import {AlertService} from "./_services/alert.service";
-import {UserService} from "./_services/user.service";
-import {AlertComponent} from "./_directives/alert.component";
-import {LoginCustom} from "./_helpers/login-custom";
-import {Helpers} from "../helpers";
-import {AdminUsersService} from "../_services/apis/admin-users.service";
-import {RequestResetPasswordService} from "./_services/request-reset-password.service";
-import {cloneDeep} from 'lodash'
-import {environment} from '../../environments/environment'
+import { ActivatedRoute, Router } from "@angular/router";
+import { ScriptLoaderService } from "../_services/script-loader.service";
+import { AuthenticationService } from "./_services/authentication.service";
+import { AlertService } from "./_services/alert.service";
+import { UserService } from "./_services/user.service";
+import { AlertComponent } from "./_directives/alert.component";
+import { LoginCustom } from "./_helpers/login-custom";
+import { Helpers } from "../helpers";
+import { AdminUsersService } from "../_services/apis/admin-users.service";
+import { RequestResetPasswordService } from "./_services/request-reset-password.service";
+import { cloneDeep } from 'lodash'
+import { environment } from '../../environments/environment'
 @Component({
     selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
     templateUrl: './templates/login-1.component.html',
@@ -33,20 +33,20 @@ export class AuthComponent implements OnInit {
     show2FA: boolean = false;
     clonedCurrentUser: any;
     siteKey = environment.siteKey;
-    @ViewChild('alertSignin', {read: ViewContainerRef}) alertSignin: ViewContainerRef;
-    @ViewChild('alertSignup', {read: ViewContainerRef}) alertSignup: ViewContainerRef;
-    @ViewChild('alertForgotPass', {read: ViewContainerRef}) alertForgotPass: ViewContainerRef;
-    @ViewChild('alert2FA', {read: ViewContainerRef}) alert2FA: ViewContainerRef;
+    @ViewChild('alertSignin', { read: ViewContainerRef }) alertSignin: ViewContainerRef;
+    @ViewChild('alertSignup', { read: ViewContainerRef }) alertSignup: ViewContainerRef;
+    @ViewChild('alertForgotPass', { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
+    @ViewChild('alert2FA', { read: ViewContainerRef }) alert2FA: ViewContainerRef;
 
     constructor(private _router: Router,
-                private _script: ScriptLoaderService,
-                private _userService: UserService,
-                private _route: ActivatedRoute,
-                private _authService: AuthenticationService,
-                private _alertService: AlertService,
-                private cfr: ComponentFactoryResolver,
-                private _requestResetPasswordService: RequestResetPasswordService,
-                private _adminUserService: AdminUsersService) {
+        private _script: ScriptLoaderService,
+        private _userService: UserService,
+        private _route: ActivatedRoute,
+        private _authService: AuthenticationService,
+        private _alertService: AlertService,
+        private cfr: ComponentFactoryResolver,
+        private _requestResetPasswordService: RequestResetPasswordService,
+        private _adminUserService: AdminUsersService) {
         var animationData = {
             "v": "5.0.3",
             "fr": 60,
@@ -65,11 +65,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corners a2 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [221.477, 70.927, 0], "ix": 2},
-                        "a": {"a": 0, "k": [2.75, 1.932, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [221.477, 70.927, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [2.75, 1.932, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -84,7 +84,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -93,15 +93,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 275,
                                     "s": [121, 51],
                                     "e": [121, 57],
                                     "to": [0, 1],
                                     "ti": [0, -1]
-                                }, {"t": 299}],
+                                }, { "t": 299 }],
                                 "ix": 2
                             }
                         }, {
@@ -109,61 +109,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -187,21 +187,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [2.75, 1.932], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [2.75, 1.932], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -222,11 +222,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corners a1 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [207.144, 70.539, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.583, 2.712, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [207.144, 70.539, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.583, 2.712, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -241,7 +241,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -250,15 +250,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 267,
                                     "s": [123, 51],
                                     "e": [121, 57],
                                     "to": [-0.33333334326744, 1],
                                     "ti": [0.33333334326744, -1]
-                                }, {"t": 290}],
+                                }, { "t": 290 }],
                                 "ix": 2
                             }
                         }, {
@@ -266,61 +266,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -344,21 +344,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.583, 2.712], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.583, 2.712], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -379,11 +379,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corners e Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [160.321, 63.061, 0], "ix": 2},
-                        "a": {"a": 0, "k": [4.292, 7.332, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [160.321, 63.061, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [4.292, 7.332, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -398,7 +398,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -407,15 +407,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 215,
                                     "s": [118, 57],
                                     "e": [121, 57],
                                     "to": [0.5, 0],
                                     "ti": [-0.5, 0]
-                                }, {"t": 236}],
+                                }, { "t": 236 }],
                                 "ix": 2
                             }
                         }, {
@@ -423,61 +423,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -501,21 +501,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [4.291, 7.332], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [4.291, 7.332], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -536,11 +536,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corners b3 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [130.17, 31.898, 0], "ix": 2},
-                        "a": {"a": 0, "k": [8.554, 9.413, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [130.17, 31.898, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [8.554, 9.413, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -555,7 +555,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -564,15 +564,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 126,
                                     "s": [125, 45],
                                     "e": [121, 57],
                                     "to": [-0.66666668653488, 2],
                                     "ti": [0.66666668653488, -2]
-                                }, {"t": 150}],
+                                }, { "t": 150 }],
                                 "ix": 2
                             }
                         }, {
@@ -580,7 +580,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
@@ -589,13 +589,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.833], "y": [0.833]},
-                                    "o": {"x": [0.167], "y": [0.167]},
+                                    "i": { "x": [0.833], "y": [0.833] },
+                                    "o": { "x": [0.167], "y": [0.167] },
                                     "n": ["0p833_0p833_0p167_0p167"],
                                     "t": 126,
                                     "s": [48],
                                     "e": [100]
-                                }, {"t": 150}],
+                                }, { "t": 150 }],
                                 "ix": 4
                             }
                         }, {
@@ -603,49 +603,49 @@ export class AuthComponent implements OnInit {
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -669,21 +669,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [8.554, 9.413], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [8.554, 9.413], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -704,11 +704,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner b2 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [121.879, 53.607, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.401, 3.554, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [121.879, 53.607, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.401, 3.554, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -723,7 +723,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -732,15 +732,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 152,
                                     "s": [120, 60],
                                     "e": [121, 57],
                                     "to": [0.16666667163372, -0.5],
                                     "ti": [-0.16666667163372, 0.5]
-                                }, {"t": 176}],
+                                }, { "t": 176 }],
                                 "ix": 2
                             }
                         }, {
@@ -748,61 +748,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -826,21 +826,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.401, 3.555], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.401, 3.555], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -861,11 +861,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner b1 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [114.523, 68.955, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.046, 2.727, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [114.523, 68.955, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.046, 2.727, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -880,7 +880,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -889,15 +889,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 159,
                                     "s": [121, 53],
                                     "e": [121, 57],
                                     "to": [0, 0.66666668653488],
                                     "ti": [0, -0.66666668653488]
-                                }, {"t": 183}],
+                                }, { "t": 183 }],
                                 "ix": 2
                             }
                         }, {
@@ -905,61 +905,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -983,21 +983,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.045, 2.727], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.045, 2.727], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1018,11 +1018,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner mb Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [108.977, 80.598, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.25, 2.479, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [108.977, 80.598, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.25, 2.479, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -1037,7 +1037,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -1046,15 +1046,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 134,
                                     "s": [121, 52],
                                     "e": [121, 57],
                                     "to": [0, 0.83333331346512],
                                     "ti": [0, -0.83333331346512]
-                                }, {"t": 159}],
+                                }, { "t": 159 }],
                                 "ix": 2
                             }
                         }, {
@@ -1062,61 +1062,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": " ",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -1140,21 +1140,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.25, 2.479], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.25, 2.479], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1175,11 +1175,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner3 m Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [89.019, 62.304, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.166, 2.399, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [89.019, 62.304, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.166, 2.399, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -1194,7 +1194,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -1203,15 +1203,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 65,
                                     "s": [120, 61],
                                     "e": [121, 57],
                                     "to": [0.16666667163372, -0.66666668653488],
                                     "ti": [-0.16666667163372, 0.66666668653488]
-                                }, {"t": 92}],
+                                }, { "t": 92 }],
                                 "ix": 2
                             }
                         }, {
@@ -1219,61 +1219,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Height",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Width",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -1297,21 +1297,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.167, 2.399], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.167, 2.399], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1332,11 +1332,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner2 m Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [74.029, 62.778, 0], "ix": 2},
-                        "a": {"a": 0, "k": [2.426, 2.365, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [74.029, 62.778, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [2.426, 2.365, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -1351,7 +1351,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -1360,15 +1360,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 57,
                                     "s": [120, 61],
                                     "e": [121, 57],
                                     "to": [0.16666667163372, -0.66666668653488],
                                     "ti": [-0.16666667163372, 0.66666668653488]
-                                }, {"t": 83}],
+                                }, { "t": 83 }],
                                 "ix": 2
                             }
                         }, {
@@ -1376,61 +1376,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Height",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Width",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -1454,21 +1454,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [2.426, 2.365], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [2.426, 2.365], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1489,11 +1489,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner1 m Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [62.773, 78.703, 0], "ix": 2},
-                        "a": {"a": 0, "k": [2.957, 3.584, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [62.773, 78.703, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [2.957, 3.584, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -1508,7 +1508,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -1517,15 +1517,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 51,
                                     "s": [122, 51],
                                     "e": [121, 57],
                                     "to": [-0.16666667163372, 1],
                                     "ti": [0.16666667163372, -1]
-                                }, {"t": 76}],
+                                }, { "t": 76 }],
                                 "ix": 2
                             }
                         }, {
@@ -1533,61 +1533,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Height",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Width",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -1611,21 +1611,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [2.957, 3.584], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [2.957, 3.584], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1646,11 +1646,11 @@ export class AuthComponent implements OnInit {
                     "nm": "corner u Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [41.336, 87.006, 0], "ix": 2},
-                        "a": {"a": 0, "k": [3.308, 3.219, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [41.336, 87.006, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [3.308, 3.219, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "ef": [{
@@ -1665,7 +1665,7 @@ export class AuthComponent implements OnInit {
                             "nm": "Anchor Point",
                             "mn": "ADBE Geometry2-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": [121, 57], "ix": 1}
+                            "v": { "a": 0, "k": [121, 57], "ix": 1 }
                         }, {
                             "ty": 3,
                             "nm": "Position",
@@ -1674,15 +1674,15 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": 0.833, "y": 0.833},
-                                    "o": {"x": 0.167, "y": 0.167},
+                                    "i": { "x": 0.833, "y": 0.833 },
+                                    "o": { "x": 0.167, "y": 0.167 },
                                     "n": "0p833_0p833_0p167_0p167",
                                     "t": 32,
                                     "s": [121, 54],
                                     "e": [121, 57],
                                     "to": [0, 0.5],
                                     "ti": [0, -0.5]
-                                }, {"t": 60}],
+                                }, { "t": 60 }],
                                 "ix": 2
                             }
                         }, {
@@ -1690,61 +1690,61 @@ export class AuthComponent implements OnInit {
                             "nm": "Uniform Scale",
                             "mn": "ADBE Geometry2-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Height",
                             "mn": "ADBE Geometry2-0003",
                             "ix": 4,
-                            "v": {"a": 0, "k": 100, "ix": 4}
+                            "v": { "a": 0, "k": 100, "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Scale Width",
                             "mn": "ADBE Geometry2-0004",
                             "ix": 5,
-                            "v": {"a": 0, "k": 100, "ix": 5}
+                            "v": { "a": 0, "k": 100, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Skew",
                             "mn": "ADBE Geometry2-0005",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0, "ix": 6}
+                            "v": { "a": 0, "k": 0, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Skew Axis",
                             "mn": "ADBE Geometry2-0006",
                             "ix": 7,
-                            "v": {"a": 0, "k": 0, "ix": 7}
+                            "v": { "a": 0, "k": 0, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Rotation",
                             "mn": "ADBE Geometry2-0007",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Geometry2-0008",
                             "ix": 9,
-                            "v": {"a": 0, "k": 100, "ix": 9}
+                            "v": { "a": 0, "k": 100, "ix": 9 }
                         }, {
                             "ty": 7,
                             "nm": "Use Composition’s Shutter Angle",
                             "mn": "ADBE Geometry2-0009",
                             "ix": 10,
-                            "v": {"a": 0, "k": 1, "ix": 10}
+                            "v": { "a": 0, "k": 1, "ix": 10 }
                         }, {
                             "ty": 0,
                             "nm": "Shutter Angle",
                             "mn": "ADBE Geometry2-0010",
                             "ix": 11,
-                            "v": {"a": 0, "k": 0, "ix": 11}
+                            "v": { "a": 0, "k": 0, "ix": 11 }
                         }, {
                             "ty": 7,
                             "nm": "Sampling",
                             "mn": "ADBE Geometry2-0012",
                             "ix": 12,
-                            "v": {"a": 0, "k": 1, "ix": 12}
+                            "v": { "a": 0, "k": 1, "ix": 12 }
                         }]
                     }],
                     "shapes": [{
@@ -1768,21 +1768,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [3.307, 3.219], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [3.307, 3.219], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1803,11 +1803,11 @@ export class AuthComponent implements OnInit {
                     "nm": "~ Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [95.426, 103.837, 0], "ix": 2},
-                        "a": {"a": 0, "k": [44.076, 8.796, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [95.426, 103.837, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [44.076, 8.796, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -1824,8 +1824,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -1840,49 +1840,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -1891,13 +1891,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 287,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 320}],
+                                }, { "t": 320 }],
                                 "ix": 9
                             }
                         }, {
@@ -1905,13 +1905,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -1935,21 +1935,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [44.076, 8.795], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [44.076, 8.795], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -1970,11 +1970,11 @@ export class AuthComponent implements OnInit {
                     "nm": "a Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [222.239, 61.35, 0], "ix": 2},
-                        "a": {"a": 0, "k": [17.513, 15.578, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [222.239, 61.35, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [17.513, 15.578, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -1991,8 +1991,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2007,49 +2007,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2058,13 +2058,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 254,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 284}],
+                                }, { "t": 284 }],
                                 "ix": 9
                             }
                         }, {
@@ -2072,13 +2072,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2102,21 +2102,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [17.513, 15.578], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [17.513, 15.578], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -2137,11 +2137,11 @@ export class AuthComponent implements OnInit {
                     "nm": "l Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [211.065, 47.344, 0], "ix": 2},
-                        "a": {"a": 0, "k": [21.249, 29.587, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [211.065, 47.344, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [21.249, 29.587, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -2158,8 +2158,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2174,49 +2174,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2225,13 +2225,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 231,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 259}],
+                                }, { "t": 259 }],
                                 "ix": 9
                             }
                         }, {
@@ -2239,13 +2239,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2269,21 +2269,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [21.249, 29.587], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [21.249, 29.587], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -2304,11 +2304,11 @@ export class AuthComponent implements OnInit {
                     "nm": "e2 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [183.09, 49.831, 0], "ix": 2},
-                        "a": {"a": 0, "k": [29.182, 31.558, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [183.09, 49.831, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [29.182, 31.558, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -2325,8 +2325,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2341,49 +2341,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2392,13 +2392,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 208,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 231}],
+                                }, { "t": 231 }],
                                 "ix": 9
                             }
                         }, {
@@ -2406,13 +2406,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2436,21 +2436,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [29.181, 31.558], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [29.181, 31.558], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -2471,11 +2471,11 @@ export class AuthComponent implements OnInit {
                     "nm": "e1 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [164.73, 57.237, 0], "ix": 2},
-                        "a": {"a": 0, "k": [10.691, 10.277, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [164.73, 57.237, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [10.691, 10.277, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -2492,8 +2492,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2508,49 +2508,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2559,13 +2559,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 198,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 212}],
+                                }, { "t": 212 }],
                                 "ix": 9
                             }
                         }, {
@@ -2573,13 +2573,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2603,21 +2603,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [10.691, 10.277], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [10.691, 10.277], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -2638,11 +2638,11 @@ export class AuthComponent implements OnInit {
                     "nm": "r Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [188.093, 73.433, 0], "ix": 2},
-                        "a": {"a": 0, "k": [52.975, 28.677, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [188.093, 73.433, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [52.975, 28.677, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -2659,8 +2659,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2675,25 +2675,25 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
@@ -2702,13 +2702,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 91,
                                     "s": [6],
                                     "e": [4]
-                                }, {"t": 93}],
+                                }, { "t": 93 }],
                                 "ix": 5
                             }
                         }, {
@@ -2716,19 +2716,19 @@ export class AuthComponent implements OnInit {
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2737,13 +2737,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 156,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 198}],
+                                }, { "t": 198 }],
                                 "ix": 9
                             }
                         }, {
@@ -2751,13 +2751,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2768,7 +2768,7 @@ export class AuthComponent implements OnInit {
                             "ix": 1,
                             "ks": {
                                 "a": 0,
-                                "k": {"i": [[0, 0]], "o": [[0, 0]], "v": [[-179.619, 4.244]], "c": false},
+                                "k": { "i": [[0, 0]], "o": [[0, 0]], "v": [[-179.619, 4.244]], "c": false },
                                 "ix": 2
                             },
                             "nm": "Path 1",
@@ -2776,9 +2776,9 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "st",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 3},
-                            "o": {"a": 0, "k": 100, "ix": 4},
-                            "w": {"a": 0, "k": 2, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 3 },
+                            "o": { "a": 0, "k": 100, "ix": 4 },
+                            "w": { "a": 0, "k": 2, "ix": 5 },
                             "lc": 1,
                             "lj": 1,
                             "ml": 4,
@@ -2787,21 +2787,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [0, 0], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [0, 0], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Shape 1",
@@ -2831,21 +2831,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [52.975, 28.677], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [52.975, 28.677], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -2866,11 +2866,11 @@ export class AuthComponent implements OnInit {
                     "nm": "b3 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [121.313, 68.85, 0], "ix": 2},
-                        "a": {"a": 0, "k": [11.38, 17.293, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [121.313, 68.85, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [11.38, 17.293, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -2887,8 +2887,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -2903,49 +2903,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -2954,13 +2954,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 135,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 156}],
+                                }, { "t": 156 }],
                                 "ix": 9
                             }
                         }, {
@@ -2968,13 +2968,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -2998,21 +2998,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [11.38, 17.293], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [11.38, 17.293], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -3033,11 +3033,11 @@ export class AuthComponent implements OnInit {
                     "nm": "b2 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [128.503, 47.631, 0], "ix": 2},
-                        "a": {"a": 0, "k": [22.059, 38.511, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [128.503, 47.631, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [22.059, 38.511, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -3054,8 +3054,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -3070,49 +3070,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -3121,13 +3121,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 118,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 140}],
+                                }, { "t": 140 }],
                                 "ix": 9
                             }
                         }, {
@@ -3135,13 +3135,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -3165,21 +3165,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [22.059, 38.511], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [22.059, 38.511], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -3200,11 +3200,11 @@ export class AuthComponent implements OnInit {
                     "nm": "b1 Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [134.162, 21.237, 0], "ix": 2},
-                        "a": {"a": 0, "k": [49.554, 21.247, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [134.162, 21.237, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [49.554, 21.247, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -3221,8 +3221,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -3237,49 +3237,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -3288,13 +3288,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 79,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 118}],
+                                }, { "t": 118 }],
                                 "ix": 9
                             }
                         }, {
@@ -3302,13 +3302,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -3332,21 +3332,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [49.553, 21.247], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [49.553, 21.247], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -3367,11 +3367,11 @@ export class AuthComponent implements OnInit {
                     "nm": "m Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [87.567, 72.262, 0], "ix": 2},
-                        "a": {"a": 0, "k": [27.426, 16.705, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [87.567, 72.262, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [27.426, 16.705, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -3388,8 +3388,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -3404,49 +3404,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -3455,13 +3455,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 42,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 79}],
+                                }, { "t": 79 }],
                                 "ix": 9
                             }
                         }, {
@@ -3469,13 +3469,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -3499,21 +3499,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [27.426, 16.705], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [27.426, 16.705], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -3534,11 +3534,11 @@ export class AuthComponent implements OnInit {
                     "nm": "U Outlines",
                     "sr": 1,
                     "ks": {
-                        "o": {"a": 0, "k": 100, "ix": 11},
-                        "r": {"a": 0, "k": 0, "ix": 10},
-                        "p": {"a": 0, "k": [37.514, 64.562, 0], "ix": 2},
-                        "a": {"a": 0, "k": [36.947, 31.381, 0], "ix": 1},
-                        "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                        "o": { "a": 0, "k": 100, "ix": 11 },
+                        "r": { "a": 0, "k": 0, "ix": 10 },
+                        "p": { "a": 0, "k": [37.514, 64.562, 0], "ix": 2 },
+                        "a": { "a": 0, "k": [36.947, 31.381, 0], "ix": 1 },
+                        "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                     },
                     "ao": 0,
                     "hasMask": true,
@@ -3555,8 +3555,8 @@ export class AuthComponent implements OnInit {
                             },
                             "ix": 1
                         },
-                        "o": {"a": 0, "k": 100, "ix": 3},
-                        "x": {"a": 0, "k": 0, "ix": 4},
+                        "o": { "a": 0, "k": 100, "ix": 3 },
+                        "x": { "a": 0, "k": 0, "ix": 4 },
                         "nm": "Mask 1"
                     }],
                     "ef": [{
@@ -3571,49 +3571,49 @@ export class AuthComponent implements OnInit {
                             "nm": "Path",
                             "mn": "ADBE Stroke-0001",
                             "ix": 1,
-                            "v": {"a": 0, "k": 0, "ix": 1}
+                            "v": { "a": 0, "k": 0, "ix": 1 }
                         }, {
                             "ty": 7,
                             "nm": "All Masks",
                             "mn": "ADBE Stroke-0010",
                             "ix": 2,
-                            "v": {"a": 0, "k": 1, "ix": 2}
+                            "v": { "a": 0, "k": 1, "ix": 2 }
                         }, {
                             "ty": 7,
                             "nm": "Stroke Sequentially",
                             "mn": "ADBE Stroke-0011",
                             "ix": 3,
-                            "v": {"a": 0, "k": 1, "ix": 3}
+                            "v": { "a": 0, "k": 1, "ix": 3 }
                         }, {
                             "ty": 2,
                             "nm": "Color",
                             "mn": "ADBE Stroke-0002",
                             "ix": 4,
-                            "v": {"a": 0, "k": [1, 1, 1, 1], "ix": 4}
+                            "v": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Size",
                             "mn": "ADBE Stroke-0003",
                             "ix": 5,
-                            "v": {"a": 0, "k": 4, "ix": 5}
+                            "v": { "a": 0, "k": 4, "ix": 5 }
                         }, {
                             "ty": 0,
                             "nm": "Brush Hardness",
                             "mn": "ADBE Stroke-0004",
                             "ix": 6,
-                            "v": {"a": 0, "k": 0.95, "ix": 6}
+                            "v": { "a": 0, "k": 0.95, "ix": 6 }
                         }, {
                             "ty": 0,
                             "nm": "Opacity",
                             "mn": "ADBE Stroke-0005",
                             "ix": 7,
-                            "v": {"a": 0, "k": 1, "ix": 7}
+                            "v": { "a": 0, "k": 1, "ix": 7 }
                         }, {
                             "ty": 0,
                             "nm": "Start",
                             "mn": "ADBE Stroke-0008",
                             "ix": 8,
-                            "v": {"a": 0, "k": 0, "ix": 8}
+                            "v": { "a": 0, "k": 0, "ix": 8 }
                         }, {
                             "ty": 0,
                             "nm": "End",
@@ -3622,13 +3622,13 @@ export class AuthComponent implements OnInit {
                             "v": {
                                 "a": 1,
                                 "k": [{
-                                    "i": {"x": [0.667], "y": [1]},
-                                    "o": {"x": [0.333], "y": [0]},
+                                    "i": { "x": [0.667], "y": [1] },
+                                    "o": { "x": [0.333], "y": [0] },
                                     "n": ["0p667_1_0p333_0"],
                                     "t": 0,
                                     "s": [0],
                                     "e": [100]
-                                }, {"t": 42}],
+                                }, { "t": 42 }],
                                 "ix": 9
                             }
                         }, {
@@ -3636,13 +3636,13 @@ export class AuthComponent implements OnInit {
                             "nm": "Spacing",
                             "mn": "ADBE Stroke-0006",
                             "ix": 10,
-                            "v": {"a": 0, "k": 0, "ix": 10}
+                            "v": { "a": 0, "k": 0, "ix": 10 }
                         }, {
                             "ty": 7,
                             "nm": "Paint Style",
                             "mn": "ADBE Stroke-0007",
                             "ix": 11,
-                            "v": {"a": 0, "k": 3, "ix": 11}
+                            "v": { "a": 0, "k": 3, "ix": 11 }
                         }]
                     }],
                     "shapes": [{
@@ -3666,21 +3666,21 @@ export class AuthComponent implements OnInit {
                             "hd": false
                         }, {
                             "ty": "fl",
-                            "c": {"a": 0, "k": [1, 1, 1, 1], "ix": 4},
-                            "o": {"a": 0, "k": 100, "ix": 5},
+                            "c": { "a": 0, "k": [1, 1, 1, 1], "ix": 4 },
+                            "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "nm": "Fill 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false
                         }, {
                             "ty": "tr",
-                            "p": {"a": 0, "k": [36.946, 31.381], "ix": 2},
-                            "a": {"a": 0, "k": [0, 0], "ix": 1},
-                            "s": {"a": 0, "k": [100, 100], "ix": 3},
-                            "r": {"a": 0, "k": 0, "ix": 6},
-                            "o": {"a": 0, "k": 100, "ix": 7},
-                            "sk": {"a": 0, "k": 0, "ix": 4},
-                            "sa": {"a": 0, "k": 0, "ix": 5},
+                            "p": { "a": 0, "k": [36.946, 31.381], "ix": 2 },
+                            "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                            "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                            "r": { "a": 0, "k": 0, "ix": 6 },
+                            "o": { "a": 0, "k": 100, "ix": 7 },
+                            "sk": { "a": 0, "k": 0, "ix": 4 },
+                            "sa": { "a": 0, "k": 0, "ix": 5 },
                             "nm": "Transform"
                         }],
                         "nm": "Group 1",
@@ -3704,11 +3704,11 @@ export class AuthComponent implements OnInit {
                 "refId": "comp_0",
                 "sr": 1,
                 "ks": {
-                    "o": {"a": 0, "k": 100, "ix": 11},
-                    "r": {"a": 0, "k": 0, "ix": 10},
-                    "p": {"a": 0, "k": [180, 184, 0], "ix": 2},
-                    "a": {"a": 0, "k": [121, 57, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                    "o": { "a": 0, "k": 100, "ix": 11 },
+                    "r": { "a": 0, "k": 0, "ix": 10 },
+                    "p": { "a": 0, "k": [180, 184, 0], "ix": 2 },
+                    "a": { "a": 0, "k": [121, 57, 0], "ix": 1 },
+                    "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                 },
                 "ao": 0,
                 "w": 242,
@@ -3724,11 +3724,11 @@ export class AuthComponent implements OnInit {
                 "nm": "background",
                 "sr": 1,
                 "ks": {
-                    "o": {"a": 0, "k": 100, "ix": 11},
-                    "r": {"a": 0, "k": 0, "ix": 10},
-                    "p": {"a": 0, "k": [180, 180, 0], "ix": 2},
-                    "a": {"a": 0, "k": [180, 180, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                    "o": { "a": 0, "k": 100, "ix": 11 },
+                    "r": { "a": 0, "k": 0, "ix": 10 },
+                    "p": { "a": 0, "k": [180, 180, 0], "ix": 2 },
+                    "a": { "a": 0, "k": [180, 180, 0], "ix": 1 },
+                    "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
                 },
                 "ao": 0,
                 "sw": 360,
@@ -3777,25 +3777,25 @@ export class AuthComponent implements OnInit {
         this.loading = true;
         this._authService.login(this.model.email, this.model.password, this.model['g-recaptcha-response'])
             .subscribe(
-                data => {
-                    this._adminUserService.verify().toPromise().then(() => {
-                        if (this._adminUserService.checkModuleOtherRight('admin-users', '2FA')) {
-                            this.show2FA = true;
-                            this.loading = false;
-                            this.clonedCurrentUser = (JSON.parse(localStorage.getItem('currentUser'))) ?
-                                cloneDeep(JSON.parse(localStorage.getItem('currentUser'))) : null;
-                            localStorage.removeItem('currentUser');
-                        } else {
-                            this._router.navigate([this.returnUrl]);
-                        }
-                    })
+            data => {
+                this._adminUserService.verify().toPromise().then(() => {
+                    if (this._adminUserService.checkModuleOtherRight('admin-users', '2FA')) {
+                        this.show2FA = true;
+                        this.loading = false;
+                        this.clonedCurrentUser = (JSON.parse(localStorage.getItem('currentUser'))) ?
+                            cloneDeep(JSON.parse(localStorage.getItem('currentUser'))) : null;
+                        localStorage.removeItem('currentUser');
+                    } else {
+                        this._router.navigate([this.returnUrl]);
+                    }
+                })
 
-                },
-                error => {
-                    this.showAlert('alertSignin');
-                    this._alertService.error(error);
-                    this.loading = false;
-                });
+            },
+            error => {
+                this.showAlert('alertSignin');
+                this._alertService.error(error);
+                this.loading = false;
+            });
     }
 
     verification2FA() {
@@ -3803,20 +3803,20 @@ export class AuthComponent implements OnInit {
 
         this._authService.faVerification(this.model.faCode, this.clonedCurrentUser)
             .subscribe(
-                (data: any) => {
-                    if (data.verified) {
-                        this._router.navigate([this.returnUrl]);
-                    } else {
-                        this.showAlert('alert2FA');
-                        this._alertService.error('2 FA code is invalid.');
-                        this.loading = false;
-                    }
-                },
-                error => {
+            (data: any) => {
+                if (data.verified) {
+                    this._router.navigate([this.returnUrl]);
+                } else {
                     this.showAlert('alert2FA');
-                    this._alertService.error(error);
+                    this._alertService.error('2 FA code is invalid.');
                     this.loading = false;
-                });
+                }
+            },
+            error => {
+                this.showAlert('alert2FA');
+                this._alertService.error(error);
+                this.loading = false;
+            });
     }
 
     onHide2FA() {
@@ -3829,36 +3829,36 @@ export class AuthComponent implements OnInit {
         this.loading = true;
         this._userService.create(this.model)
             .subscribe(
-                data => {
-                    this.showAlert('alertSignin');
-                    this._alertService.success('Thank you. To complete your registration please check your email.', true);
-                    this.loading = false;
-                    LoginCustom.displaySignInForm();
-                    this.model = {};
-                },
-                error => {
-                    this.showAlert('alertSignup');
-                    this._alertService.error(error);
-                    this.loading = false;
-                });
+            data => {
+                this.showAlert('alertSignin');
+                this._alertService.success('Thank you. To complete your registration please check your email.', true);
+                this.loading = false;
+                LoginCustom.displaySignInForm();
+                this.model = {};
+            },
+            error => {
+                this.showAlert('alertSignup');
+                this._alertService.error(error);
+                this.loading = false;
+            });
     }
 
     forgotPass() {
         this.loading = true;
         this._requestResetPasswordService.requestReset(this.model.email)
             .subscribe(
-                data => {
-                    this.showAlert('alertSignin');
-                    this._alertService.success('Cool! Password recovery instruction has been sent to your email.', true);
-                    this.loading = false;
-                    LoginCustom.displaySignInForm();
-                    this.model = {};
-                },
-                error => {
-                    this.showAlert('alertForgotPass');
-                    this._alertService.error(error);
-                    this.loading = false;
-                });
+            data => {
+                this.showAlert('alertSignin');
+                this._alertService.success('Cool! Password recovery instruction has been sent to your email.', true);
+                this.loading = false;
+                LoginCustom.displaySignInForm();
+                this.model = {};
+            },
+            error => {
+                this.showAlert('alertForgotPass');
+                this._alertService.error(error);
+                this.loading = false;
+            });
     }
 
     showAlert(target) {

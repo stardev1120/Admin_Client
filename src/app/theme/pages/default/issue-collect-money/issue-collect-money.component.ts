@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash'
-import {UsersService} from "../../../../_services/apis/users.service";
-import {LoansService} from "../../../../_services/apis/loans.service";
-import {CollectionsService} from "../../../../_services/apis/collections.service";
-import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
-import {Loan} from "../../../../models/loan";
-import {Collection} from "../../../../models/collection";
+import { UsersService } from "../../../../_services/apis/users.service";
+import { LoansService } from "../../../../_services/apis/loans.service";
+import { CollectionsService } from "../../../../_services/apis/collections.service";
+import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
+import { Loan } from "../../../../models/loan";
+import { Collection } from "../../../../models/collection";
 
 
 @Component({
@@ -20,10 +20,10 @@ export class IssueCollectMoneyComponent implements OnInit {
     id: string;
 
     constructor(private api: UsersService,
-                private _router: Router,
-                private _loanService: LoansService,
-                private _collectionService: CollectionsService,
-                private _adminUserService: AdminUsersService) {
+        private _router: Router,
+        private _loanService: LoansService,
+        private _collectionService: CollectionsService,
+        private _adminUserService: AdminUsersService) {
 
     }
 

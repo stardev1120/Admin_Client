@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {isEmpty} from 'lodash'
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { isEmpty } from 'lodash'
 
-import {Helpers} from '../../../../helpers';
-import {ScriptLoaderService} from '../../../../_services/script-loader.service';
-import {AdminUserCountry} from "../../../../models/admin-user-country";
-import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
-import {Country} from "../../../../models/country";
-import {UserActivityLogService} from "../../../../_services/apis/user-activity-log.service";
-import {UserActivityLog} from "../../../../models/user-activity-log";
+import { Helpers } from '../../../../helpers';
+import { ScriptLoaderService } from '../../../../_services/script-loader.service';
+import { AdminUserCountry } from "../../../../models/admin-user-country";
+import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
+import { Country } from "../../../../models/country";
+import { UserActivityLogService } from "../../../../_services/apis/user-activity-log.service";
+import { UserActivityLog } from "../../../../models/user-activity-log";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -51,9 +51,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
         axis_valueField_3: 'loans'
     };
     constructor(private _script: ScriptLoaderService,
-                private _router: Router,
-                public adminUserService: AdminUsersService,
-                private _userAcitvityLog: UserActivityLogService) {
+        private _router: Router,
+        public adminUserService: AdminUsersService,
+        private _userAcitvityLog: UserActivityLogService) {
         this.adminUserCountries = this.adminUserService.currentAdminUser.AdminuserCountries;
     }
 

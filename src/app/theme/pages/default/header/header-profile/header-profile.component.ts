@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
 import { ActivatedRoute, Router } from "@angular/router";
 
-import {UsersService} from '../../../../../_services/apis/users.service'
-import {AdminUsersService} from '../../../../../_services/apis/admin-users.service'
+import { UsersService } from '../../../../../_services/apis/users.service'
+import { AdminUsersService } from '../../../../../_services/apis/admin-users.service'
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -18,8 +18,8 @@ export class HeaderProfileComponent implements OnInit {
     profileFormError: string;
 
     constructor(private route: ActivatedRoute,
-                private adminUserService: AdminUsersService,
-                private router: Router) {
+        private adminUserService: AdminUsersService,
+        private router: Router) {
 
     }
     ngOnInit() {
@@ -28,13 +28,13 @@ export class HeaderProfileComponent implements OnInit {
     }
 
     async onChangePassword() {
-    try{
-        let res = await this.adminUserService.changePassword(this.passwordModel)
-        this.router.navigate(["/profile"])
+        try {
+            let res = await this.adminUserService.changePassword(this.passwordModel)
+            this.router.navigate(["/profile"])
 
-    } catch(error) {
-        this.changePasswordFormError = "The password is wrong"
-    }
+        } catch (error) {
+            this.changePasswordFormError = "The password is wrong"
+        }
 
 
     }
@@ -42,7 +42,7 @@ export class HeaderProfileComponent implements OnInit {
         this.adminUserService.save(this.currentAdminUser)
             .subscribe((res) => {
                 this.router.navigate(["/profile"])
-        }, (err) => {
+            }, (err) => {
                 this.profileFormError = "Could not update your profile, Please review your information"
             });
     }
