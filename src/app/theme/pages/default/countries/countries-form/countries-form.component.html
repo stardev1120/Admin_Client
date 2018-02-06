@@ -87,7 +87,7 @@
                 </div>
 
                 <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && country_code.hasError('required') || (country_code.touched && title.hasError('required'))}">
+                     [ngClass]="{'has-danger':mForm.submitted && country_code.hasError('required') || (country_code.touched && country_code.hasError('required'))}">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Code *
                     </label>

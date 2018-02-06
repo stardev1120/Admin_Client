@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { IndexComponent } from './index.component';
-import { LayoutModule } from '../../../layouts/layout.module';
-import { DefaultComponent } from '../default.component';
-import { BarChartDirective, DateRangeDirective } from "../../../../_directives";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Routes, RouterModule} from '@angular/router';
+import {IndexComponent} from './index.component';
+import {LayoutModule} from '../../../layouts/layout.module';
+import {DefaultComponent} from '../default.component';
+import {BarChartDirective, DateRangeDirective, SerialAmChartDirective, LineChartDirective} from "../../../../_directives";
 
 const routes: Routes = [
     {
@@ -27,7 +27,9 @@ const routes: Routes = [
     ], declarations: [
         IndexComponent,
         BarChartDirective,
-        DateRangeDirective
+        DateRangeDirective,
+        SerialAmChartDirective,
+        LineChartDirective
     ]
 })
 export class IndexModule {

@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 
 export class RequestResetPassowrd {
     constructor(public email?: String,
-        public id?: String
+                public id?: String
     ) {
     }
 

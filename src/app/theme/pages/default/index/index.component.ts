@@ -1,17 +1,14 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { isEmpty } from 'lodash'
+import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {isEmpty} from 'lodash'
 
-import { Helpers } from '../../../../helpers';
-import { ScriptLoaderService } from '../../../../_services/script-loader.service';
-import { AdminUserCountry } from "../../../../models/admin-user-country";
-import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
-import { Country } from "../../../../models/country";
-import { UserActivityLogService } from "../../../../_services/apis/user-activity-log.service";
-import { UserActivityLog } from "../../../../models/user-activity-log";
-
-declare let google: any;
-declare let GoogleChartsDemo: any;
+import {Helpers} from '../../../../helpers';
+import {ScriptLoaderService} from '../../../../_services/script-loader.service';
+import {AdminUserCountry} from "../../../../models/admin-user-country";
+import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
+import {Country} from "../../../../models/country";
+import {UserActivityLogService} from "../../../../_services/apis/user-activity-log.service";
+import {UserActivityLog} from "../../../../models/user-activity-log";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -25,11 +22,38 @@ export class IndexComponent implements OnInit, AfterViewInit {
     selectedDateRange: any;
     selectedDateRangeActivity: any;
     adminUserActivityLogs: UserActivityLog[];
-
+    serialAmChart1Options = {
+        axis_1: 'usersAxis',
+        axis_title_1: 'Users',
+        axis_legendValueText_1: 'users',
+        axis_valueField_1: 'users',
+        axis_2: 'collectionsAxis',
+        axis_title_2: 'Collections',
+        axis_legendValueText_2: 'collections',
+        axis_valueField_2: 'collections',
+        axis_3: 'loansAxis',
+        axis_title_3: 'Loans',
+        axis_legendValueText_3: 'loans',
+        axis_valueField_3: 'loans'
+    };
+    serialAmChart2Options = {
+        axis_1: 'usersAxis',
+        axis_title_1: 'Users',
+        axis_legendValueText_1: 'users',
+        axis_valueField_1: 'users',
+        axis_2: 'collectionsAxis',
+        axis_title_2: 'Collected Collections',
+        axis_legendValueText_2: '$ collected',
+        axis_valueField_2: 'collections',
+        axis_3: 'loansAxis',
+        axis_title_3: 'Issued Loans',
+        axis_legendValueText_3: '$ issued loans',
+        axis_valueField_3: 'loans'
+    };
     constructor(private _script: ScriptLoaderService,
-        private _router: Router,
-        public adminUserService: AdminUsersService,
-        private _userAcitvityLog: UserActivityLogService) {
+                private _router: Router,
+                public adminUserService: AdminUsersService,
+                private _userAcitvityLog: UserActivityLogService) {
         this.adminUserCountries = this.adminUserService.currentAdminUser.AdminuserCountries;
     }
 
@@ -44,25 +68,21 @@ export class IndexComponent implements OnInit, AfterViewInit {
         /*        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
                     'assets/grids/users-activity-log.js');*/
 
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             '//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js');
 
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             '//www.amcharts.com/lib/3/plugins/export/export.min.js');
+*/
+        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/demo/default/custom/components/charts/amcharts/charts.js');*/
 
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/demo/default/custom/components/charts/amcharts/charts.js');
+        /*Helpers.loadStyles('.m-grid__item.m-grid__item--fluid.m-wrapper', [
+            '//www.amcharts.com/lib/3/plugins/export/export.css']);*/
 
-        Helpers.loadStyles('.m-grid__item.m-grid__item--fluid.m-wrapper', [
-            '//www.amcharts.com/lib/3/plugins/export/export.css']);
+        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/demo/default/custom/components/charts/google-charts.js');*/
 
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/demo/default/custom/components/charts/google-charts.js');
-
-        google.load('visualization', '1', {
-            packages: ['corechart', 'bar', 'line'],
-            callback: GoogleChartsDemo.runDemos()
-        });
         this.onLoadUserActivityLog(undefined);
 
     }

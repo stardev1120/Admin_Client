@@ -8,6 +8,6 @@ export class Company implements BaseModel {
     public company_address: String;
     public contact_number: String;
     public country_id: number;
-    public country: Country;
+    public Country: Country;
     public id?: String;
 }

@@ -1,3 +1,11 @@
 export const environment = {
-    production: true
+    production: true,
+    defaultLanguage: 'ar-EG',
+    supportedLanguages: [
+        'en-US',
+        'fr-FR',
+        'ar-EG'
+    ],
+    baseUrl: 'http://192.168.153.135:3000/api/admin',
+    siteKey: "6LfjtEMUAAAAACnCnaYBFWzW8Id00qVZd3_64ibj"
 };

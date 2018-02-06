@@ -1,5 +1,5 @@
-import { BaseModel } from "../_services/base-model";
-import { FeatureACL } from "./featureACL";
+import {BaseModel} from "../_services/base-model";
+import {FeatureACL} from "./featureACL";
 
 export class Role implements BaseModel {
     public role_id: String;

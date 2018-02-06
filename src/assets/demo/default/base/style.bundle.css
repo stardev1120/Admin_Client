@@ -31004,3 +31004,7 @@ body.m-content--skin-light2 {
 .m_datatable_collections.m-datatable.m-datatable--default.m-datatable--error.m-datatable--loaded{
     width: 100%
 }
+
+.amcharts-chart-div a{
+    display: none !important;
+}
