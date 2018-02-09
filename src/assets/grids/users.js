@@ -4,7 +4,7 @@ var DatatableRemoteAjaxDemo = function () {
     //== Private functions
     // basic demo
     var demo = function () {
-        var baseUrl = $('#basUrl').val()+'/user';
+        var baseUrl = $('#basUrl').val() + '/user';
         var currentUserString = localStorage.getItem('currentUser');
         var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
             (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
@@ -17,7 +17,7 @@ var DatatableRemoteAjaxDemo = function () {
             if (currentUser) {
                 var token = currentUser.token;
                 headers['authorization'] = "JWT " + token;
-                if(currentCountry){
+                if (currentCountry) {
                     headers['country_id'] = currentCountry;
                 }
             }
@@ -26,7 +26,7 @@ var DatatableRemoteAjaxDemo = function () {
         var datatable = $('.m_datatable').mDatatable({
             // datasource definition
             data: {
-               type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
                         // sample GET method
@@ -111,47 +111,56 @@ var DatatableRemoteAjaxDemo = function () {
                     },
                 },*/
                 {
+                    field: 'id',
+                    title: 'Id',
+                    filterable: false, // disable or enable filtering
+                    width: 50
+                },
+                {
                     field: 'email',
                     title: 'Email',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    width: 200
                 },
                 {
                     field: 'fname',
                     title: 'Name',
                     filterable: false, // disable or enable filtering
-                    width: 150,
+                    //width: 150,
                     template: function (row) {
-                        return row.fname+' '+row.mname+' '+row.lname;
+                        var userName = row.fname ? row.fname + ' ' : '';
+                        userName += row.mname ? row.mname + ' ' : ' ';
+                        userName += row.lname ? row.lname : '';
+                        return userName;
                     }
                 },
                 {
                     field: 'phone_number',
                     title: 'Phone',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'status',
                     title: 'Status',
                     filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
                 },
                 {
                     field: 'created_at',
                     title: 'Sign up date',
                     filterable: false, // disable or enable filtering
-                    width: 100
+                    //width: 100
                 },
                 {
                     field: 'Actions',
-                    width: 110,
+                    //width: 110,
                     title: 'Actions',
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return '\<a href="#/users/view/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
+                        return '\<a href="#/users/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\

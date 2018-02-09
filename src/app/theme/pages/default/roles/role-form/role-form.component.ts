@@ -27,8 +27,8 @@ export class RoleFormComponent implements OnInit {
 
     }
     ngAfterViewInit() {
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/grids/feature-acls.js');
+        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+            'assets/grids/feature-acls.js');*/
 
     }
     ngOnInit() {
@@ -38,7 +38,6 @@ export class RoleFormComponent implements OnInit {
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
-            console.log(mForm.valid, mForm)
             this.data.role_id = this.data.role_name.split(' ').join('_')
             this.api.save(this.data)
                 .subscribe(r => {

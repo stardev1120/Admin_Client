@@ -11,11 +11,11 @@ export class LoanResolver implements Resolve<Loan> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Loan> | Promise<Loan> | Loan {
-        let id = route.paramMap.get('id');
+        let id = route.paramMap.get('loanId');
         if (id == 'new') {
             return new Loan();
         }
-        return this.api.get(route.paramMap.get('id'));
+        return this.api.get(route.paramMap.get('loanId'));
     }
 
 }

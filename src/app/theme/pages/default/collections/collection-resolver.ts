@@ -11,11 +11,11 @@ export class CollectionResolver implements Resolve<Collection> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Collection> | Promise<Collection> | Collection {
-        let id = route.paramMap.get('id');
+        let id = route.paramMap.get('collectId');
         if (id == 'new') {
             return new Collection();
         }
-        return this.api.get(route.paramMap.get('id'));
+        return this.api.get(route.paramMap.get('collectId'));
     }
 
 }

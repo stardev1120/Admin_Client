@@ -45,7 +45,7 @@ export class RoleViewComponent implements OnInit {
                 console.log(error);
             })
     }
-    
+
     saveRights(){
         location.reload()
     }

@@ -41,7 +41,6 @@ export class CollectionFormComponent implements OnInit {
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
-            console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
                     this.router.navigate(["/users"])

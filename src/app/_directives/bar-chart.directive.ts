@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
-import { environment } from '../../environments/environment'
+import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import {environment} from '../../environments/environment'
 
 //declare var $: JQueryStatic;
 declare var Chart: any;
@@ -16,7 +16,7 @@ export class BarChartDirective implements OnChanges {
     @Input('date-range') dateRange: any;
     @Input('country-id') countryId;
     baseUrl = environment.baseUrl;
-    chart: any;
+    chart:any;
 
     constructor(private el: ElementRef) {
         this.baseUrl += '/dashboard';
@@ -28,9 +28,9 @@ export class BarChartDirective implements OnChanges {
 
     ngOnChanges(changes) {
         if (!!changes['dateRange'] || !!this.dateRange) {
-            let countryId = changes['countryId'] && changes['countryId'].currentValue ? changes['countryId'].currentValue.id : (this.countryId ? this.countryId.id : undefined);
+            let countryId = changes['countryId'] && changes['countryId'].currentValue ? changes['countryId'].currentValue.id : (this.countryId?this.countryId.id:undefined);
             let dateRange = changes['dateRange'] && changes['dateRange'].currentValue ? changes['dateRange'].currentValue : this.dateRange;
-            if (!!dateRange) {
+            if(!!dateRange){
                 this.dailySales(countryId, dateRange)
             }
         }
@@ -65,7 +65,7 @@ export class BarChartDirective implements OnChanges {
             method: 'post',
             data: JSON.stringify(body),
             headers: headers
-        }).done(function(t) {
+        }).done(function (t) {
             const chartData = {
                 labels: t.data[0],
                 datasets: [{
@@ -75,8 +75,8 @@ export class BarChartDirective implements OnChanges {
             };
             $(that.el.nativeElement).empty();
             let chartContainer = (<any>$(that.el.nativeElement).append('<canvas></canvas>')).find('canvas');
-            let kpi = t[that.chatKpiName][0] ? t[that.chatKpiName][0] : t[that.chatKpiName];
-            $('#' + that.chartKpiId).text((kpi[that.chatKpiName] ? kpi[that.chatKpiName] : 0) + ' ' + that.chatKpiText);
+            let kpi = t[that.chatKpiName][0]?t[that.chatKpiName][0]:t[that.chatKpiName];
+            $('#' + that.chartKpiId).text((kpi[that.chatKpiName]?kpi[that.chatKpiName]:0) + ' ' + that.chatKpiText);
             if (chartContainer.length == 0) {
                 return;
             }

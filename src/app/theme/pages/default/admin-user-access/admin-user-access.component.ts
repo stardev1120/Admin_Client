@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
-import { ScriptLoaderService } from "../../../../_services/script-loader.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AdminUserAccessService } from "../../../../_services/apis/admin-user-access.service";
-import { AdminUserAccess } from "../../../../models/admin-user-access";
-// import { Helpers } from '../../../../../../../helpers';
-// import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 
+import {AdminUserAccessService} from "../../../../_services/apis/admin-user-access.service";
+import {AdminUserAccess} from "../../../../models/admin-user-access";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -17,11 +14,13 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
     userId: any;
     user: any;
     code: string;
-    private sub: any;
+    submitted = false;
+    error: string;
+    hasError = false;
 
     constructor(private _router: Router,
-        private route: ActivatedRoute,
-        private _adminUserAccessService: AdminUserAccessService) {
+                private route: ActivatedRoute,
+                private _adminUserAccessService: AdminUserAccessService) {
 
     }
 
@@ -33,7 +32,10 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
             adminUserAccess.user_id = this.userId;
             this._adminUserAccessService.save(adminUserAccess).subscribe((userInfo: any) => {
                 this.user = userInfo.user;
-                console.log('this.stateUrl ==> ', this.stateUrl, this.userId, userInfo.user)
+            }, error => {
+                console.log(error);
+                this.error = error.error.text;
+                this.hasError = true;
             });
         })
     }
@@ -43,34 +45,37 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     ngOnDestroy() {
-        //this.sub.unsubscribe();
-    }
-
-    sendRequestAccess() {
-        // todo: send request access
-        // user_id
     }
 
     verifyAccess() {
-        // todo verify code and then redirect to user view
-        this._adminUserAccessService.verifyOTP(this.code, this.userId).subscribe(valid => {
-            console.log('valid ==> ', valid)
-            if (valid) {
-                //let stateUrl = this.removeLastDirectoryPartOf(this.stateUrl);
-                this._router.navigate([this.stateUrl]);
-            } else {
-                console.log('code is invalid')
-            }
+        this.submitted = true;
+        this.error = '';
+        this.hasError = false;
+        if (!this.code) {
+            return;
+        }
 
+        this._adminUserAccessService.verifyOTP(this.code, this.userId).subscribe((valid: any) => {
+            if (valid && valid.message === 'done') {
+                this.submitted = false;
+                this.error = '';
+                this._router.navigate([this.stateUrl]).then();
+            } else {
+                console.log('code is invalid');
+                this.hasError = true;
+                this.error = 'code is invalid.'
+            }
         }, error => {
-            console.log(error)
+            console.log(error.error.text);
+            this.hasError = true;
+            this.error = error.error.text
         })
 
     }
 
-    /*    removeLastDirectoryPartOf(the_url) {
-            let the_arr = the_url.split('/');
-            the_arr.pop();
-            return (the_arr.join('/'));
-        }*/
+    onChangeOtp() {
+        this.submitted = false;
+        this.error = '';
+        this.hasError = false;
+    }
 }

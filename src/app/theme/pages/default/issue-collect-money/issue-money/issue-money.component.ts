@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 
-import { Loan } from "../../../../../models/loan";
-import { LoansService } from "../../../../../_services/apis/loans.service";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {Loan} from "../../../../../models/loan";
+import {LoansService} from "../../../../../_services/apis/loans.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -15,10 +15,9 @@ export class IssueMoneyComponent implements OnInit {
     data: Loan;
 
     constructor(private api: LoansService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private modalService: NgbModal) {
-
+                private router: Router,
+                private route: ActivatedRoute,
+                private modalService: NgbModal) {
     }
 
     ngOnInit() {

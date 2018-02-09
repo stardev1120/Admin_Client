@@ -148,46 +148,6 @@ var DatatableRemoteAjaxDemo = function () {
 						\
 						';
                             }
-                            if (actionsRights['DELETE']) {
-                                content = content + ' \
-                                 <div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                                                            <div class="modal-dialog" role="document"> \
-                                                            <div class="modal-content"> \
-                                                            <div class="modal-header"> \
-                                                            <h5 class="modal-title" id="exampleModalLabel">\
-                                                            Delete\
-                                                            </h5> \
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                                                            <span aria-hidden="true"> \
-                                                            &times; \
-                                                        </span> \
-                                           </button> \
-                                           </div> \
-                                           <div class="modal-body">\
-                                               <p> \
-                                               Are you Sure ?\
-                                          </p> \
-                                           </div>\
-                                           <div class="modal-footer">\
-                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                                               Close \
-                                               </button>\
-                                               <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                                                Delete \
-                                               </button>\
-                                               </div> \
-                                               </div> \
-                                               </div> \
-                                               </div> \
-                                 <a href="javascript:void(0)"\
-                                   class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"\
-                                   title="Delete" \
-                                    data-target="#model-del-' + row.id + '" data-toggle="modal">\
-                                <i class="la la-trash"></i> \
-                                 </a> \
-                                 \
-                            '
-                            }
                             if (actionsRights['GET']) {
                                 content = content + ' \
                             \<a href="#/countries/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
@@ -201,42 +161,6 @@ var DatatableRemoteAjaxDemo = function () {
                             return '\
                             <a href="#/countries/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
-						</a>\
-						\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
 						</a>\
 						\
 						<a href="#/countries/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
@@ -269,7 +193,7 @@ var DatatableRemoteAjaxDemo = function () {
             console.log($(e.target)[0].checked, 'e');
             $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
         });
-        datatable.on('click', '[id^="delete-row-"]', function (e) {
+        /*datatable.on('click', '[id^="delete-row-"]', function (e) {
             var id = $(e.target).prop('id');
             id = id.replace('delete-row-', '');
 
@@ -278,7 +202,7 @@ var DatatableRemoteAjaxDemo = function () {
                 method: 'delete',
                 headers: headers
             }).done(datatable.load);
-        });
+        });*/
     };
 
     return {

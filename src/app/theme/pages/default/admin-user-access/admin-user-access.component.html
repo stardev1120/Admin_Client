@@ -1,91 +1,112 @@
 <!-- BEGIN: Subheader -->
 <div class="m-subheader">
-	<div class="d-flex align-items-center">
-		<div class="mr-auto">
-			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-				<li class="m-nav__item m-nav__item--home">
-					<a href="/index" class="m-nav__link m-nav__link--icon">
-						<i class="m-nav__link-icon la la-home"></i>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="/index" class="m-nav__link">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="/index" class="m-nav__link">
 						<span class="m-nav__link-text">
 							Home
 						</span>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="" class="m-nav__link">
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
 						<span class="m-nav__link-text">
 							Admin User Access
 						</span>
-					</a>
-				</li>
-			</ul>
-		</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-	</div>
+    </div>
 </div>
 <!-- END: Subheader -->
 <div class="m-content">
 
-	<div class="m-portlet m-portlet--mobile m-form">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text">
-						Admin User Access
-					</h3>
-				</div>
-			</div>
+    <div class="m-portlet m-portlet--mobile m-form">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Admin User Access
+                    </h3>
+                </div>
+            </div>
 
-		</div>
-		<div class="m-portlet__body">
-			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-				<div class="row" *ngIf="user">
-					<div class="col-xl-4 order-2 order-xl-1">
-						<!--<div class="row align-items-center">
-							<div class="col-xl-4 order-2 order-xl-1">
-								<button class="btn btn-primary btn-lg" style="width: 150px" (click)="verifyAccess()">Enter OTP</button>
-							</div>
-						</div>
-						<br>-->
-						<div class="row align-items-center">
-							<div class="col-xl-12 order-2 order-xl-1">
-								<label class="m--font-boldest">User Profile Name : </label>
-								<span class="m--font-normal"><b>{{user.fname}} {{user.lname}}</b></span>
-							</div>
-						</div>
-						<br>
-						<div class="row align-items-center">
-							<div class="col-xl-12 order-2 order-xl-1">
-								<label class="m--font-boldest">OTP : </label>
-								<input type="password" [(ngModel)]="code" placeholder="Enter OTP" class="m--font-normal">
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-8 order-2 order-xl-1">
-						<img style="border: 1px solid #575962;margin: 5px;" src="{{user.profilepic}}" height="250" width="250"/>
-						<img style="border: 1px solid #575962;margin: 5px;" src="{{user.selfie_proof_file}}" height="250" width="250"/>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="m-portlet__foot m-portlet__foot--fit">
-			<div class="m-form__actions m-form__actions">
-				<div class="row">
-					<div class="col-lg-3 ml-lg-auto">
-						<button class="btn btn-focus m-btn m-btn--custom m-btn--pill" style="width: 150px" (click)="verifyAccess()">Verify</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row" *ngIf="user">
+                    <div class="col-xl-4 order-2 order-xl-1">
+                        <!--<div class="row align-items-center">
+                            <div class="col-xl-4 order-2 order-xl-1">
+                                <button class="btn btn-primary btn-lg" style="width: 150px" (click)="verifyAccess()">Enter OTP</button>
+                            </div>
+                        </div>
+                        <br>-->
+                        <div class="row align-items-center">
+                            <div class="col-xl-12 order-2 order-xl-1">
+                                <label class="m--font-boldest">User Profile Name : </label>
+                                <span class="m--font-normal"><b>{{user.fname}} {{user.lname}}</b></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12 order-2 order-xl-1" [ngClass]="{'has-danger':submitted && (!code || hasError)}">
+                                <label class="m--font-boldest">OTP : </label>
+                                <input type="password" (input)="onChangeOtp()" [(ngModel)]="code" placeholder="Enter OTP"
+                                       class="m--font-normal">
+
+                                <div *ngIf="submitted && !code && !hasError"
+                                     class="form-control-feedback">
+                                    required.
+                                </div>
+                                <div *ngIf="submitted && code && hasError"
+                                     class="form-control-feedback">
+                                    {{error}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <img style="border: 1px solid #575962;margin: 5px;" src="{{user.profilepic}}" height="250"
+                             onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                             width="250"/>
+                        <img style="border: 1px solid #575962;margin: 5px;" src="{{user.selfie_proof_file}}"
+                             onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                             height="250" width="250"/>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!user && hasError">
+                    <div class="center has-danger" style="color: #f4516c; ">
+                        {{error}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class="row">
+                    <div class="col-lg-3 ml-lg-auto">
+                        <button class="btn btn-focus m-btn m-btn--custom m-btn--pill" style="width: 150px"
+                                (click)="verifyAccess()">Verify
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

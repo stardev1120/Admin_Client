@@ -5,7 +5,7 @@ import { HeaderProfileComponent } from './header-profile.component';
 import { LayoutModule } from '../../../../layouts/layout.module';
 import { DefaultComponent } from '../../default.component';
 import { FormsModule } from '@angular/forms';
-import { CompaniesResolver } from "../../companies/companies-resolver";
+import {CompaniesResolver} from "../../companies/companies-resolver";
 const routes: Routes = [
     {
         "path": "",

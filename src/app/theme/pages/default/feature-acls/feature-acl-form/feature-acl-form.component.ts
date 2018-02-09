@@ -9,7 +9,7 @@ import { CompaniesService } from "../../../../../_services/apis/company.service"
 import { Company } from "../../../../../models/company";
 import { FeatureACL } from "../../../../../models/featureACL";
 import { FeatureACLsService } from "../../../../../_services/apis/feature-acls.service";
-import { Location } from "@angular/common";
+import {Location} from "@angular/common";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -24,7 +24,7 @@ export class FeatureACLFormComponent implements OnInit {
     constructor(private api: FeatureACLsService,
         private router: Router,
         private route: ActivatedRoute,
-        public location: Location) {
+                public location: Location) {
 
     }
 
@@ -36,7 +36,6 @@ export class FeatureACLFormComponent implements OnInit {
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
-            console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
                     this.router.navigate(["/feature-acls"])

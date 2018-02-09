@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
 
-import { Country } from "../../../models/country";
-import { environment } from '../../../../environments/environment'
-import { AdminUsersService } from "../../../_services/apis/admin-users.service";
-import { AdminUserCountry } from "../../../models/admin-user-country";
+import {Country} from "../../../models/country";
+import {environment} from '../../../../environments/environment'
+import {AdminUsersService} from "../../../_services/apis/admin-users.service";
+import {AdminUserCountry} from "../../../models/admin-user-country";
 
 declare let mLayout: any;
 
@@ -23,9 +23,9 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.currentUser = this._adminUserService.currentAdminUser
-        if (!this._adminUserService.checkModuleOtherRight('countries', 'seeAllCountries')) {
+        if(!this._adminUserService.checkModuleOtherRight('countries', 'seeAllCountries')) {
             this.adminUserCountries = this._adminUserService.currentAdminUser.AdminuserCountries;
-            if (!!localStorage.getItem('currentCountry')) {
+            if(!!localStorage.getItem('currentCountry')){
                 this.currentCountry = JSON.parse(localStorage.getItem('currentCountry')) as Country;
             } else {
                 this.currentCountry = this.adminUserCountries[0].Country;

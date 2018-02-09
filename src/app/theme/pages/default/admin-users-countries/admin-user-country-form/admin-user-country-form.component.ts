@@ -31,7 +31,6 @@ export class AdminUserCountryFormComponent implements OnInit {
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
-            console.log(mForm.valid, mForm)
             this.api.save(this.data)
                 .subscribe(r => {
                     this.router.navigate(["/admin-users-countries"])

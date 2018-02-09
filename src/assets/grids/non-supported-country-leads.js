@@ -2,7 +2,7 @@
 
 var DatatableRemoteAjaxDemo = function () {
     var demo = function () {
-        var baseUrl = $('#basUrl').val()+'/non-supported-country-lead';
+        var baseUrl = $('#basUrl').val() + '/non-supported-country-lead';
         var currentUserString = localStorage.getItem('currentUser');
         var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
             (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
@@ -79,7 +79,7 @@ var DatatableRemoteAjaxDemo = function () {
                     // pagination
                     pagination: {
                         // page size select
-                        pageSizeSelect: [ 5, 10, 20, 50, 100]
+                        pageSizeSelect: [5, 10, 20, 50, 100]
                     }
                 }
             },
@@ -125,9 +125,8 @@ var DatatableRemoteAjaxDemo = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50,
                     template: function (row) {
-                        var gps_location = row.gps_location ? JSON.parse(row.gps_location) : {'lat': '-', 'long': '-'}
-
-                        return '<div>lat: ' + gps_location['lat'] + '- long:' + gps_location['long'] + '</div>'
+                        var gps_location = row.gps_location ? row.gps_location : {'lat': '-', 'long': '-'};
+                        return gps_location;
                     }
                 },
 
@@ -189,7 +188,7 @@ var DatatableRemoteAjaxDemo = function () {
         $('#country').on('input propertychange paste', function () {
             // shortcode to datatable.getDataSourceParam('query');
             var query = datatable.getDataSourceQuery();
-            if($(this).val()){
+            if ($(this).val()) {
                 query.country = $(this).val();
             } else {
                 delete query.country;
