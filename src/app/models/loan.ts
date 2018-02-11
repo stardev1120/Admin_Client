@@ -4,7 +4,7 @@ import { Collection } from "./collection";
 
 export class Loan implements BaseModel {
     public date_taken: Date;
-    public amount_taken: number;
+    public ammount_taken: number;
     public service_fee: string;
     public interest_rate: string;
     public duration_of_loan: number;

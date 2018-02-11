@@ -106,7 +106,7 @@
                         width: 100
                     },
                     {
-                        field: 'amount_taken',
+                        field: 'ammount_taken',
                         title: 'Amount Taken',
                         filterable: false, // disable or enable filtering
                         width: 50
