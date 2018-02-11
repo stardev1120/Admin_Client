@@ -148,14 +148,6 @@ var DatatableRemoteAjaxDemo = function () {
 						\
 						';
                             }
-                            if (actionsRights['GET']) {
-                                content = content + ' \
-                            \<a href="#/countries/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-                                <i class="la la-folder-open"></i>\
-                                </a>\
-                            \
-                            '
-                            }
                             return content;
                         } else {
                             return '\
@@ -163,9 +155,6 @@ var DatatableRemoteAjaxDemo = function () {
 							<i class="la la-edit"></i>\
 						</a>\
 						\
-						<a href="#/countries/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-						<i class="la la-folder-open"></i>\
-						</a>\
 					';
                         }
 

@@ -52,7 +52,7 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                     <div id="m_header_menu"
                          class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark">
-                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow" *ngIf="adminUserCountries">
+                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow" *ngIf="adminUserCountries && currentCountry">
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"
                                 data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
                                 <a href="#" class="m-menu__link m-menu__toggle">
@@ -91,7 +91,7 @@
                                 data-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 									<span class="m-topbar__userpic">
-										<img src="assets/app/media/img/users/user4.jpg"
+										<img src="assets/app/media/img/bg/default_person.png"
                                              class="m--img-rounded m--marginless m--img-centered" alt=""/>
 									</span>
                                     <span class="m-topbar__username m--hide">
@@ -106,7 +106,7 @@
                                              *ngIf="currentUser">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
-                                                    <img src="assets/app/media/img/users/user4.jpg"
+                                                    <img src="assets/app/media/img/bg/default_person.png"
                                                          class="m--img-rounded m--marginless" alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">

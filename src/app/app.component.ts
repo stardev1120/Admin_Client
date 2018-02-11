@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { Helpers } from "./helpers";
+
 import { I18nService } from "./_services/i18n.service";
 import { environment } from "../environments/environment";
 
@@ -11,10 +11,16 @@ import { environment } from "../environments/environment";
 })
 export class AppComponent implements OnInit {
     title = 'app';
-    globalBodyClass = 'm-page--loading-non-block m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default';
-
+    public lottieConfig: Object;
+    private anim: any;
     constructor(private _router: Router,
         private i18nService: I18nService) {
+        this.lottieConfig = {
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'assets/app/data.json'
+        };
     }
 
     ngOnInit() {
@@ -22,12 +28,16 @@ export class AppComponent implements OnInit {
 
         this._router.events.subscribe((route) => {
             if (route instanceof NavigationStart) {
-                Helpers.setLoading(true);
-                Helpers.bodyClass(this.globalBodyClass);
+                this.anim.play();
             }
             if (route instanceof NavigationEnd) {
-                Helpers.setLoading(false);
+                this.anim.stop();
             }
         });
+    }
+
+    handleAnimation(anim: any) {
+        this.anim = anim;
+        this.anim.setSpeed(0.5);
     }
 }

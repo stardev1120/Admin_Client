@@ -1,9 +1,10 @@
 export class LoginCustom {
 
     static handleSignInFormSubmit() {
-        $('#m_login_signin_submit').click(function(e) {
+        $('#m_login_signin_submit').click(function (e) {
             let form = $(this).closest('form');
             form.validate({
+                ignore: ".ignore",
                 rules: {
                     email: {
                         required: true,
@@ -11,6 +12,17 @@ export class LoginCustom {
                     },
                     password: {
                         required: true
+                    },
+                    hiddenRecaptcha: {
+                        required: function () {
+                            if(grecaptcha.getResponse() == '') {
+                                $('#captchaError').css('display', 'block').css('visibility', 'visible');
+                            } else {
+                                $('#captchaError').css('display', 'none').css('visibility', 'hidden');
+                            }
+
+                            return grecaptcha.getResponse() == '';
+                        }
                     }
                 }
             });
@@ -53,29 +65,29 @@ export class LoginCustom {
     }
 
     static handleFormSwitch() {
-        $('#m_login_forget_password').click(function(e) {
+        $('#m_login_forget_password').click(function (e) {
             e.preventDefault();
             LoginCustom.displayForgetPasswordForm();
         });
 
-        $('#m_login_forget_password_cancel').click(function(e) {
+        $('#m_login_forget_password_cancel').click(function (e) {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         });
 
-        $('#m_login_signup').click(function(e) {
+        $('#m_login_signup').click(function (e) {
             e.preventDefault();
             LoginCustom.displaySignUpForm();
         });
 
-        $('#m_login_signup_cancel').click(function(e) {
+        $('#m_login_signup_cancel').click(function (e) {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         });
     }
 
     static handleSignUpFormSubmit() {
-        $('#m_login_signup_submit').click(function(e) {
+        $('#m_login_signup_submit').click(function (e) {
             let btn = $(this);
             let form = $(this).closest('form');
             form.validate({
@@ -106,7 +118,7 @@ export class LoginCustom {
     }
 
     static handleForgetPasswordFormSubmit() {
-        $('#m_login_forget_password_submit').click(function(e) {
+        $('#m_login_forget_password_submit').click(function (e) {
             let btn = $(this);
             let form = $(this).closest('form');
             form.validate({

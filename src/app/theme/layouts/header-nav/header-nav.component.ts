@@ -22,14 +22,16 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.currentUser = this._adminUserService.currentAdminUser
+        this.currentUser = this._adminUserService.currentAdminUser;
         if(!this._adminUserService.checkModuleOtherRight('countries', 'seeAllCountries')) {
             this.adminUserCountries = this._adminUserService.currentAdminUser.AdminuserCountries;
             if(!!localStorage.getItem('currentCountry')){
                 this.currentCountry = JSON.parse(localStorage.getItem('currentCountry')) as Country;
             } else {
-                this.currentCountry = this.adminUserCountries[0].Country;
-                localStorage.setItem('currentCountry', JSON.stringify(this.adminUserCountries[0].Country));
+                if(this.adminUserCountries[0]){
+                    this.currentCountry = this.adminUserCountries[0].Country;
+                    localStorage.setItem('currentCountry', JSON.stringify(this.adminUserCountries[0].Country));
+                }
             }
         } else {
             this.adminUserCountries = null;

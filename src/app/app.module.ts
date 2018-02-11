@@ -5,6 +5,7 @@ import {LayoutModule} from './theme/layouts/layout.module';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RecaptchaModule} from 'ng-recaptcha';
 import {QRCodeModule} from 'angular2-qrcode';
+import {LottieAnimationViewModule} from "ng-lottie";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -34,7 +35,8 @@ import {AuthInterceptor} from "./_services/auth-http-interceptor.service";
         ApisModule,
         TranslateModule.forRoot(),
         RecaptchaModule.forRoot(),
-        QRCodeModule
+        QRCodeModule,
+        LottieAnimationViewModule
     ],
     providers: [
         ScriptLoaderService,

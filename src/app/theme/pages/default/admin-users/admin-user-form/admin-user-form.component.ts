@@ -28,7 +28,7 @@ export class AdminUserFormComponent implements OnInit {
     ngOnInit() {
         this.data = this.route.snapshot.data.adminUser as AdminUser;
         if(this.data && this.data.AdminuserCountries) {
-            var that = this;
+            let that = this;
             _.each(that.data.AdminuserCountries, function (country) {
                 that.selectedCountries.push(country.country_id)
             })

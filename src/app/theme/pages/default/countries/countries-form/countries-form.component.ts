@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
 
-import { Country } from "../../../../../models/country";
-import { CountriesService } from "../../../../../_services/apis/countries.service";
-import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import {Country} from "../../../../../models/country";
+import {CountriesService} from "../../../../../_services/apis/countries.service";
+import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -15,17 +15,19 @@ import { ScriptLoaderService } from "../../../../../_services/script-loader.serv
 export class CountriesFormComponent implements OnInit {
     data: Country;
     currencies: any;
-
+    isEditMode = false;
 
     constructor(private _script: ScriptLoaderService, private api: CountriesService,
-        private router: Router,
-        private route: ActivatedRoute) {
+                private router: Router,
+                private route: ActivatedRoute) {
 
     }
 
     ngOnInit() {
         this.data = this.route.snapshot.data.country as Country;
+        this.isEditMode = !!this.data.id;
     }
+
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/countries-investments.js');
@@ -33,12 +35,16 @@ export class CountriesFormComponent implements OnInit {
             'assets/grids/countries-settings.js');
 
     }
+
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
             this.api.save(this.data)
                 .subscribe(r => {
-                    this.router.navigate(["/countries"])
+                    this.data = r;
+                    if(this.isEditMode){
+                        this.router.navigate(["/countries"])
+                    }
                 });
         }
     }

@@ -8,17 +8,16 @@ import { CountrySettingFormComponent } from "./country-setting-form/country-sett
 import { CountrySettingResolver } from "./country-settings-resolver";
 
 import { FormsModule } from "@angular/forms";
-import { CountriesResolver } from "../countries/countries-resolver";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "children": [
-            {
+/*            {
                 "path": "",
                 "component": CountriesSettingsComponent
-            },
+            },*/
             {
                 "path": ":id/:countryId",
                 "component": CountrySettingFormComponent,
@@ -37,8 +36,7 @@ const routes: Routes = [
         FormsModule
     ],
     providers: [
-        CountrySettingResolver,
-        CountriesResolver
+        CountrySettingResolver
     ],
 
     exports: [

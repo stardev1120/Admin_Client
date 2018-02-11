@@ -4064,7 +4064,13 @@ a.bg-dark:focus, a.bg-dark:hover {
   align-content: flex-end !important; }
 
 .align-content-center {
-  align-content: center !important; }
+    align-content: center !important;}
+
+.align-content-center img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .align-content-between {
   align-content: space-between !important; }
@@ -31007,4 +31013,10 @@ body.m-content--skin-light2 {
 
 .amcharts-chart-div a{
     display: none !important;
+}
+
+.a-disabled {
+    color: gray;
+    cursor: not-allowed;
+    pointer-events: none;
 }

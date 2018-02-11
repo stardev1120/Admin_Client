@@ -22,5 +22,6 @@ export class AdminUser implements BaseModel {
     public Role: Role;
     public AdminuserCountries: any = [];
     public countries: AdminUserCountry[];
+    public is2FAVerified: boolean;
     public id?: string;
 }

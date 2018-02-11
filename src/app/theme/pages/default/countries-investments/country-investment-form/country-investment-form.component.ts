@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
 
-import { Country } from "../../../../../models/country";
-import { CountriesService } from "../../../../../_services/apis/countries.service";
-import { CountryInvestment } from "../../../../../models/country-investment";
-import { CountriesInvestmentService } from "../../../../../_services/apis/countries-investment.service";
+import {Country} from "../../../../../models/country";
+import {CountriesService} from "../../../../../_services/apis/countries.service";
+import {CountryInvestment} from "../../../../../models/country-investment";
+import {CountriesInvestmentService} from "../../../../../_services/apis/countries-investment.service";
 import {Location} from "@angular/common";
 
 @Component({
@@ -16,23 +16,20 @@ import {Location} from "@angular/common";
 })
 export class CountryInvestmentFormComponent implements OnInit {
     data: CountryInvestment;
+    country: Country;
 
     statuses: any = [{
-        id: 'status1',
-        title: 'Status 1'
+        id: 'Active',
+        title: 'Active'
     }, {
-        id: 'status2',
-        title: 'Status 2'
-    }, {
-        id: 'status3',
-        title: 'Status 3'
-    }, {
-        id: 'status4',
-        title: 'Status 4'
+        id: 'Disabled',
+        title: 'Disabled'
     }];
+
     constructor(private api: CountriesInvestmentService,
-        private router: Router,
-        private route: ActivatedRoute,
+                private countryApi: CountriesService,
+                private router: Router,
+                private route: ActivatedRoute,
                 public location: Location) {
 
     }
@@ -41,16 +38,22 @@ export class CountryInvestmentFormComponent implements OnInit {
         this.data = this.route.snapshot.data.countryInvestment as CountryInvestment;
         this.route.params
             .map(params => params['countryId'])
-            .subscribe(countryId => this.data.country_id = countryId*1);
+            .subscribe(countryId => {
+                this.data.country_id = countryId * 1;
+                this.countryApi.get(countryId).subscribe(country => {
+                    this.country = country;
+                })
+            });
     }
 
     onSubmit(mForm: any) {
 
         if (mForm.valid) {
             this.api.save(this.data)
-                .subscribe(r => {
+                .subscribe(() => {
                     //this.router.navigate(["/countries-investments"])
-                    this.location.back();
+                    //this.location.back();
+                    this.router.navigate(['/countries', this.data.country_id])
                 });
         }
     }

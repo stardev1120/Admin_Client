@@ -7,7 +7,17 @@
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
-                <li class="m-nav__separator">
+                <li class="m-nav__separator" *ngIf="country">
+                    -
+                </li>
+                <li class="m-nav__item" *ngIf="country">
+                    <a [routerLink]="['/countries/view', data.country_id]" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{country.name}}
+						</span>
+                    </a>
+                </li>
+                <!--<li class="m-nav__separator">
                     -
                 </li>
                 <li class="m-nav__item">
@@ -16,14 +26,17 @@
 							Countries setting
 						</span>
                     </a>
-                </li>
+                </li>-->
                 <li class="m-nav__separator">
                     -
                 </li>
                 <li class="m-nav__item">
                     <a href="" class="m-nav__link">
-						<span class="m-nav__link-text">
+						<span class="m-nav__link-text" *ngIf="data.id">
 							{{data.name}}
+						</span>
+                        <span class="m-nav__link-text" *ngIf="!data.id">
+							 New country setting
 						</span>
                     </a>
                 </li>
@@ -89,9 +102,10 @@
                         Value *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <input [(ngModel)]="data.value" type="text" class="form-control m-input"
+                        <textarea rows="4" [(ngModel)]="data.value" type="text" class="form-control m-input"
                                name="value1"
                                placeholder="Enter value" required #value1="ngModel">
+                        </textarea>
                         <div *ngIf="mForm.submitted && value1.hasError('required') || (value1.touched && value1.hasError('required'))"
                              class="form-control-feedback">
                             required.

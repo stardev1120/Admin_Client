@@ -30,15 +30,6 @@ const routes: Routes = [
                 resolve: {
                     country: CountryResolver
                 }
-            },
-            {
-                "path": "view/:id",
-                "component": CountryViewComponent,
-                "canActivate": [AuthGuard],
-                data:{module: 'countries', action: 'GET'},
-                resolve: {
-                    country: CountryResolver
-                }
             }
         ]
     }
