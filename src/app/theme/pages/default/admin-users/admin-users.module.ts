@@ -13,6 +13,7 @@ import { RolesResolver } from "../roles/roles-resolver";
 import { AdminUserResolver } from "./admin-user-resolver";
 import { CountriesResolver } from "../countries/countries-resolver";
 import {AuthGuard} from "../../../../auth/_guards";
+import {AdminUserChangePasswordComponent} from "./admin-user-change-password/admin-user-change-password.component";
 
 const routes: Routes = [
     {
@@ -35,6 +36,15 @@ const routes: Routes = [
                     companies: CompaniesResolver,
                     roles: RolesResolver,
                     countries: CountriesResolver,
+                }
+            },
+            {
+                "path": "change-password/:id",
+                "component": AdminUserChangePasswordComponent,
+                "canActivate": [AuthGuard],
+                data:{module: 'admin-users', action: 'PUT'},
+                resolve: {
+                    adminUser: AdminUserResolver,
                 }
             }
         ]
@@ -60,7 +70,8 @@ const routes: Routes = [
 
     ], declarations: [
         AdminUsersComponent,
-        AdminUserFormComponent
+        AdminUserFormComponent,
+        AdminUserChangePasswordComponent
     ]
 })
 export class AdminUsersModule {

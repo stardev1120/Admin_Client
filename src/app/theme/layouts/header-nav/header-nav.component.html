@@ -52,7 +52,8 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                     <div id="m_header_menu"
                          class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark">
-                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow" *ngIf="adminUserCountries && currentCountry">
+                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow"
+                            *ngIf="adminUserCountries && currentCountry">
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"
                                 data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
                                 <a href="#" class="m-menu__link m-menu__toggle">
@@ -64,8 +65,10 @@
 										</span>
 									</span>
 								</span>
-                                    <i class="m-menu__hor-arrow la la-angle-down" *ngIf="adminUserCountries.length > 1"></i>
-                                    <i class="m-menu__ver-arrow la la-angle-right" *ngIf="adminUserCountries.length > 1"></i>
+                                    <i class="m-menu__hor-arrow la la-angle-down"
+                                       *ngIf="adminUserCountries.length > 1"></i>
+                                    <i class="m-menu__ver-arrow la la-angle-right"
+                                       *ngIf="adminUserCountries.length > 1"></i>
                                 </a>
                                 <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left"
                                      *ngIf="adminUserCountries.length > 1">
@@ -91,11 +94,11 @@
                                 data-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 									<span class="m-topbar__userpic">
-										<img src="assets/app/media/img/bg/default_person.png"
-                                             class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                            <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                 [src]="currentUser.photo" class="m--img-rounded m--marginless m--img-centered" alt=""/>
 									</span>
                                     <span class="m-topbar__username m--hide">
-										Nick
+										{{currentUser.name}}
 									</span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
@@ -106,7 +109,8 @@
                                              *ngIf="currentUser">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
-                                                    <img src="assets/app/media/img/bg/default_person.png"
+                                                    <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                                         [src]="currentUser.photo"
                                                          class="m--img-rounded m--marginless" alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">
@@ -143,8 +147,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="m-nav__item">
-                                                        <a routerLink="/snippets/pages/user/login-1"
-                                                           class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder"
+                                                        <a class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder"
                                                            routerLink="/logout">
                                                             Logout
                                                         </a>

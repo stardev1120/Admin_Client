@@ -24,6 +24,7 @@ export class User implements BaseModel {
     public id_proof_file: string;
     public selfie_proof_file: string;
     public address_proof_file: string;
+    public selfie_proof_video: string;
     public id_verification_status: string;
     public address_verification_status: string;
     public phone_number: string;

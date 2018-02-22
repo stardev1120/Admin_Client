@@ -1,9 +1,9 @@
-import { BaseModel } from "../_services/base-model";
-import { Loan } from "./loan";
-import { Country } from "./country";
-import { Company } from "./company";
-import { Role } from "./role";
-import { AdminUserCountry } from "./admin-user-country";
+import {BaseModel} from "../_services/base-model";
+import {Loan} from "./loan";
+import {Country} from "./country";
+import {Company} from "./company";
+import {Role} from "./role";
+import {AdminUserCountry} from "./admin-user-country";
 
 export class AdminUser implements BaseModel {
     public name: string;
@@ -18,10 +18,12 @@ export class AdminUser implements BaseModel {
     public two_factor_temp_secret: string;
     public otpauth_url: string;
     public last_login: Date;
-    public company: Company;
+    public Company: Company;
     public Role: Role;
     public AdminuserCountries: any = [];
     public countries: AdminUserCountry[];
     public is2FAVerified: boolean;
+    public photo: string;
+    public status: string;
     public id?: string;
 }

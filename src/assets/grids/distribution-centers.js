@@ -1,60 +1,48 @@
-//== Class definition
-
-var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    // basic demo
-    var demo = function () {
-        var baseUrl = $('#basUrl').val() + '/distribution-center/company';//'http://localhost:3000/api/admin/distribution-center'
-        var currentUserString = localStorage.getItem('currentUser');
-        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
-            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
-        var headers = {
-            "content-type": "application/json"
-        };
-        if (currentUserString) {
-            var currentUser = JSON.parse(currentUserString);
-            if (currentUser) {
-                var token = currentUser.token;
-                headers['authorization'] = "JWT " + token;
-                if (currentCountry) {
-                    headers['country_id'] = currentCountry;
-                }
+var Datatable_Distribution_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
             }
-
         }
-
-        var datatable = $('.m_datatable_centers').mDatatable({
-            // datasource definition
+    }
+    var demo = function (filter) {
+        datatable = $('.m_datatable_centers').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        // sample GET method
                         method: 'GET',
                         headers: headers,
-                        //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                        url: baseUrl,
-                        params: {
-                            query: {"company_id": $('#company_id_1').val()}
-                        },
+                        url: baseUrl + '/distribution-center/company',
                         map: function (raw) {
-                            // sample data mapping
                             var dataSet = raw;
                             if (typeof raw.data !== 'undefined') {
                                 dataSet = raw.data;
                             }
                             return dataSet;
-                        },
-                    },
+                        }
+                    }
                 },
-                pageSize: 5,
+                pageSize: 10,
                 saveState: {
                     cookie: true,
-                    webstorage: true,
+                    webstorage: true
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                serverSorting: true,
+                serverSorting: true
             },
 
             // layout definition
@@ -74,44 +62,17 @@ var DatatableRemoteAjaxDemo = function () {
             toolbar: {
                 // toolbar items
                 items: {
-                    // pagination
-                    /*actions: {
-                        delete: {
-                            name: 'Delete All',
-                            url: '/delete',
-                            fn: function (ids) {
-                                console.log(ids);
-                            }
-                        }
-                    },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [5, 10, 20, 50, 100]
+                        pageSizeSelect: [10, 20, 50, 100]
                     }
                 }
             },
-
-            /* search: {
-                 input: $('#m_form_name')
-             },*/
-
-            // columns definition
             columns: [
-                /* {
-                     field: 'select',
-                     width: 20,
-                     title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                     sortable: false,
-                     overflow: 'visible',
-                     template: function (row) {
-                         return '<input type="checkbox" id="select-' + row.id + '" data-value="' + row.id + '"/>';
-                     },
-                 },*/
                 {
                     field: 'address',
                     title: 'Address',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false
                 },
                 {
                     field: 'lat',
@@ -126,8 +87,7 @@ var DatatableRemoteAjaxDemo = function () {
                 {
                     field: 'contact_number',
                     title: 'Contact Number',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false
                 },
                 {
                     field: 'country',
@@ -138,18 +98,7 @@ var DatatableRemoteAjaxDemo = function () {
                     template: function (row) {
                         return row.Country.name;
                     }
-                }/*,
-                {
-                    field: 'company',
-                    title: 'Company',
-                    // sortable: 'asc', // default sort
-                    filterable: false, // disable or enable filtering
-                    //width: 100,
-                    template: function (row) {
-                        return row.Company.name;
-                    }
-                }*/,
-
+                },
                 {
                     field: 'Actions',
                     //width: 110,
@@ -157,7 +106,6 @@ var DatatableRemoteAjaxDemo = function () {
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
                             <a href="#/distribution-centers/' + row.id + '/' + $('#company_id_1').val() + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
@@ -198,26 +146,9 @@ var DatatableRemoteAjaxDemo = function () {
 							<i class="la la-trash"></i>\
 						</a>\
 					';
-                    },
-                }],
+                    }
+                }]
         });
-
-        /*var query = datatable.getDataSourceQuery();
-
-
-        $('#m_form_name').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            query.name = $(this).val();
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.name !== 'undefined' ? query.name : '');
-
-        $('#selectall').change(function (e) {
-            console.log($(e.target)[0].checked, 'e');
-            $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });*/
         datatable.on('click', '[id^="delete-row-"]', function (e) {
             var id = $(e.target).prop('id');
             id = id.replace('delete-row-', '');
@@ -229,15 +160,37 @@ var DatatableRemoteAjaxDemo = function () {
                 headers: headers
             }).done(datatable.load);
         });
+
+        query(filter);
+        return datatable;
     };
+
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+        if (filter['country_id']) {
+            query['country_id'] = filter['country_id'];
+        } else {
+            delete query.country_id;
+        }
+        datatable.setOption('include', ["Company", "Country"]);
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
 
     return {
         // public functions
-        init: function () {
-            demo();
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam;
+            return demo(filter);
         },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
     };
 }();
-jQuery(document).ready(function () {
-    DatatableRemoteAjaxDemo.init();
-});

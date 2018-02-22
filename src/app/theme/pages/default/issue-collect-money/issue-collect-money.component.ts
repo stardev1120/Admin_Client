@@ -20,7 +20,7 @@ export class IssueCollectMoneyComponent implements OnInit {
     id: string;
     error = '';
     hasError = false;
-    submitted= false;
+    submitted = false;
 
     constructor(private api: UsersService,
                 private _router: Router,
@@ -36,7 +36,23 @@ export class IssueCollectMoneyComponent implements OnInit {
     onIssueMoney(loanId: string) {
         this._loanService.get(loanId).subscribe((loan: Loan) => {
             if (loan) {
-                this._router.navigate(['/issue-collect-money/issue/' + loan.user_id + '/' + loan.id]).then();
+                if(loan.status === 'To-be-Given'){
+                    if (loan.user_id) {
+                        if(loan.User){
+                            this._router.navigate(['/issue-collect-money/issue/' + loan.user_id + '/' + loan.id]).then();
+                        } else {
+                            this.error = 'Loan\'s user didn\'t belong to a current counrty';
+                            this.hasError = true;
+                        }
+                    }
+                    else {
+                        this.error = 'Loan didn\'t belong to a certain user';
+                        this.hasError = true;
+                    }
+                } else {
+                    this.error = 'Loan is already issued.';
+                    this.hasError = true;
+                }
             } else {
                 this.error = 'Invalid loan id';
                 this.hasError = true;
@@ -51,9 +67,20 @@ export class IssueCollectMoneyComponent implements OnInit {
     onCollectMoney(collectionId: string) {
         this._collectionService.get(collectionId).subscribe((collection: Collection) => {
             if (collection) {
-                this._router.navigate(['/issue-collect-money/collect/' + collection.Loan.user_id + '/' + collection.id]).then();
+                if(collection.status !== 'Collected'){
+                    if (collection.Loan && collection.Loan.user_id) {
+                        this._router.navigate(['/issue-collect-money/collect/' + collection.Loan.user_id + '/' + collection.id]).then();
+                    }
+                    else {
+                        this.error = 'Collection didn\'t belong to a certain user';
+                        this.hasError = true;
+                    }
+                } else {
+                    this.error = 'Collection is already collected';
+                    this.hasError = true;
+                }
             } else {
-                this.error = 'Invalid collected id';
+                this.error = 'Invalid collection id';
                 this.hasError = true;
             }
         }, error => {
@@ -78,7 +105,7 @@ export class IssueCollectMoneyComponent implements OnInit {
                     this.onIssueMoney(this.id);
                     return;
                 }
-               //console.log('User didn\'t have a permission for issue money, please, contact Admin user')
+                //console.log('User didn\'t have a permission for issue money, please, contact Admin user')
             } else if (_.startsWith(this.code.toLowerCase(), 'c')) {
                 if (this._adminUserService.checkModuleOtherRight('collections', 'collectMoney')) {
                     this.onCollectMoney(this.id);

@@ -12,6 +12,7 @@ import {LoanResolver} from "./loan-resolver";
 import {FormsModule} from "@angular/forms";
 import {UsersResolver} from "../users/users-resolver";
 import {AuthGuard} from "../../../../auth/_guards";
+import {LoanViewComponent} from "./loan-view/loan-view.component";
 
 const routes: Routes = [
     {
@@ -25,13 +26,22 @@ const routes: Routes = [
                 "component": LoanslistComponent
             },
             {
-                "path": ":id",
+                "path": ":loanId",
                 "component": LoanFormComponent,
                 "canActivate": [AuthGuard],
                 data: {module: 'loans', action: 'PUT'},
                 resolve: {
                     loan: LoanResolver,
                     users: UsersResolver
+                }
+            },
+            {
+                "path": "view/:loanId",
+                "component": LoanViewComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'loans', action: 'GET'},
+                resolve: {
+                    loan: LoanResolver
                 }
             }
         ]
@@ -56,7 +66,8 @@ const routes: Routes = [
 
     ], declarations: [
         LoanslistComponent,
-        LoanFormComponent
+        LoanFormComponent,
+        LoanViewComponent
     ]
 })
 export class LoansModule {

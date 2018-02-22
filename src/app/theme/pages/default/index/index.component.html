@@ -1,5 +1,5 @@
 <!-- BEGIN: Subheader -->
-<div class="m-subheader" appunwraptag="">
+<div class="m-subheader" appunwraptag="" *ngIf="adminUserService.isUserhasMainRole">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="m-subheader__title">
@@ -67,15 +67,12 @@
 </div>
 <!-- END: Subheader -->
 <div class="m-content">
-    <div class="row">
+    <div *ngIf="chartData" class="row">
         <div class="col-xl-3">
             <div class="m-widget14">
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('users')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_users')"
+                        <div (click)="onNavigateToRoute('users')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -84,22 +81,15 @@
                                 <span id="m_chart_daily_sales1_count" class="m-widget14__desc">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales1_count'"
                                  [chart-color]="'#7FD6F6'"
-                                 [chart-api]="'/users-per-date'"
+                                 [chart-data]="chartData['users-per-date']"
                                  [chart-kpi-text]="'User'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'count'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
-
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('collections')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_amount_collected')"
+                        <div (click)="onNavigateToRoute('collections', 'status', 'Collected')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin || adminUserService.isDistributor" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -108,17 +98,65 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales2_sum">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales2_sum'"
-                                 [chart-color]="'#34bfa3'"
-                                 [chart-api]="'/collected-amount-per-date'"
+                                 [chart-color]="'#f4516c'"
+                                 [chart-data]="chartData['collected-amount-per-date']"
                                  [chart-kpi-text]="'$'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'sum'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
+                        <div (click)="onNavigateToRoute('collections', 'admin_user_id', adminUserService.currentAdminUser.id)" *ngIf="adminUserService.isDistributorAdmin || adminUserService.isDistributor" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Collections by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales19_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales19_sum'"
+                                   [chart-color]="'#34bfa3'"
+                                   [chart-data]="chartData['collections-per-date-by-current']"
+                                   [chart-kpi-text]="'collection'"
+                                   [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('collections', 'company_id', adminUserService.currentAdminUser.company_id)" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Collections by your company
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales25_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales25_sum'"
+                                   [chart-color]="'#f4516c'"
+                                   [chart-data]="chartData['collections-per-date-by-company']"
+                                   [chart-kpi-text]="'collection'"
+                                   [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('users', 'status', 'Unverified')" *ngIf="adminUserService.isCallCenter" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Unverified Users
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales29_count">
+							</span>
+                            </div>
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                  [chart-kpi-id]="'m_chart_daily_sales29_count'"
+                                  [chart-color]="'#f4516c'"
+                                  [chart-data]="chartData['unverified-users-per-date']"
+                                  [chart-kpi-text]="'User'"
+                                  [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,10 +165,7 @@
             <div class="m-widget14">
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('loans')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_loans')"
+                        <div (click)="onNavigateToRoute('loans')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -139,20 +174,15 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales3_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales3_count'"
                                  [chart-color]="'#c4c5d6'"
-                                 [chart-api]="'/loans-per-date'"
+                                 [chart-data]="chartData['loans-per-date']"
                                  [chart-kpi-text]="'Loan'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'count'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
-                        <!--begin:: Widgets/Daily Sales-->
-                        <div class="m-widget14" style="background-color: white;margin-top: 10px;"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'average_uScore')">
+                        <div (click)="onNavigateToRoute('users')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14" style="background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Average uScore
@@ -160,17 +190,99 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales4_avg">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales4_avg'"
                                  [chart-color]="'#00c5dc'"
-                                 [chart-api]="'/avg-uscore-per-date'"
+                                 [chart-data]="chartData['avg-uscore-per-date']"
                                  [chart-kpi-text]="''"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'avg'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
+                        <div (click)="onNavigateToRoute('admin-collect-distribute', 'admin_user_id', adminUserService.currentAdminUser.id)" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Distributes by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales20_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales20_sum'"
+                                   [chart-color]="'#c4c5d6'"
+                                   [chart-data]="chartData['distributes-per-date-by-current']"
+                                   [chart-kpi-text]="'distribute'"
+                                   [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('admin-collect-distribute', 'company_id', adminUserService.currentAdminUser.company_id)" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Distributes by your Company
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales24_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales24_sum'"
+                                   [chart-color]="'#ffb822'"
+                                   [chart-data]="chartData['distributes-per-date-by-company']"
+                                   [chart-kpi-text]="'distribute'"
+                                   [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('admin-user-access', 'status', 'Verified', 'admin_user_id', adminUserService.currentAdminUser.id)" *ngIf="adminUserService.isCallCenter" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Users viewed by OTP by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales18_count">
+							</span>
+                            </div>
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                  [chart-kpi-id]="'m_chart_daily_sales18_count'"
+                                  [chart-color]="'#f4516c'"
+                                  [chart-data]="chartData['otp-user-per-date-current']"
+                                  [chart-kpi-text]="'User'"
+                                  [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('loans', 'status', 'Active')" *ngIf="adminUserService.isDistributor" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Given Out Loans
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales28_sum">
+							</span>
+                            </div>
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                  [chart-kpi-id]="'m_chart_daily_sales28_sum'"
+                                  [chart-color]="'#ffb822'"
+                                  [chart-data]="chartData['issued-amount-per-date']"
+                                  [chart-kpi-text]="'$'"
+                                  [chart-kpi-name]="'sum'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('distributes', 'admin_user_id', adminUserService.currentAdminUser.id)" *ngIf="adminUserService.isDistributor" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Distributes by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales23_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales23_sum'"
+                                   [chart-color]="'#34bfa3'"
+                                   [chart-data]="chartData['distributes-per-date-by-current']"
+                                   [chart-kpi-text]="'distribute'"
+                                   [chart-kpi-name]="'count'">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,10 +291,7 @@
             <div class="m-widget14">
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('collections')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_collections')"
+                        <div (click)="onNavigateToRoute('collections')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -191,41 +300,65 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales5_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales5_count'"
                                  [chart-color]="'#5867dd'"
-                                 [chart-api]="'/collections-per-date'"
+                                 [chart-data]="chartData['collections-per-date']"
                                  [chart-kpi-text]="'Collection'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'count'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('users')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_users_profile_viewed_by_otp_access')"
+                        <div (click)="onNavigateToRoute('admin-user-access', 'status', 'Verified')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
                                     Users viewed by OTP
                                 </h3>
                                 <span class="m-widget14__desc" id="m_chart_daily_sales6_count">
-								34 User
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales6_count'"
                                  [chart-color]="'#36a3f7'"
-                                 [chart-api]="'/otp-user-per-date'"
+                                 [chart-data]="chartData['otp-user-per-date']"
                                  [chart-kpi-text]="'User'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'count'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
+                        <div (click)="onNavigateToRoute('loans', 'admin_user_id', adminUserService.currentAdminUser.id, 'status', 'Active')" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Given Out Loans by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales21_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales21_sum'"
+                                   [chart-color]="'#5867dd'"
+                                   [chart-data]="chartData['issued-amount-per-date-by-current']"
+                                   [chart-kpi-text]="'$'"
+                                   [chart-kpi-name]="'sum'">
+                            </div>
+                        </div>
+                        <div (click)="onNavigateToRoute('loans', 'company_id', adminUserService.currentAdminUser.company_id, 'status', 'Active')" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Given Out Loans by your company
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales27_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales27_sum'"
+                                   [chart-color]="'#36a3f7'"
+                                   [chart-data]="chartData['issued-amount-per-date-by-company']"
+                                   [chart-kpi-text]="'$'"
+                                   [chart-kpi-name]="'sum'">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,10 +367,7 @@
             <div class="m-widget14">
                 <div class="m-widget14__stats">
                     <div class="m-widget14__items m-widget14__items-col1">
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('loans')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_given_out_loans')"
+                        <div (click)="onNavigateToRoute('loans', 'status', 'Active')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -246,22 +376,15 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales7_sum">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales7_sum'"
                                  [chart-color]="'#ffb822'"
-                                 [chart-api]="'/issued-amount-per-date'"
+                                 [chart-data]="chartData['issued-amount-per-date']"
                                  [chart-kpi-text]="'$'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'sum'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
-
-                        <!--begin:: Widgets/Daily Sales-->
-                        <!--(click)="onNavigateToRoute('users')"-->
-                        <div class="m-widget14"
-                             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'total_of_unverified_users')"
+                        <div (click)="onNavigateToRoute('users', 'status', 'Unverified')" *ngIf="adminUserService.isSuperAdmin || adminUserService.isAdmin" class="m-widget14"
                              style="cursor: pointer;background-color: white;margin-top: 10px;">
                             <div class="m-widget14__header m--margin-bottom-30">
                                 <h3 class="m-widget14__title">
@@ -270,269 +393,288 @@
                                 <span class="m-widget14__desc" id="m_chart_daily_sales8_count">
 							</span>
                             </div>
-                            <div class="m-widget14__chart" style="height:120px;" appBarChart
+                            <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
                                  [chart-kpi-id]="'m_chart_daily_sales8_count'"
                                  [chart-color]="'#f4516c'"
-                                 [chart-api]="'/unverified-users-per-date'"
+                                 [chart-data]="chartData['unverified-users-per-date']"
                                  [chart-kpi-text]="'User'"
-                                 [country-id]="currentCountry"
-                                 [date-range]="selectedDateRange"
                                  [chart-kpi-name]="'count'">
                             </div>
                         </div>
-                        <!--end:: Widgets/Daily Sales-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"
-                 *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'country_investment_money_left')">
-                <div class="m-widget14__header m--margin-bottom-30">
-                    <h3 class="m-widget14__title">
-                        Country Investment Money Left
-                    </h3>
-                    <span class="m-widget14__desc" id="m_chart_daily_sales9_sum">
-
+                        <div (click)="onNavigateToRoute('collections', 'status', 'Collected', 'admin_user_id', adminUserService.currentAdminUser.id)" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Collected by you
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales22_sum">
 							</span>
-                </div>
-                <div class="m-widget14__chart" style="height:120px;" appBarChart
-                     [chart-kpi-id]="'m_chart_daily_sales9_sum'"
-                     [chart-color]="'#E4507E'"
-                     [chart-api]="'/left-money-per-date'"
-                     [chart-kpi-text]="'$'"
-                     [country-id]="currentCountry"
-                     [date-range]="selectedDateRange"
-                     [chart-kpi-name]="'sum'">
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"
-                 *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'country_investment_status')">
-                <div class="m-widget14__header m--margin-bottom-30">
-                    <h3 class="m-widget14__title">
-                        Country Investment Status
-                    </h3>
-                    <span class="m-widget14__desc" id="m_chart_daily_sales10_count">
-							</span>
-                </div>
-                <div class="m-widget14__chart" style="height:120px;" appBarChart
-                     [chart-kpi-id]="'m_chart_daily_sales10_count'"
-                     [chart-color]="'#6f42c1'"
-                     [chart-api]="'/investment-status-per-date'"
-                     [chart-kpi-text]="''"
-                     [country-id]="currentCountry"
-                     [date-range]="selectedDateRange"
-                     [chart-kpi-name]="'count'">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12"
-             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'duration_users_loans_collections')">
-            <!--begin::Portlet-->
-            <div class="m-portlet m-portlet--tab">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-							<span class="m-portlet__head-icon m--hide">
-								<i class="la la-gear"></i>
-							</span>
-                            <h3 class="m-portlet__head-text">
-                                Duration on Users, Loans and Collections
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div style="height: 500px;" appSerialAmChart
-                         [chart-api]="'/users-loans-collections-per-date'"
-                         [country-id]="currentCountry"
-                         [date-range]="selectedDateRange"
-                         [chart-settings]="serialAmChart1Options"></div>
-                </div>
-            </div>
-            <!--end::Portlet-->
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12"
-             *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'duration_users_amountOfLoans_amountOfCollections')">
-            <!--begin::Portlet-->
-            <div class="m-portlet m-portlet--tab">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-							<span class="m-portlet__head-icon m--hide">
-								<i class="la la-gear"></i>
-							</span>
-                            <h3 class="m-portlet__head-text">
-                                Duration on Users, Amount of Loans and Amount of Collections
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div style="height: 500px;" appSerialAmChart
-                         [chart-api]="'/users-loans-collections-amount-per-date'"
-                         [country-id]="currentCountry"
-                         [date-range]="selectedDateRange"
-                         [chart-settings]="serialAmChart2Options"></div>
-                </div>
-            </div>
-            <!--end::Portlet-->
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12" *ngIf="adminUserService.checkModuleOtherRight('dashboard', 'revenue')">
-            <!--begin::Portlet-->
-            <div class="m-portlet m-portlet--tab">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-							<span class="m-portlet__head-icon m--hide">
-								<i class="la la-gear"></i>
-							</span>
-                            <h3 class="m-portlet__head-text">
-                                Revenue By Day
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div style="height:500px;" appLineChart
-                         [chart-api]="'/revenue-per-date'"
-                         [country-id]="currentCountry"
-                         [date-range]="selectedDateRange"
-                         [title]="'Revenue By Day'"
-                         [column-1]="'Day'"
-                         [column-2]="'Revenue'"></div>
-                </div>
-            </div>
-            <!--end::Portlet-->
-        </div>
-    </div>
-    <div class="row">
-        <!--<div class="col-xl-12">
-            &lt;!&ndash;end: Search Form &ndash;&gt;
-            &lt;!&ndash;begin: Datatable &ndash;&gt;
-            <div class="m_datatable" id="json_data"></div>
-            &lt;!&ndash;end: Datatable &ndash;&gt;
-        </div>-->
-        <div class="col-xl-12" *ngIf="adminUserService.checkModuleActionRight('user-activities', 'GET')">
-            <!--begin:: Widgets/Audit Log-->
-            <div class="m-portlet m-portlet--full-height">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                Users Activities Logs
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="m-portlet__head-tools m-subheader" style="padding-top: 0">
-                        <!--<ul class="nav nav-pills nav-pills&#45;&#45;brand m-nav-pills&#45;&#45;align-right m-nav-pills&#45;&#45;btn-pill m-nav-pills&#45;&#45;btn-sm" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
-                                    Today
-                                </a>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
-                                    Week
-                                </a>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
-                                    Month
-                                </a>
-                            </li>
-                        </ul>-->
-                        <span class="m-subheader__daterange" appDateRange
-                              (on-change)="onChangeDateRangeActivity($event)">
-				<span class="m-subheader__daterange-label">
-					<span class="m-subheader__daterange-title"></span>
-					<span class="m-subheader__daterange-date m--font-brand"></span>
-				</span>
-				<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-					<i class="la la-angle-down"></i>
-				</a>
-			</span>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="m_widget4_tab1_content">
-                            <div class="m-scrollable" data-scrollable="true" data-max-height="400"
-                                 style="height: 400px; overflow: hidden;">
-                                <div class="m-list-timeline m-list-timeline--skin-light">
-                                    <div class="m-list-timeline__items">
-                                        <div class="m-list-timeline__item"
-                                             *ngFor="let activityLog of adminUserActivityLogs">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"
-                                                  *ngIf="activityLog.payload.method == 'GET'"></span>
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--brand"
-                                                  *ngIf="activityLog.payload.method == 'POST'"></span>
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--accent"
-                                                  *ngIf="activityLog.payload.method == 'PUT'"></span>
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--danger"
-                                                  *ngIf="activityLog.payload.method == 'DELETE'"></span>
-                                            <span class="m-list-timeline__text">
-												{{activityLog.user_email}}
-											</span>
-                                            <span class="m-list-timeline__text">
-												{{activityLog.action.action}}
-											</span>
-                                            <span class="m-list-timeline__text">
-                                                <span class="m-badge m-badge--success m-badge--wide"
-                                                      *ngIf="activityLog.payload.method == 'GET'">
-													{{activityLog.payload.method}}
-												</span>
-                                                <span class="m-badge m-badge--brand m-badge--wide"
-                                                      *ngIf="activityLog.payload.method == 'POST'">
-													{{activityLog.payload.method}}
-												</span>
-                                                <span class="m-badge m-badge--accent m-badge--wide"
-                                                      *ngIf="activityLog.payload.method == 'PUT'">
-													{{activityLog.payload.method}}
-												</span>
-                                                <span class="m-badge m-badge--danger m-badge--wide"
-                                                      *ngIf="activityLog.payload.method == 'DELETE'">
-													{{activityLog.payload.method}}
-												</span>
-											</span>
-                                            <span class="m-list-timeline__text"
-                                                  *ngIf="activityLog.payload.body && isNotEmpty(activityLog.payload.body)">
-												{{activityLog.payload.body}}
-											</span>
-                                            <span class="m-list-timeline__text"
-                                                  *ngIf="activityLog.payload.params && isNotEmpty(activityLog.payload.body)">
-												{{activityLog.payload.params}}
-											</span>
-                                            <span class="m-list-timeline__text"
-                                                  *ngIf="!activityLog.payload.params || !isNotEmpty(activityLog.payload.body)">
-											</span>
-                                            <span class="m-list-timeline__text"
-                                                  *ngIf="!activityLog.payload.params || !isNotEmpty(activityLog.payload.body)">
-											</span>
-                                            <span class="m-list-timeline__time">
-												{{activityLog.created_at | date:'medium'}}
-											</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales22_sum'"
+                                   [chart-color]="'#f4516c'"
+                                   [chart-data]="chartData['collected-amount-per-date-by-current']"
+                                   [chart-kpi-text]="'$'"
+                                   [chart-kpi-name]="'sum'">
                             </div>
                         </div>
-                        <div class="tab-pane" id="m_widget4_tab2_content"></div>
-                        <div class="tab-pane" id="m_widget4_tab3_content"></div>
+                        <div (click)="onNavigateToRoute('collections', 'status', 'Collected', 'company_id', adminUserService.currentAdminUser.company_id)" *ngIf="adminUserService.isDistributorAdmin" class="m-widget14"
+                             style="cursor: pointer;background-color: white;margin-top: 10px;">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Amount Collected by your company
+                                </h3>
+                                <span class="m-widget14__desc" id="m_chart_daily_sales26_sum">
+							</span>
+                            </div>
+                            <div   class="m-widget14__chart" style="height:120px;" appBarChart-data
+                                   [chart-kpi-id]="'m_chart_daily_sales26_sum'"
+                                   [chart-color]="'#34bfa3'"
+                                   [chart-data]="chartData['collected-amount-per-date-by-company']"
+                                   [chart-kpi-text]="'$'"
+                                   [chart-kpi-name]="'sum'">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!--end:: Widgets/Audit Log-->
         </div>
     </div>
+    <div *ngIf="chartData && adminUserService.isSuperAdmin" class="row">
+           <div class="col-xl-6">
+               <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"
+                    (click)="onNavigateToRoute('countries-investments', 'status', 'Active')" >
+                   <div class="m-widget14__header m--margin-bottom-30">
+                       <h3 class="m-widget14__title">
+                           Country Investment Money Left
+                       </h3>
+                       <span class="m-widget14__desc" id="m_chart_daily_sales9_sum">
+
+                               </span>
+                   </div>
+                   <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
+                        [chart-kpi-id]="'m_chart_daily_sales9_sum'"
+                        [chart-color]="'#E4507E'"
+                        [chart-data]="chartData['left-money-per-date']"
+                        [chart-kpi-text]="'$'"
+                        [chart-kpi-name]="'sum'">
+                   </div>
+               </div>
+           </div>
+           <div class="col-xl-6">
+               <div class="m-widget14" style="background-color: white;margin-top: 10px;margin-bottom: 10px;"
+                    (click)="onNavigateToRoute('collections', 'status', 'Collected')" >
+                   <div class="m-widget14__header m--margin-bottom-30">
+                       <h3 class="m-widget14__title">
+                           Numbers of users that their collection To-be-Collected
+                       </h3>
+                       <span class="m-widget14__desc" id="m_chart_daily_sales10_count">
+                               </span>
+                   </div>
+                   <div  class="m-widget14__chart" style="height:120px;" appBarChart-data
+                        [chart-kpi-id]="'m_chart_daily_sales10_count'"
+                        [chart-color]="'#6f42c1'"
+                        [chart-data]="chartData['collection-count-per-date-with-status']"
+                        [chart-kpi-text]="'User'"
+                        [chart-kpi-name]="'count'">
+                   </div>
+               </div>
+           </div>
+       </div>
+    <div *ngIf="chartData && adminUserService.isSuperAdmin" class="row">
+           <div class="col-xl-12">
+               <!--begin::Portlet-->
+               <div class="m-portlet m-portlet--tab">
+                   <div class="m-portlet__head">
+                       <div class="m-portlet__head-caption">
+                           <div class="m-portlet__head-title">
+                               <span class="m-portlet__head-icon m--hide">
+                                   <i class="la la-gear"></i>
+                               </span>
+                               <h3 class="m-portlet__head-text">
+                                   Duration on Users, Loans and Collections
+                               </h3>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="m-portlet__body">
+                       <div style="height: 500px;" appSerialAmChart-data
+                            [chart-data]="chartData['users-loans-collections-per-date']"
+                            [chart-settings]="serialAmChart1Options"></div>
+                   </div>
+               </div>
+               <!--end::Portlet-->
+           </div>
+       </div>
+    <div *ngIf="chartData && adminUserService.isSuperAdmin" class="row">
+           <div class="col-xl-12">
+               <!--begin::Portlet-->
+               <div class="m-portlet m-portlet--tab">
+                   <div class="m-portlet__head">
+                       <div class="m-portlet__head-caption">
+                           <div class="m-portlet__head-title">
+                               <span class="m-portlet__head-icon m--hide">
+                                   <i class="la la-gear"></i>
+                               </span>
+                               <h3 class="m-portlet__head-text">
+                                   Duration on Users, Amount of Loans and Amount of Collections
+                               </h3>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="m-portlet__body">
+                       <div style="height: 500px;" appSerialAmChart-data
+                            [chart-data]="chartData['users-loans-collections-amount-per-date']"
+                            [chart-settings]="serialAmChart2Options"></div>
+                   </div>
+               </div>
+               <!--end::Portlet-->
+           </div>
+       </div>
+    <div *ngIf="chartData && adminUserService.isSuperAdmin" class="row">
+           <div class="col-xl-12">
+               <!--begin::Portlet-->
+               <div class="m-portlet m-portlet--tab">
+                   <div class="m-portlet__head">
+                       <div class="m-portlet__head-caption">
+                           <div class="m-portlet__head-title">
+                               <span class="m-portlet__head-icon m--hide">
+                                   <i class="la la-gear"></i>
+                               </span>
+                               <h3 class="m-portlet__head-text">
+                                   Revenue By Day
+                               </h3>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="m-portlet__body">
+                       <div style="height:500px;" appLineChart-data
+                            [chart-data]="chartData['revenue-per-date']"
+                            [title]="'Revenue By Day'"
+                            [column-1]="'Day'"
+                            [column-2]="'Revenue'"></div>
+                   </div>
+               </div>
+               <!--end::Portlet-->
+           </div>
+       </div>
+    <div class="row">
+           <!--<div class="col-xl-12">
+               &lt;!&ndash;end: Search Form &ndash;&gt;
+               &lt;!&ndash;begin: Datatable &ndash;&gt;
+               <div class="m_datatable" id="json_data"></div>
+               &lt;!&ndash;end: Datatable &ndash;&gt;
+           </div>-->
+           <div class="col-xl-12" *ngIf="adminUserService.checkModuleActionRight('user-activities', 'GET')">
+               <!--begin:: Widgets/Audit Log-->
+               <div class="m-portlet m-portlet--full-height">
+                   <div class="m-portlet__head">
+                       <div class="m-portlet__head-caption">
+                           <div class="m-portlet__head-title">
+                               <h3 class="m-portlet__head-text">
+                                   Users Activities Logs
+                               </h3>
+                           </div>
+                       </div>
+                       <div class="m-portlet__head-tools m-subheader" style="padding-top: 0">
+                           <!--<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                               <li class="nav-item m-tabs__item">
+                                   <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
+                                       Today
+                                   </a>
+                               </li>
+                               <li class="nav-item m-tabs__item">
+                                   <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
+                                       Week
+                                   </a>
+                               </li>
+                               <li class="nav-item m-tabs__item">
+                                   <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
+                                       Month
+                                   </a>
+                               </li>
+                           </ul>-->
+                           <span class="m-subheader__daterange" appDateRange [start-date]="'today'"
+                                 (on-change)="onChangeDateRangeActivity($event)">
+                   <span class="m-subheader__daterange-label">
+                       <span class="m-subheader__daterange-title"></span>
+                       <span class="m-subheader__daterange-date m--font-brand"></span>
+                   </span>
+                   <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                       <i class="la la-angle-down"></i>
+                   </a>
+               </span>
+                       </div>
+                   </div>
+                   <div class="m-portlet__body">
+                       <div class="tab-content">
+                           <div class="tab-pane active" id="m_widget4_tab1_content">
+                               <div class="m-scrollable" data-scrollable="true" data-max-height="400"
+                                    style="height: 400px; overflow: hidden;">
+                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                       <div class="m-list-timeline__items">
+                                           <div class="m-list-timeline__item"
+                                                *ngFor="let activityLog of adminUserActivityLogs">
+                                               <span class="m-list-timeline__badge m-list-timeline__badge--success"
+                                                     *ngIf="activityLog.payload && activityLog.payload.method == 'GET'"></span>
+                                               <span class="m-list-timeline__badge m-list-timeline__badge--brand"
+                                                     *ngIf="activityLog.payload && activityLog.payload.method == 'POST'"></span>
+                                               <span class="m-list-timeline__badge m-list-timeline__badge--accent"
+                                                     *ngIf="activityLog.payload && activityLog.payload.method == 'PUT'"></span>
+                                               <span class="m-list-timeline__badge m-list-timeline__badge--danger"
+                                                     *ngIf="activityLog.payload && activityLog.payload.method == 'DELETE'"></span>
+                                               <span class="m-list-timeline__text">
+                                                   {{activityLog.user_email}}
+                                               </span>
+                                               <span class="m-list-timeline__text">
+                                                   {{activityLog.action.action}}
+                                               </span>
+                                               <span class="m-list-timeline__text">
+                                                   <span class="m-badge m-badge--success m-badge--wide"
+                                                         *ngIf="activityLog.payload && activityLog.payload.method == 'GET'">
+                                                       {{activityLog.payload.method}}
+                                                   </span>
+                                                   <span class="m-badge m-badge--brand m-badge--wide"
+                                                         *ngIf="activityLog.payload && activityLog.payload.method == 'POST'">
+                                                       {{activityLog.payload.method}}
+                                                   </span>
+                                                   <span class="m-badge m-badge--accent m-badge--wide"
+                                                         *ngIf="activityLog.payload && activityLog.payload.method == 'PUT'">
+                                                       {{activityLog.payload.method}}
+                                                   </span>
+                                                   <span class="m-badge m-badge--danger m-badge--wide"
+                                                         *ngIf="activityLog.payload && activityLog.payload.method == 'DELETE'">
+                                                       {{activityLog.payload.method}}
+                                                   </span>
+                                               </span>
+                                               <span class="m-list-timeline__text"
+                                                     *ngIf="activityLog.payload && activityLog.payload.body && isNotEmpty(activityLog.payload.body)">
+                                                   {{activityLog.payload.body}}
+                                               </span>
+                                               <span class="m-list-timeline__text"
+                                                     *ngIf="activityLog.payload && activityLog.payload.params && isNotEmpty(activityLog.payload.body)">
+                                                   {{activityLog.payload.params}}
+                                               </span>
+                                               <span class="m-list-timeline__text"
+                                                     *ngIf="activityLog.payload && (!activityLog.payload.params || !isNotEmpty(activityLog.payload.body))">
+                                               </span>
+                                               <span class="m-list-timeline__text"
+                                                     *ngIf="activityLog.payload && (!activityLog.payload.params || !isNotEmpty(activityLog.payload.body))">
+                                               </span>
+                                               <span class="m-list-timeline__time">
+                                                   {{activityLog.created_at | date:'medium'}}
+                                               </span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="tab-pane" id="m_widget4_tab2_content"></div>
+                           <div class="tab-pane" id="m_widget4_tab3_content"></div>
+                       </div>
+                   </div>
+               </div>
+               <!--end:: Widgets/Audit Log-->
+           </div>
+       </div>
 </div>

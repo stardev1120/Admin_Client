@@ -4,18 +4,8 @@
 		<div class="mr-auto">
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
-					<a href="/index" class="m-nav__link m-nav__link--icon">
+					<a href="#/index" class="m-nav__link m-nav__link--icon">
 						<i class="m-nav__link-icon la la-home"></i>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="/index" class="m-nav__link">
-						<span class="m-nav__link-text">
-							Home
-						</span>
 					</a>
 				</li>
 				<li class="m-nav__separator">
@@ -25,16 +15,6 @@
 					<a href="" class="m-nav__link">
 						<span class="m-nav__link-text">
 							Countries Investments
-						</span>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="" class="m-nav__link">
-						<span class="m-nav__link-text">
-							List
 						</span>
 					</a>
 				</li>
@@ -69,7 +49,7 @@
 
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search country title" id="title">
+									<input type="text" (change)="onChangeName($event)" class="form-control m-input m-input--solid" placeholder="Search country title">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -79,21 +59,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="#/countries-investments/new" class="btn btn-focus m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-							<span>
-								<i class="la la-cart-plus"></i>
-								<span>
-									New country investment
-								</span>
-							</span>
-						</a>
-						<div class="m-separator m-separator--dashed d-xl-none"></div>
-					</div>
 				</div>
 			</div>
 			<!--end: Search Form -->  		<!--begin: Datatable -->
-			<div class="m_datatable-countries-investments" id="json_data"></div>
+			<div class="m_datatable-countries-investments-1" id="m_datatable-countries-investments-1"></div>
 			<!--end: Datatable -->
 		</div>
 	</div>

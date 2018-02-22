@@ -18,6 +18,8 @@ export class AdminUserFormComponent implements OnInit {
     roles: any = [];
     selectedCountries: any = [];
     currentAdminUser: any;
+    matched: boolean;
+    renewPassword: string;
 
     constructor(private api: AdminUsersService,
         private router: Router,
@@ -27,6 +29,10 @@ export class AdminUserFormComponent implements OnInit {
 
     ngOnInit() {
         this.data = this.route.snapshot.data.adminUser as AdminUser;
+        if(this.api.currentAdminUser.id === this.data.id){
+            this.router.navigate(["/admin-users"]);
+            return;
+        }
         if(this.data && this.data.AdminuserCountries) {
             let that = this;
             _.each(that.data.AdminuserCountries, function (country) {
@@ -49,7 +55,7 @@ export class AdminUserFormComponent implements OnInit {
     }
 
     onSubmit(mForm: any) {
-        if (mForm.valid) {
+        if (mForm.valid && (this.matched || this.data.id)) {
             this.data.AdminuserCountries = this.selectedCountries
             this.api.save(this.data)
                 .subscribe(r => {
@@ -68,5 +74,16 @@ export class AdminUserFormComponent implements OnInit {
             }
         }
     }
+    goBack(){
+        window.history.back();
+    }
 
+
+    passwordMatching() {
+        this.matched = this.renewPassword === this.data.password;
+    }
+
+    onChangeStatus(){
+        this.data.status && this.data.status === 'Active' ? this.data.status = 'Inactive' : this.data.status = 'Active';
+    }
 }

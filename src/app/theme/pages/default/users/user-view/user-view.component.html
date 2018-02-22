@@ -3,7 +3,7 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -23,7 +23,7 @@
                 <li class="m-nav__item">
                     <a href="" class="m-nav__link">
 						<span class="m-nav__link-text">
-							{{data.email}}
+							<span>{{data.fname}}</span> <span>{{data.mname}}</span> <span>{{data.lname}}</span>
 						</span>
                     </a>
                 </li>
@@ -39,9 +39,17 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        {{data.email}}
+                        <span>{{data.fname}}</span> <span>{{data.mname}}</span> <span>{{data.lname}}</span>
                     </h3>
                 </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <a title="Refresh user data"
+                   class="btn btn-focus m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+                   (click)="onRefreshUserData()"
+                   [ngClass]="{'m-loader m-loader--right m-loader--light': loading}">
+                    <i *ngIf="!loading" class="la la-refresh"></i>
+                </a>
             </div>
         </div>
         <!--begin::Form-->
@@ -61,7 +69,8 @@
                                 <label class="m--font-boldest">
                                     Full name:
                                 </label>
-                                <span class="m--font-normal">{{data.fname}}</span>
+                                <span class="m--font-normal">{{data.fname}}</span> <span class="m--font-normal">{{data.mname}}</span>
+                                <span class="m--font-normal">{{data.lname}}</span>
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
@@ -84,12 +93,11 @@
                                 <span class="m--font-normal">{{data.dob | date:'mediumDate'}}</span>
 
                             </div>
-                            <div class="">
+                            <div class="" *ngIf="data.Country">
                                 <label class="m--font-boldest">
                                     Country:
                                 </label>
-                                <span class="m--font-normal">{{data.country_id}}</span>
-
+                                <span class="m--font-normal">{{data.Country.name}}</span>
                             </div>
                             <div class="">
                                 <label class="m--font-boldest">
@@ -105,26 +113,30 @@
                                 <span class="m--font-normal">{{data.relationship}}</span>
 
                             </div>
+                            <div *ngIf="this.userLocationUrl">
+                                <label class="m--font-boldest">
+                                    Location
+                                </label>
+                                <span class="m--font-normal">
+                                    <a target="_blank" [attr.href]="userLocationUrl">Open google map</a>
+                                </span>
+
+                            </div>
                         </div>
                         <div class="col-md-6 col-sm-8 col-xs-12">
                             <div class="">
                                 <img style="border: 1px solid #575962;margin: 5px;"
                                      [src]="data.profilepic" height="200"
+                                     onerror="this.src='assets/app/media/img/bg/default_person.png'"
                                      width="200"/>
                                 <img style="border: 1px solid #575962;margin: 5px;"
-                                     [src]="data.profilepic" height="200"
+                                     [src]="data.selfie_proof_file" height="200"
+                                     onerror="this.src='assets/app/media/img/bg/default_person.png'"
                                      width="200"/>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="">
-                                        <label class="m--font-boldest">
-                                            U Score:
-                                        </label>
-                                        <span class="m--font-normal">{{data.uScore_status}}</span>
-
-                                    </div>
                                     <div class="">
                                         <label class="m--font-boldest">
                                             No Of Active Loans:
@@ -135,7 +147,7 @@
                                         <label class="m--font-boldest">
                                             Total Number Of Loans:
                                         </label>
-                                        <span class="m--font-normal">20</span>
+                                        <span class="m--font-normal">{{countOfLoans}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +155,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'verified')">
+                            <div class="form-group row"
+                                 *ngIf="_adminUserService.checkModuleFieldRight('users', 'verified')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Phone Status
                                 </label>
@@ -158,28 +171,34 @@
                                 </div>
                             </div>
 
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
+                            <div class=" form-group row"
+                                 *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     ID Status
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" [checked]="data.id_verification_status == 'Verified'" name=""
+														<input type="checkbox"
+                                                               [checked]="data.id_verification_status == 'Verified'"
+                                                               name=""
                                                                (change)="onChangeIdStatus()">
 														<span></span>
 													</label>
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'address_verification_status')">
+                            <div class=" form-group row"
+                                 *ngIf="_adminUserService.checkModuleFieldRight('users', 'address_verification_status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Address Status
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" [checked]="data.address_verification_status == 'Verified'" name=""
+														<input type="checkbox"
+                                                               [checked]="data.address_verification_status === 'Verified'"
+                                                               name=""
                                                                (change)="onChangeAddressStatus()">
 														<span></span>
 													</label>
@@ -201,50 +220,105 @@
 												</span>
                                 </div>
                             </div>-->
-                            <br>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'address_proof_file')">
+                            <div class=" form-group row">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     View Documents
                                 </label>
                                 <div class="col-6">
                                     <div class="row">
                                         <div style="text-decoration: underline" class="m--font-normal">
-                                            <a target="_blank" [attr.href]="'http://' + data.id_proof_file">Id Proof Document</a>
+                                            <a data-toggle="modal" data-target="#m_modal_1" style="cursor: pointer">Id Proof
+                                                Document</a>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div style="text-decoration: underline" class="m--font-normal">
-                                            <a target="_blank" [attr.href]="'http://' + data.address_proof_file">Address Proof Document</a>
+                                            <a  data-toggle="modal" data-target="#m_modal_2" style="cursor: pointer">Address
+                                                Proof Document</a>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="data.selfie_proof_video">
+                                        <div style="text-decoration: underline" class="m--font-normal">
+                                            <a  data-toggle="modal" data-target="#m_modal_3" style="cursor: pointer">Selife Proof Video</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
+                            <div class="form-group row"
+                                 *ngIf="_adminUserService.checkModuleFieldRight('users', 'uScore_status')">
+                                <label class="col-5 col-form-label m--font-boldest">
+                                    U Score:
+                                </label>
+                                <div class="col-3">
+												<span class="m-switch m-switch--lg">
+													<label>
+														<input type="checkbox"
+                                                               [checked]="data.uScore_status == 'DONE'"
+                                                               name="uScore_status"
+                                                               (change)="onChangUScoreStatus()">
+														<span></span>
+													</label>
+												</span>
+                                </div>
+
+                            </div>
+                            <div class=" form-group row"
+                                 *ngIf="_adminUserService.checkModuleFieldRight('users', 'status')">
                                 <label class="col-5 col-form-label m--font-boldest">
                                     Block Account
                                 </label>
                                 <div class="col-3">
 												<span class="m-switch m-switch--lg">
 													<label>
-														<input type="checkbox" [checked]="data.status == 'Active'" name=""
+														<input type="checkbox" [checked]="data.status !== 'Active'"
+                                                               name=""
                                                                (change)="onChangeAccountStatus()">
 														<span></span>
 													</label>
 												</span>
                                 </div>
                             </div>
-                            <div class=" form-group row" *ngIf="_adminUserService.checkModuleOtherRight('users', 'triggerCreditStore')">
-                                <label class="col-5 col-form-label m--font-boldest">
+                            <!--<div class=" form-group row"
+                                 *ngIf="_adminUserService.checkModuleOtherRight('users', 'triggerCreditStore')">
+                                <label class="col-5 col-form-label m&#45;&#45;font-boldest">
                                     Trigger Credit Score
                                 </label>
                                 <div class="col-3">
-												<span class="m-switch m-switch--lg">
+												<span class="m-switch m-switch&#45;&#45;lg">
 													<label>
-                                                        <input type="checkbox" [checked]="data.criditScore == 'Active'" name=""
+                                                        <input type="checkbox" [checked]="data.criditScore == 'Active'"
+                                                               name=""
                                                                (change)="onTriggerCediteScore()">
                                                         <span></span>
                                                     </label>
 												</span>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-4 col-xs-12">
+                            <div class="row">
+                                <label class="col-5 col-form-label m--font-boldest">
+                                    Available Amount :
+                                </label>
+                                <div class="col-3">
+                                    <span class="m--font-normal" *ngIf="!_adminUserService.isSuperAdmin">{{data.available_amount}}</span>
+                                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                                           [(ngModel)]="data.available_amount" [ngModelOptions]="{standalone: true}"
+                                           (change)="onChangeAvailableAmount()"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-5 col-form-label m--font-boldest">
+                                    Minimum Available Amount :
+                                </label>
+                                <div class="col-3">
+                                    <span class="m--font-normal" *ngIf="!_adminUserService.isSuperAdmin">{{data.min_availalble_amount}}</span>
+                                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                                           [(ngModel)]="data.min_availalble_amount"
+                                           [ngModelOptions]="{standalone: true}"
+                                           (change)="onChangeMinimumAvailableAmount()"/>
                                 </div>
                             </div>
                         </div>
@@ -254,7 +328,8 @@
                         <h4><i class="m-menu__link-icon flaticon-attachment"></i> Loans</h4>
                     </div>  <!--end: Search Form -->        <!--begin: Datatable -->
                     <input type="hidden" id="adminUsers_id_other" [value]="_adminUserService.getModuleOther('loans')">
-                    <div class="m_datatable_loans" id="json_data_loans"></div>
+                    <input type="hidden" id="adminUsers_Supper_Admin" [value]="_adminUserService.isSuperAdmin">
+                    <div class="m_datatable_loans_collections" id="m_datatable_loans_collections"></div>
                     <!--end: Datatable -->
                     <!--<div class="row">
                         <h4><i class="m-menu__link-icon flaticon-coins"></i> Collection</h4>
@@ -283,3 +358,97 @@
     </div>
 </div>
 
+<!--end::Portlet-->
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <a target="_blank" [attr.href]="data.id_proof_file">Address
+                        Proof Document</a>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center;">
+                    <img [src]="data.id_proof_file"
+                         onerror="this.src='assets/app/media/img/bg/not-available.png'"
+                         alt="">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">
+                    <a target="_blank" [attr.href]="data.address_proof_file">Address Proof Document</a>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center;">
+                    <img [src]="data.address_proof_file"
+                         onerror="this.src='assets/app/media/img/bg/not-available.png'"
+                         alt="">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">
+                    <a target="_blank" [attr.href]="data.selfie_proof_video">
+                        Selfie proof video</a>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center;">
+                    <video src="{{data.selfie_proof_video}}" width="320" height="240" controls>
+                        Your browser does not support the video tag.
+                    </video>
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->

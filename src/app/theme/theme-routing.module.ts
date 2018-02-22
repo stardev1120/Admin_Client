@@ -7,6 +7,7 @@ import {NonSupportedCountryLeadsModule} from "./pages/default/non-supported-coun
 import {DistributionCentersModule} from "./pages/default/distribution-centers/distribution-centers.module";
 import {AdminUserAccessModule} from "./pages/default/admin-user-access/admin-user-access.module";
 import {IssueCollectMoneyModule} from "./pages/default/issue-collect-money/issue-collect-money.module";
+import {AdminCollectDistributeModule} from "./pages/default/admin-collect-distribute/admin-collect-distribute.module";
 
 const routes: Routes = [
     {
@@ -83,6 +84,10 @@ const routes: Routes = [
             {
                 "path": "issue-collect-money",
                 "loadChildren": ".\/pages\/default\/issue-collect-money\/issue-collect-money.module#IssueCollectMoneyModule"
+            },
+            {
+                "path": "admin-collect-distribute",
+                "loadChildren": ".\/pages\/default\/admin-collect-distribute\/admin-collect-distribute.module#AdminCollectDistributeModule"
             },
             {
                 "path": "angular\/ng-bootstrap",

@@ -15,13 +15,19 @@ export class LoginCustom {
                     },
                     hiddenRecaptcha: {
                         required: function () {
-                            if(grecaptcha.getResponse() == '') {
-                                $('#captchaError').css('display', 'block').css('visibility', 'visible');
-                            } else {
-                                $('#captchaError').css('display', 'none').css('visibility', 'hidden');
-                            }
+                            try {
+                                if (!grecaptcha || grecaptcha.getResponse() == '') {
+                                    $('#captchaError').css('display', 'block').css('visibility', 'visible');
+                                } else {
+                                    $('#captchaError').css('display', 'none').css('visibility', 'hidden');
+                                }
 
-                            return grecaptcha.getResponse() == '';
+                                return !grecaptcha || grecaptcha.getResponse() == '';
+                            } catch (error) {
+                                console.log(error);
+                                $('#captchaError').css('display', 'block').css('visibility', 'visible');
+                                return true;
+                            }
                         }
                     }
                 }

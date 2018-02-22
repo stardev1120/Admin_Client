@@ -4,18 +4,8 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
-                    </a>
-                </li>
-                <li class="m-nav__separator">
-                    -
-                </li>
-                <li class="m-nav__item">
-                    <a href="/index" class="m-nav__link">
-						<span class="m-nav__link-text">
-							Home
-						</span>
                     </a>
                 </li>
                 <li class="m-nav__separator">
@@ -101,8 +91,11 @@
             <div class="m-form__actions m-form__actions">
                 <div class="row">
                     <div class="col-lg-3 ml-lg-auto">
-                        <button class="btn btn-focus m-btn m-btn--custom m-btn--pill" style="width: 150px"
+                        <button [disabled]="hasError" class="btn btn-focus m-btn m-btn--custom m-btn--pill" style="width: 150px"
                                 (click)="verifyAccess()">Verify
+                        </button>
+                        <button (click)="goBack()" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
                         </button>
                     </div>
                 </div>

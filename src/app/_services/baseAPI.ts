@@ -60,7 +60,6 @@ export class BaseApiService<T extends BaseModel> {
     }
 
     query(query: any) {
-        console.log(encodeURI(query));
         return this.http
             .get<T[]>(this.baseUrl + this.url + '?filter=' + `${encodeURI(query)}`, {headers: this.authorization()})
     }

@@ -1,0 +1,129 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a [routerLink]="['/users/view', data.Loan.User.id]" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{data.Loan.User.fname}} {{data.Loan.User.mname}} {{data.Loan.User.lname}}
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Collection #{{data.id}}
+						</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        View Collection {{data.id}} of {{data.Loan.User.fname}} {{data.Loan.User.mname}} {{data.Loan.User.lname}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!--begin: loan view-->
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    User
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.Loan.User.fname}} {{data.Loan.User.mname}} {{data.Loan.User.lname}}
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Loan
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.loan_id}}
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Amount
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.amount}} {{data.currency}}
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Date of Collection
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.date| date: 'medium'}}
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Retry date
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.retry_date| date: 'medium'}}
+                </div>
+
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Status
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.status}}
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Date
+                </label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    {{data.created_at| date: 'medium'}}
+                </div>
+            </div>
+            <!--end: loan view -->
+            <!--begin: Datatable -->
+            <input type="hidden" id="collection_id" [value]="data.id">
+            <div class="row">
+                <h4><i class="m-menu__link-icon flaticon-attachment"></i> Collection History</h4>
+            </div>
+            <div class="m_datatable_collection_histroy" id="m_datatable_collection_histroy"></div>
+            <!--end: Datatable -->
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class="row">
+                    <div class="col-lg-9 ml-lg-auto">
+                        <button (click)="goBack()" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Form-->
+    </div>
+</div>

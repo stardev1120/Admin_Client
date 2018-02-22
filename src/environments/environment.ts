@@ -11,7 +11,7 @@ export const environment = {
         'fr-FR',
         'ar-EG'
     ],
-    baseUrl: 'http://192.168.153.135:3000/api/admin',
+    baseUrl: 'http://192.168.153.136:3000/api/admin',
     siteKey: "6LfjtEMUAAAAACnCnaYBFWzW8Id00qVZd3_64ibj"
 };
 

@@ -1,42 +1,34 @@
-//== Class definition
-
-var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    // basic demo
-    var demo = function () {
-        var baseUrl = $('#basUrl').val() + '/admin-user';//'http://192.168.153.130:3000/api/admin/admin-user'
-        var actionsRights = JSON.parse($('#adminUsers_id_actions').val());
-        var currentUserString = localStorage.getItem('currentUser');
-        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
-            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
-        var headers = {
-            "content-type": "application/json"
-        };
-
-        if (currentUserString) {
-            var currentUser = JSON.parse(currentUserString);
-            if (currentUser) {
-                var token = currentUser.token;
-                headers['authorization'] = "JWT " + token;
-                if (currentCountry) {
-                    headers['country_id'] = currentCountry;
-                }
+var Datatable_Admin_Users_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
             }
         }
-
-        var datatable = $('.m_datatable').mDatatable({
-            // datasource definition
+    }
+    var demo = function (filter) {
+        var actionsRights = JSON.parse($('#adminUsers_id_actions').val());
+        var currentUserId = JSON.parse($('#currentAdminUser_id').val());
+        datatable = $('.m_datatable_admin_users').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        // sample GET method
                         method: 'GET',
-                        //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                        url: baseUrl,
+                        url: baseUrl + '/admin-user',
                         headers: headers,
                         map: function (raw) {
-                            // sample data mapping
                             var dataSet = raw;
                             if (typeof raw.data !== 'undefined') {
                                 dataSet = raw.data;
@@ -45,14 +37,14 @@ var DatatableRemoteAjaxDemo = function () {
                         },
                     },
                 },
-                pageSize: 5,
+                pageSize: 10,
                 saveState: {
                     cookie: true,
-                    webstorage: true,
+                    webstorage: true
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                serverSorting: true,
+                serverSorting: true
             },
 
             // layout definition
@@ -65,69 +57,35 @@ var DatatableRemoteAjaxDemo = function () {
 
             // column sorting
             sortable: true,
-
+            //include: ["Company", "Role"],
             pagination: true,
 
             toolbar: {
                 // toolbar items
                 items: {
-                    // pagination
-                    // actions: {
-                    //     delete: {
-                    //         name: 'Delete All',
-                    //         url: '/delete',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     },
-                    //     activate: {
-                    //         name: 'Activate All',
-                    //         url: '/active',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     }
-                    // },
                     pagination: {
                         // page size select
-                        pageSizeSelect: [5, 10, 20, 50, 100],
-                    },
-                },
-            },
-
-            search: {
-                //input: $('#m_form_email'),
+                        pageSizeSelect: [10, 20, 50, 100]
+                    }
+                }
             },
 
             // columns definition
             columns: [
-                /*{
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    //sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                    }
-                },*/
                 {
                     field: 'name',
                     title: 'Name',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false
                 },
                 {
                     field: 'email',
                     title: 'Email',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false
                 },
                 {
                     field: 'phone_number',
                     title: 'Phone',
-                    filterable: false, // disable or enable filtering
-                    //width: 50
+                    filterable: false
                 },
                 {
                     field: 'company',
@@ -142,11 +100,21 @@ var DatatableRemoteAjaxDemo = function () {
                 {
                     field: 'role',
                     title: 'Role',
-                    sortable: 'asc', // default sort
+                    //sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
                    // width: 100,
                     template: function (row) {
                         return row.Role.role_name;
+                    }
+                },
+                {
+                    field: 'status',
+                    title: 'Status',
+                    //sortable: 'asc', // default sort
+                    filterable: false, // disable or enable filtering
+                    // width: 100,
+                    template: function (row) {
+                        return row.status?row.status:'Inactive';
                     }
                 },
                 {
@@ -157,11 +125,18 @@ var DatatableRemoteAjaxDemo = function () {
                     overflow: 'visible',
                     template: function (row) {
                         var content = '';
+                        if(row.id === currentUserId){
+                            return;
+                        }
                         if (actionsRights) {
                             if (actionsRights['PUT']) {
                                 content = content + '\
                             <a href="#/admin-users/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
+						</a>\
+						\
+						<a href="#/admin-users/change-password/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Change Password">\
+							<i class="la la-exchange"></i>\
 						</a>\
 						\
 						';
@@ -261,75 +236,62 @@ var DatatableRemoteAjaxDemo = function () {
                 }]
         });
 
-        var query = datatable.getDataSourceQuery();
-        $('#email').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.email = $(this).val();
-            } else {
-                delete query.email;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.email !== 'undefined' ? query.email : '');
-
-
-        $('#name').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.name = $(this).val();
-            } else {
-                delete query.name;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.name !== 'undefined' ? query.name : '');
-
-        $('#phone_number').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.phone_number = $(this).val();
-            } else {
-                delete query.phone_number;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.phone_number !== 'undefined' ? query.phone_number : '');
-        $('#selectall').change(function (e) {
-            console.log($(e.target)[0].checked, 'e');
-            $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });
-        datatable.on('click', '[id^="delete-row-"]', function (e) {
-            var id = $(e.target).prop('id');
-            id = id.replace('delete-row-', '');
-            console.log(id, 'e');
-
-            $.ajax({
-                url: baseUrl + '/' + id,
-                method: 'delete',
-                headers: headers
-            }).done(datatable.load);
-
-
-        });
-
-
+        query(filter);
+        return datatable;
     };
+
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+        var include = [];
+        var role = {
+            association: "Role",
+            required: true
+        };
+
+        var company = {
+            association: "Company",
+            required: true
+        };
+        include.push(role);
+        include.push(company);
+        datatable.setOption('include', include);
+
+        if (filter['email']) {
+            query['email'] = {$like: filter['email'] + '%'};
+        } else {
+            delete query.email;
+        }
+
+        if (filter['name']) {
+            query['name'] = {$like: filter['name'] + '%'};
+        } else {
+            delete query.fname;
+        }
+
+        if (filter['phone_number']) {
+            query['phone_number'] = {$like: filter['phone_number'] + '%'};
+        } else {
+            delete query.phone_number;
+        }
+
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
 
     return {
         // public functions
-        init: function () {
-            demo();
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam;
+            return demo(filter);
         },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
     };
 }();
-
-jQuery(document).ready(function () {
-    DatatableRemoteAjaxDemo.init();
-});

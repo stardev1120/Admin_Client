@@ -1,16 +1,17 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule, Routes} from "@angular/router";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {DefaultComponent} from "../default.component";
 import {LayoutModule} from "../../../layouts/layout.module";
 import {CollectionsComponent} from "./list/collections.component";
 import {CollectionFormComponent} from "./collection-form/collection-form.component";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import {FormsModule} from "@angular/forms";
 import {LoansResolver} from "../loans/loans-resolver";
 import {CollectionResolver} from "./collection-resolver";
 import {AuthGuard} from "../../../../auth/_guards";
+import {CollectionViewComponent} from "./collection-view/collection-view.component";
 
 const routes: Routes = [
     {
@@ -24,13 +25,22 @@ const routes: Routes = [
                 "component": CollectionsComponent
             },
             {
-                "path": ":id",
+                "path": ":collectId",
                 "component": CollectionFormComponent,
                 "canActivate": [AuthGuard],
                 data: {module: 'collections', action: 'PUT'},
                 resolve: {
                     collection: CollectionResolver,
                     loans: LoansResolver
+                }
+            },
+            {
+                "path": "view/:collectId",
+                "component": CollectionViewComponent,
+                "canActivate": [AuthGuard],
+                data: {module: 'collections', action: 'GET'},
+                resolve: {
+                    collection: CollectionResolver
                 }
             }
         ]
@@ -46,8 +56,7 @@ const routes: Routes = [
         FormsModule
     ],
     providers: [
-        CollectionResolver,
-        LoansResolver
+        CollectionResolver
     ],
 
     exports: [
@@ -55,7 +64,8 @@ const routes: Routes = [
 
     ], declarations: [
         CollectionsComponent,
-        CollectionFormComponent
+        CollectionFormComponent,
+        CollectionViewComponent
     ]
 })
 export class CollectionsModule {

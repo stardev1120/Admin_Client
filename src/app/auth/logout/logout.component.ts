@@ -22,12 +22,16 @@ export class LogoutComponent implements OnInit {
         // reset login status
         this._authService.logout().subscribe((res) => {
             this._adminUserService.currentAdminUser = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('currentCountry');
+            localStorage.clear();
             this._router.navigate(['/login']);
         }, (error) => {
             console.log(error);
             this._adminUserService.currentAdminUser = null;
             localStorage.removeItem('currentUser');
             localStorage.removeItem('currentCountry');
+            localStorage.clear();
             this._router.navigate(['/login']);
         })
     }

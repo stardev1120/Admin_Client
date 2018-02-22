@@ -1,249 +1,223 @@
-//== Class definition
-(function(){
-    var DatatableRemoteAjaxDemo = function () {
-        //== Private functions
-        // basic demo
-        var demo = function () {
-            var baseUrl = $('#basUrl').val() + '/collection';
-            var currentUserString = localStorage.getItem('currentUser');
-            var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
-                (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
-            var headers = {
-                "content-type": "application/json"
-            };
+var Datatable_Collections_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
+            }
+        }
+    }
+    var demo = function (filter) {
+        datatable = $('.m_datatable_collections').mDatatable({
+            data: {
+                type: 'remote',
+                source: {
+                    read: {
+                        method: 'GET',
+                        url: baseUrl + '/collection',
+                        headers: headers,
+                        map: function (raw) {
+                            // sample data mapping
+                            var dataSet = raw;
+                            if (typeof raw.data !== 'undefined') {
+                                dataSet = raw.data;
+                            }
+                            return dataSet;
+                        }
+                    }
+                },
+                pageSize: 10,
+                saveState: {
+                    cookie: true,
+                    webstorage: true
+                },
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            layout: {
+                theme: 'default', // datatable theme
+                class: '', // custom wrapper class
+                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                footer: false // display/hide footer
+            },
 
-            if (currentUserString) {
-                var currentUser = JSON.parse(currentUserString);
-                if (currentUser) {
-                    var token = currentUser.token;
-                    headers['authorization'] = "JWT " + token;
-                    if (currentCountry) {
-                        headers['country_id'] = currentCountry;
+            // column sorting
+            sortable: true,
+
+            pagination: true,
+
+            toolbar: {
+                // toolbar items
+                items: {
+                    pagination: {
+                        // page size select
+                        pageSizeSelect: [10, 20, 30, 50, 100]
                     }
                 }
-            }
+            },
 
-            var datatable = $('.m_datatable_collections').mDatatable({
-                // datasource definition
-                data: {
-                    type: 'remote',
-                    source: {
-                        read: {
-                            // sample GET method
-                            method: 'GET',
-                            //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                            url: baseUrl,
-                            headers: headers,
-                            map: function (raw) {
-                                // sample data mapping
-                                var dataSet = raw;
-                                if (typeof raw.data !== 'undefined') {
-                                    dataSet = raw.data;
-                                }
-                                return dataSet;
-                            },
-                        },
-                    },
-                    pageSize: 10,
-                    saveState: {
-                        cookie: true,
-                        webstorage: true,
-                    },
-                    serverPaging: true,
-                    serverFiltering: true,
-                    serverSorting: true,
-                },
-
-                // layout definition
-                layout: {
-                    theme: 'default', // datatable theme
-                    class: '', // custom wrapper class
-                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-                    footer: false // display/hide footer
-                },
-
-                // column sorting
-                sortable: true,
-
-                pagination: true,
-
-                toolbar: {
-                    // toolbar items
-                    items: {
-                        // pagination
-                        // actions: {
-                        //     delete: {
-                        //         name: 'Delete All',
-                        //         url: '/delete',
-                        //         fn: function (ids) {
-                        //             console.log(ids);
-                        //         }
-                        //     },
-                        //     activate: {
-                        //         name: 'Activate All',
-                        //         url: '/active',
-                        //         fn: function (ids) {
-                        //             console.log(ids);
-                        //         }
-                        //     }
-                        // },
-                        pagination: {
-                            // page size select
-                            pageSizeSelect: [ 10, 20, 30, 50, 100],
-                        },
-                    },
-                },
-
-                search: {
-                    input: $('#m_form_user_name'),
-                },
-
-                // columns definition
-                columns: [
-                    {
-                        field: 'select',
-                        width: 20,
-                        title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                        sortable: false,
-                        overflow: 'visible',
-                        template: function (row) {
-                            return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                        },
-                    }/*,
+            // columns definition
+            columns: [
                 {
-                    field: 'user',
-                    title: 'User Name',
+                    field: 'Loan',
+                    title: 'User',
                     filterable: false, // disable or enable filtering
-                    width: 200,
+                    //width: 80
                     template: function (row) {
-                        return loan.user.fname+' '+loan.user.mname+' '+loan.user.lname;
+                        if (row.Loan.User) {
+                            var userName = row.Loan.User.fname ? row.Loan.User.fname + ' ' : '';
+                            userName += row.Loan.User.mname ? row.Loan.User.mname + ' ' : ' ';
+                            userName += row.Loan.User.lname ? row.Loan.User.lname : '';
+                            return userName;
+                        }
+                        return '';
+                    }
+                }, {
+                    field: '',
+                    title: 'Loan',
+                    filterable: false, // disable or enable filtering
+                    //width: 80
+                    template: function (row) {
+                        if (row.Loan) {
+                            return row.Loan.id
+                        }
+                        return '';
                     }
                 },
                 {
-                    field: 'loan_id',
-                    title: 'loan_id',
+                    field: 'amount',
+                    title: 'Amount',
                     filterable: false, // disable or enable filtering
-                    width: 100
-                }*/,
-                    {
-                        field: 'amount',
-                        title: 'Amount',
-                        filterable: false, // disable or enable filtering
-                        width: 80
-                    },
-                    {
-                        field: 'date',
-                        title: 'Date',
-                        filterable: false, // disable or enable filtering
-                        width: 80
-                    }/*,
+                    //width: 80
+                    template: function (row) {
+                        return row.amount + ' ' + row.currency
+                    }
+                },
                 {
-                    field: 'currency',
-                    title: 'currency',
+                    field: 'date',
+                    title: 'Date',
                     filterable: false, // disable or enable filtering
-                    width: 50
-                }*/,
-                    {
-                        field: 'retry_date',
-                        title: 'Retry Date (if notpaid)',
-                        filterable: false, // disable or enable filtering
-                        width: 80
-                    },
-                    {
-                        field: 'status',
-                        title: 'status',
-                        filterable: false, // disable or enable filtering
-                        width: 50
-                    },
-                    {
-                        field: 'Actions',
-                        width: 100,
-                        title: 'Actions',
-                        sortable: false,
-                        overflow: 'visible',
-                        template: function (row) {
-                            var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                            return '\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
-						</a>\
-					';
-                        },
-                    }],
-            });
+                    // width: 80,
+                    template: function (row) {
+                        return DateFormat.format.date(row.date, 'D MMM yyyy hh:mm ss');
+                    }
+                },
+                {
+                    field: 'retry_date',
+                    title: 'Retry Date (if notpaid)',
+                    filterable: false, // disable or enable filtering
+                    // width: 80,
+                    template: function (row) {
+                        return DateFormat.format.date(row.retry_date, 'D MMM yyyy hh:mm ss');
+                    }
+                },
+                {
+                    field: 'status',
+                    title: 'status',
+                    filterable: false // disable or enable filtering
+                    // width: 50
+                }]
+        });
+        query(filter);
+        return datatable;
+    };
 
-            var query = datatable.getDataSourceQuery();
-
-            $('#m_form_user_name').on('change', function () {
-                // shortcode to datatable.getDataSourceParam('query');
-                var query = datatable.getDataSourceQuery();
-                query.user.fname = $(this).val(); // todo: we need to do for mname and lname with or and like
-                // shortcode to datatable.setDataSourceParam('query', query);
-                datatable.setDataSourceQuery(query);
-                datatable.load();
-            }).val(typeof query.fname !== 'undefined' ? query.fname : '');
-
-            $('#selectall').change(function (e) {
-                console.log($(e.target)[0].checked, 'e');
-                $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-            });
-            datatable.on('click', '[id^="delete-row-"]', function (e) {
-                var id = $(e.target).prop('id');
-                id = id.replace('delete-row-', '');
-                console.log(id, 'e');
-
-                $.ajax({
-                    url: baseUrl + '/' + id,
-                    method: 'delete'
-                }).done(datatable.load);
-
-
-            });
-
-
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+        var include = [];
+        var Loan = {
+            association: "Loan",
+            required: true
         };
-
-        return {
-            // public functions
-            init: function () {
-                demo();
-            },
+        var user = {
+            association: "User",
+            required: true
         };
-    }();
+        var adminUser = {
+            association: "AdminUser"
+        };
+        if (currentCountry && !filter['country_id']) {
+            user['where'] = {country_id: currentCountry};
+        } else if (filter['country_id']) {
+            user['where'] = {country_id: filter['country_id']};
+        }
+        /*if (filter['user_id']) {
+            if (user['where']) {
+                user['where']['id'] = filter['user_id']
+            } else {
+                user['where'] = {id: filter['user_id']};
+            }
+        }*/
+        if (filter['user_name']) {
+            if (user['where']) {
+                user['where']['fname'] = {$like: filter['user_name'] + '%'};
+            } else {
+                user['where'] = {fname: {$like: filter['user_name'] + '%'}};
+            }
+        }
+        Loan['include']=[user];
+        if (filter['admin_user_id']) {
+            adminUser['where'] = {id: filter['admin_user_id']};
+        } else {
+            delete query.admin_user_id;
+        }
 
-    jQuery(document).ready(function () {
-        DatatableRemoteAjaxDemo.init();
-    });
-})();
+        if (filter['company_id']) {
+            if (adminUser['where']) {
+                adminUser['where']['company_id'] = filter['company_id'];
+            } else {
+                adminUser['where'] = {company_id: filter['company_id']};
+            }
+        }
+        include.push(Loan);
+        include.push(adminUser);
+        datatable.setOption('include', include);
+
+        if (filter['start_date'] && filter['end_date']) {
+            query['created_at'] = {$between: [filter['start_date'], filter['end_date']]};
+        } else {
+            delete query.created_at;
+        }
+        if (filter['status']) {
+            query['status'] = filter['status'];
+        } else {
+            delete query.status;
+        }
+        if (filter['admin_user_id']) {
+            query['admin_user_id'] = filter['admin_user_id'];
+        } else {
+            delete query.admin_user_id;
+        }
+        delete query.country_id;
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
+
+    return {
+        // public functions
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam;
+            return demo(filter);
+        },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
+    };
+}();

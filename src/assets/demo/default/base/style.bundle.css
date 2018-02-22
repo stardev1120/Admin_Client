@@ -9583,7 +9583,8 @@ body.m--skin-dark {
           border-radius: 15px!important; }
     .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-info {
       float: right;
-      margin-top: 10px; }
+      margin-top: 10px;
+        margin-bottom: 10px;}
       .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-info .m-datatable__pager-size {
         margin-right: 10px; }
         .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-info .m-datatable__pager-size .btn.dropdown-toggle {
@@ -15137,7 +15138,7 @@ code {
     .m-card-user .m-card-user__details .m-card-user__email,  .m-card-user .m-card-user__details .m-card-user__last-login{
       display: inline-block;
       padding: 6px 0 0 0;
-      font-size: 1rem; }
+      font-size: 0.85rem; }
   .m-card-user.m-card-user--sm .m-card-user__pic {
     width: 40px;
     padding-right: 10px; }
@@ -31019,4 +31020,21 @@ body.m-content--skin-light2 {
     color: gray;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+.file-upload-comp{
+    margin: 0 auto 25px;
+}
+.file-upload-comp label{
+    border:1px solid #ccc;
+    width: 50px;
+    height: 40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    cursor: pointer;
+}
+.file-upload-comp input{
+    display:none;
 }

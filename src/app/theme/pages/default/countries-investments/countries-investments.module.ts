@@ -14,10 +14,10 @@ const routes: Routes = [
         "path": "",
         "component": DefaultComponent,
         "children": [
-/*            {
+            {
                 "path": "",
                 "component": CountriesInvestmentsComponent
-            },*/
+            },
             {
                 "path": ":id/:countryId",
                 "component": CountryInvestmentFormComponent,

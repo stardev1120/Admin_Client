@@ -4,18 +4,8 @@
 		<div class="mr-auto">
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
-					<a href="/index" class="m-nav__link m-nav__link--icon">
+					<a href="#/index" class="m-nav__link m-nav__link--icon">
 						<i class="m-nav__link-icon la la-home"></i>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="/index" class="m-nav__link">
-						<span class="m-nav__link-text">
-							Home
-						</span>
 					</a>
 				</li>
 				<li class="m-nav__separator">
@@ -69,7 +59,7 @@
 
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search country" id="country">
+									<input (change)="onChangeName($event)" type="text" class="form-control m-input m-input--solid" placeholder="Search country">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -93,7 +83,7 @@
 				</div>
 			</div>
 			<!--end: Search Form -->  		<!--begin: Datatable -->
-			<div class="m_datatable" id="json_data"></div>
+			<div class="m_datatable_non_support" id="m_datatable_non_support"></div>
 			<!--end: Datatable -->
 		</div>
 	</div>

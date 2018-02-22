@@ -2,14 +2,13 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
-;
-import { CountrySetting } from "../../../../../models/country-setting";
-import { CountriesSettingsService } from "../../../../../_services/apis/countries-settings.service";
-import { CompaniesService } from "../../../../../_services/apis/company.service";
-import { Company } from "../../../../../models/company";
+import {keys} from 'lodash';
+
 import { RolesService } from "../../../../../_services/apis/role.service";
 import { Role } from "../../../../../models/role";
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import {FeatureACL} from "../../../../../models/featureACL";
+import {FeatureACLsService} from "../../../../../_services/apis/feature-acls.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -23,7 +22,8 @@ export class RoleFormComponent implements OnInit {
 
     constructor(private _script: ScriptLoaderService, private api: RolesService,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+                private _featureAcls: FeatureACLsService) {
 
     }
     ngAfterViewInit() {
@@ -45,5 +45,20 @@ export class RoleFormComponent implements OnInit {
                 });
         }
     }
+    getJSONKeys(object: any) {
+        return keys(object);
+    }
 
+    onFeatureACL(featureACL: FeatureACL) {
+        this._featureAcls.save(featureACL).subscribe(data => {
+                console.log(data);
+            },
+            error => {
+                console.log(error);
+            })
+    }
+
+    saveRights(){
+        location.reload()
+    }
 }

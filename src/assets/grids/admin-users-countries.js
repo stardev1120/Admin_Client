@@ -6,7 +6,7 @@ var DatatableRemoteAjaxDemo = function () {
     // basic demo
     var demo = function () {
 
-        var datatable = $('.m_datatable').mDatatable({
+        var datatable = $('.m_datatable_admin_user_countries').mDatatable({
             // datasource definition
             data: {
                 //type: 'remote',

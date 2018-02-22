@@ -4,18 +4,8 @@
 		<div class="mr-auto">
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
-					<a href="/index" class="m-nav__link m-nav__link--icon">
+					<a href="#/index" class="m-nav__link m-nav__link--icon">
 						<i class="m-nav__link-icon la la-home"></i>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="/index" class="m-nav__link">
-						<span class="m-nav__link-text">
-							Home
-						</span>
 					</a>
 				</li>
 				<li class="m-nav__separator">
@@ -69,7 +59,7 @@
 
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search role" id="role_name">
+									<input (change)="onChangeName($event)" type="text" class="form-control m-input m-input--solid" placeholder="Search role">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -95,7 +85,7 @@
 			</div>
 			<input type="hidden" id="roles_id_actions" [value]="_adminUserService.getModuleAction('roles')">
 			<!--end: Search Form -->  		<!--begin: Datatable -->
-			<div class="m_datatable_roles" id="json_data"></div>
+			<div class="m_datatable_roles" id="m_datatable_roles"></div>
 			<!--end: Datatable -->
 		</div>
 	</div>

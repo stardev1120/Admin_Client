@@ -3,7 +3,7 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -85,22 +85,20 @@
                 </div>
 
 
-                <div class="form-group m-form__group row"
-                     [ngClass]="{'has-danger':mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))}">
+                <div class="form-group m-form__group row">
                     <label class="col-form-label col-lg-3 col-sm-12">
                         Status *
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <select placeholder="Select status" class="form-control m-input"
-                                [(ngModel)]="data.status" name="status" #status="ngModel" required>
-                            <option *ngFor="let status of statuses" [ngValue]="status.id">
-                                {{status.title}}
-                            </option>
-                        </select>
-                        <div *ngIf="mForm.submitted && status.hasError('required') || (status.touched && status.hasError('required'))"
-                             class="form-control-feedback">
-                            required.
-                        </div>
+                        <span class="m-switch m-switch--lg">
+													<label>
+														<input type="checkbox"
+                                                               [checked]="data.status == 'Active'"
+                                                               name=""
+                                                               (change)="onChangeStatus()">
+														<span></span>
+													</label>
+												</span>
                     </div>
                 </div>
             </div>
@@ -111,7 +109,8 @@
                             <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
                                 Save
                             </button>
-                            <button (click)="location.back()" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            <button (click)="location.back()" type="reset"
+                                    class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                                 Cancel
                             </button>
                         </div>

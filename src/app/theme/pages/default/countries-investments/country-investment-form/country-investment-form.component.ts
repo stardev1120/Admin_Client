@@ -46,6 +46,10 @@ export class CountryInvestmentFormComponent implements OnInit {
             });
     }
 
+    onChangeStatus(){
+        this.data.status && this.data.status === 'Active' ? this.data.status = 'Disabled' : this.data.status = 'Active';
+    }
+
     onSubmit(mForm: any) {
 
         if (mForm.valid) {

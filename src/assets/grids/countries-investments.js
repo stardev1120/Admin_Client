@@ -1,57 +1,48 @@
-//== Class definition
-
-var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    // basic demo
-    var demo = function () {
-        var baseUrl = $('#basUrl').val()+'/country-investment/country';
-        var currentUserString = localStorage.getItem('currentUser');
-        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
-            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
-        var headers = {
-            "content-type": "application/json"
-        };
-        if (currentUserString) {
-            var currentUser = JSON.parse(currentUserString);
-            if (currentUser) {
-                var token = currentUser.token;
-                headers['authorization'] = "JWT " + token;
-                if (currentCountry) {
-                    headers['country_id'] = currentCountry;
-                }
+var Datatable_Countries_Investments_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
             }
         }
-        var datatable = $('.m_datatable-countries-investments').mDatatable({
-            // datasource definition
+    }
+    var demo = function (filter) {
+        datatable = $('.m_datatable-countries-investments').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        // sample GET method
                         method: 'GET',
                         headers: headers,
-                        url: baseUrl,
-                        params: {
-                            query: {"country_id": $('#country_id_1').val()}
-                        },
+                        url: baseUrl + '/country-investment/country',
                         map: function (raw) {
-                            // sample data mapping
                             var dataSet = raw;
                             if (typeof raw.data !== 'undefined') {
                                 dataSet = raw.data;
                             }
                             return dataSet;
-                        },
-                    },
+                        }
+                    }
                 },
-                pageSize: 2,
+                pageSize: 10,
                 saveState: {
                     cookie: true,
-                    webstorage: true,
+                    webstorage: true
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                serverSorting: true,
+                serverSorting: true
             },
 
             // layout definition
@@ -71,19 +62,9 @@ var DatatableRemoteAjaxDemo = function () {
             toolbar: {
                 // toolbar items
                 items: {
-                    // pagination
-                    /*actions: {
-                        delete: {
-                            name: 'Delete All',
-                            url: '/delete',
-                            fn: function (ids) {
-                                console.log(ids);
-                            }
-                        }
-                    },*/
                     pagination: {
                         // page size select
-                        pageSizeSelect: [5, 10, 20, 50, 100]
+                        pageSizeSelect: [10, 20, 50, 100]
                     }
                 }
             },
@@ -94,37 +75,15 @@ var DatatableRemoteAjaxDemo = function () {
 
             // columns definition
             columns: [
-                /*{
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                    },
-                },*/
-                /*{
-                    field: 'country',
-                    title: 'Country Name',
-                    // sortable: 'asc', // default sort
-                    filterable: false, // disable or enable filtering
-                    //width: 50,
-                    template: function (row) {
-                        return row.Country.name;
-                    }
-                },*/
                 {
                     field: 'amount_available',
                     title: 'Amount Available',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
-                },{
+                    filterable: false
+                }, {
                     field: 'status',
                     title: 'Status',
                     // sortable: 'asc', // default sort
-                    filterable: false, // disable or enable filtering
-                    //width: 50
+                    filterable: false
                 },
 
                 {
@@ -134,9 +93,8 @@ var DatatableRemoteAjaxDemo = function () {
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\
-                            <a href="#/countries-investments/'+row.id+'/'+$('#country_id_1').val()+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+                            <a href="#/countries-investments/' + row.id + '/' + $('#country_id_1').val() + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
@@ -175,26 +133,10 @@ var DatatableRemoteAjaxDemo = function () {
 							<i class="la la-trash"></i>\
 						</a>\
 					';
-                    },
-                }],
+                    }
+                }]
         });
 
-        /*var query = datatable.getDataSourceQuery();
-
-
-        $('#m_form_name').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            query.name = $(this).val();
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.name !== 'undefined' ? query.name : '');
-
-        $('#selectall').change(function (e) {
-            console.log($(e.target)[0].checked, 'e');
-            $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });*/
         datatable.on('click', '[id^="delete-row-"]', function (e) {
             var id = $(e.target).prop('id');
             id = id.replace('delete-row-', '');
@@ -203,18 +145,40 @@ var DatatableRemoteAjaxDemo = function () {
             $.ajax({
                 url: baseUrl + '/' + id,
                 method: 'delete',
-                headers:headers
+                headers: headers
             }).done(datatable.load);
         });
+        query(filter);
+        return datatable;
     };
+
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+
+        if (filter['country_id']) {
+            query['country_id'] = filter['country_id'];
+        } else {
+            delete query.name;
+        }
+
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
 
     return {
         // public functions
-        init: function () {
-            demo();
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam;
+            return demo(filter);
         },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
     };
 }();
-jQuery(document).ready(function () {
-    DatatableRemoteAjaxDemo.init();
-});

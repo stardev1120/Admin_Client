@@ -21,8 +21,18 @@
                         </div>
                         <div class="m-card-profile__pic">
                             <div class="m-card-profile__pic-wrapper">
-                                <img src="assets/app/media/img/bg/default_person.png" alt=""/>
+                                <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                     [src]="profilePhoto" alt=""/>
                             </div>
+                            <div class="file-upload-comp">
+                                <label for="file-upload" class="custom-file-upload btn-accent"
+                                       [ngClass]="{'m-loader m-loader--right m-loader--light': loading}">
+                                    <i *ngIf="!loading" class="fa fa-cloud-upload fa-2x"></i>
+                                </label>
+                                <input [disabled]="loading" class="form-control select-img-input-cook" id="file-upload"
+                                       (change)="fileEvent($event)" type="file" name="pic" accept="image/*"/>
+                            </div>
+                            <ng-template #alertUploadPhoto></ng-template>
                         </div>
                         <div class="m-card-profile__details">
 							<span class="m-card-profile__name">
@@ -38,7 +48,7 @@
                         </div>
                         <div class="m-card-profile__details">
 							<span class="m-card-profile__email">
-								Last Login: {{currentAdminUser.last_login | date}}
+								Last Login: {{currentAdminUser.last_login | date:'medium'}}
 							</span>
                         </div>
                     </div>
@@ -183,12 +193,18 @@
                                     Change Password
                                 </a>
                             </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_3"
+                                   role="tab">
+                                    Reset 2 FA
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="m_user_profile_tab_1">
-                        <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onSubmit()"
+                        <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onSubmit(mForm)"
                               #mForm="ngForm">
                             <div class="m-portlet__body">
                                 <div class="m-form__content">
@@ -215,75 +231,76 @@
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
+                                    <label for="name" class="col-3  col-form-label">
                                         Name
                                     </label>
 
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" name="name"
+                                    <div class="col-6">
+                                        <input id="name" class="form-control m-input" type="text" name="name"
                                                [(ngModel)]="currentAdminUser.name">
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">
+                                    <label for="phone_number" class="col-3  col-form-label">
                                         Phone Number
                                     </label>
 
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" name="phone_number"
+                                    <div class="col-6">
+                                        <input id="phone_number" class="form-control m-input" type="text"
+                                               name="phone_number"
                                                [(ngModel)]="currentAdminUser.phone_number">
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label class="col-2 col-form-label">
+                                    <label class="col-3  col-form-label">
                                         Company
                                     </label>
 
-                                    <div class="col-7">
-                                        <select placeholder="Select company" class="form-control m-input"
-                                                [(ngModel)]="currentAdminUser.Company.company_name" name="company"
-                                                #company="ngModel" required>
-                                            <option *ngFor="let company of companies" [ngValue]="company.id">
-                                                {{company.company_name}}
-                                            </option>
-                                        </select>
+                                    <div class="col-6">
+                                        <label class="form-control" style="border: 0" *ngIf="currentAdminUser.Company">
+                                            {{currentAdminUser.Company.company_name}}
+                                        </label>
+                                        <label class="form-control" style="border: 0" *ngIf="!currentAdminUser.Company">
+                                            you are not belong to any company. please, contact admin.
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="lastLogin" class="col-2 col-form-label">
+                                    <label class="col-3  col-form-label">
                                         Last Login
                                     </label>
 
-                                    <div class="col-7">
-                                        <label class="form-control m-input">
-                                            {{currentAdminUser.last_login | date}}
+                                    <div class="col-6">
+                                        <label class="form-control" style="border: 0">
+                                            {{currentAdminUser.last_login | date:'medium'}}
                                         </label>
                                     </div>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="lastLogin" class="col-2 col-form-label">
-                                        Number Password Attempt
-                                    </label>
+                                <!-- <div class="form-group m-form__group row">
+                                     <label class="col-3  col-form-label">
+                                         Number Password Attempt
+                                     </label>
 
-                                    <div class="col-7">
-                                        <label class="form-control m-input">
-                                            {{currentAdminUser.number_password_attempt}}
-                                        </label>
-                                    </div>
-                                </div>
+                                     <div class="col-6">
+                                         <label class="form-control" style="border: 0">
+                                             {{currentAdminUser.number_password_attempt}}
+                                         </label>
+                                     </div>
+                                 </div>-->
                                 <div class="form-group m-form__group row">
-                                    <label for="lastLogin" class="col-2 col-form-label">
+                                    <label class="col-3  col-form-label">
                                         Max Session Time
                                     </label>
 
-                                    <div class="col-7">
-                                        <label class="form-control m-input">
+                                    <div class="col-6">
+                                        <label class="form-control" style="border: 0">
                                             {{currentAdminUser.max_session_time}}
                                         </label>
                                     </div>
                                 </div>
-                                <div class="m-form__content">
-                                    <div class="m-alert m-alert--icon alert alert-warning" *ngIf="profileFormError"
+                                <ng-template #alertUpdateProfile></ng-template>
+                                <!--<div class="m-form__content">
+                                    <div class="m-alert m-alert&#45;&#45;icon alert alert-warning" *ngIf="profileFormError"
                                          role="alert" id="profileFormError">
                                         <div class="m-alert__icon">
                                             <i class="la la-warning"></i>
@@ -296,14 +313,14 @@
                                                     aria-label="Close"></button>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
 
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions">
                                     <div class="row">
                                         <div class="col-2"></div>
-                                        <div class="col-7">
+                                        <div class="col-6">
                                             <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">
                                                 Save changes
                                             </button>
@@ -320,7 +337,7 @@
                     </div>
                     <div class="tab-pane" id="m_user_profile_tab_2">
                         <form class="m-form m-form--fit m-form--label-align-right"
-                              (ngSubmit)="onChangePassword()" #changePasswordForm="ngForm">
+                              (ngSubmit)="onChangePassword(changePasswordForm);" #changePasswordForm="ngForm">
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <div class="col-10 ml-auto">
@@ -347,11 +364,12 @@
                                 </div>
                                 <div class="form-group m-form__group row"
                                      [ngClass]="{'has-danger':changePasswordForm.submitted && password.hasError('required') || (password.touched && password.hasError('required'))}">
-                                    <label for="old-password" class="col-2 col-form-label">
+                                    <label for="old-password" class="col-3  col-form-label">
                                         Old Password
                                     </label>
-                                    <div class="col-7">
-                                        <input [(ngModel)]="passwordModel.password" type="password" class="form-control m-input" name="password"
+                                    <div class="col-6">
+                                        <input id="old-password" [(ngModel)]="passwordModel.password" type="password"
+                                               class="form-control m-input" name="password"
                                                placeholder="Enter current password" required #password="ngModel">
                                         <div *ngIf="changePasswordForm.submitted && password.hasError('required') || (password.touched && password.hasError('required'))"
                                              class="form-control-feedback">
@@ -362,11 +380,12 @@
                                 </div>
                                 <div class="form-group m-form__group row"
                                      [ngClass]="{'has-danger':changePasswordForm.submitted && newPassword.hasError('required') || (newPassword.touched && newPassword.hasError('required'))}">
-                                    <label for="old-password" class="col-2 col-form-label">
+                                    <label for="newPassword" class="col-3  col-form-label">
                                         New Password
                                     </label>
-                                    <div class="col-7">
-                                        <input [(ngModel)]="passwordModel.new_password" type="password" class="form-control m-input" name="newPassword"
+                                    <div class="col-6">
+                                        <input id="newPassword" [(ngModel)]="passwordModel.new_password" type="password"
+                                               class="form-control m-input" name="newPassword"
                                                placeholder="Enter new password" required #newPassword="ngModel">
                                         <div *ngIf="changePasswordForm.submitted && newPassword.hasError('required') || (newPassword.touched && newPassword.hasError('required'))"
                                              class="form-control-feedback">
@@ -375,9 +394,31 @@
                                     </div>
 
                                 </div>
+                                <div class="form-group m-form__group row"
+                                     [ngClass]="{'has-danger':(changePasswordForm.submitted || renewPassword1.touched)  && ( !matched || renewPassword1.hasError('required'))}">
+                                    <label for="re-newPassword" class="col-3  col-form-label">
+                                        Confirm New Password
+                                    </label>
+                                    <div class="col-6">
+                                        <input id="re-newPassword" [(ngModel)]="renewPassword"
+                                               type="password"
+                                               (ngModelChange)="passwordMatching()"
+                                               class="form-control m-input" name="renewPassword1"
+                                               placeholder="Enter confirm new password" required #renewPassword1="ngModel">
+                                        <div *ngIf="changePasswordForm.submitted && renewPassword1.hasError('required') || (renewPassword1.touched && renewPassword1.hasError('required'))"
+                                             class="form-control-feedback">
+                                            required.
+                                        </div>
+                                        <div *ngIf="(changePasswordForm.submitted || renewPassword1.touched ) && (!matched && !renewPassword1.hasError('required'))"
+                                             class="form-control-feedback">
+                                            Not matched with entered Password.
+                                        </div>
+                                    </div>
 
-                                <div class="m-form__content">
-                                    <div class="m-alert m-alert--icon alert alert-warning"
+                                </div>
+                                <ng-template #alertChangePassword></ng-template>
+                                <!--<div class="m-form__content">
+                                    <div class="m-alert m-alert&#45;&#45;icon alert alert-warning"
                                          *ngIf="changePasswordFormError"
                                          role="alert" id="changePasswordFormError">
                                         <div class="m-alert__icon">
@@ -391,13 +432,13 @@
                                                     aria-label="Close"></button>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="m-portlet__foot m-portlet__foot--fit">
                                     <div class="m-form__actions">
                                         <div class="row">
                                             <div class="col-2"></div>
-                                            <div class="col-7">
+                                            <div class="col-6">
                                                 <button type="submit"
                                                         class="btn btn-accent m-btn m-btn--air m-btn--custom">
                                                     Change
@@ -414,7 +455,22 @@
                             </div>
                         </form>
                     </div>
+                    <div class="tab-pane" id="m_user_profile_tab_3">
+                        <div class="row" style="padding-top: 15%;">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4">
+                                <button class="btn btn-primary btn-lg" (click)="onReset2FA()">Reset 2 FA</button>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 15px;">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-6">
+                                <ng-template #alertReset2FA></ng-template>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+

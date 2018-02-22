@@ -1,38 +1,30 @@
-//== Class definition
-
-var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    // basic demo
-    var demo = function () {
-        var baseUrl = $('#basUrl').val() + '/user';
-        var currentUserString = localStorage.getItem('currentUser');
-        var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
-            (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
-        var headers = {
-            "content-type": "application/json"
-        };
-
-        if (currentUserString) {
-            var currentUser = JSON.parse(currentUserString);
-            if (currentUser) {
-                var token = currentUser.token;
-                headers['authorization'] = "JWT " + token;
-                if (currentCountry) {
-                    headers['country_id'] = currentCountry;
-                }
+var Datatable_Users_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
             }
         }
-
-        var datatable = $('.m_datatable').mDatatable({
-            // datasource definition
+    }
+    var demo = function (filter) {
+        datatable = $('.m_datatable_users').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        // sample GET method
                         method: 'GET',
-                        //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                        url: baseUrl,
+                        url: baseUrl + '/user',
                         headers: headers,
                         map: function (raw) {
                             // sample data mapping
@@ -41,75 +33,35 @@ var DatatableRemoteAjaxDemo = function () {
                                 dataSet = raw.data;
                             }
                             return dataSet;
-                        },
-                    },
+                        }
+                    }
                 },
                 pageSize: 10,
                 saveState: {
                     cookie: true,
-                    webstorage: true,
+                    webstorage: true
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                serverSorting: true,
+                serverSorting: true
             },
-
-            // layout definition
             layout: {
-                theme: 'default', // datatable theme
-                class: '', // custom wrapper class
-                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-                footer: false // display/hide footer
+                theme: 'default',
+                class: '',
+                scroll: false,
+                footer: false
             },
-
-            // column sorting
             sortable: true,
-
             pagination: true,
-
             toolbar: {
-                // toolbar items
                 items: {
-                    // pagination
-                    // actions: {
-                    //     delete: {
-                    //         name: 'Delete All',
-                    //         url: '/delete',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     },
-                    //     activate: {
-                    //         name: 'Activate All',
-                    //         url: '/active',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     }
-                    // },
                     pagination: {
-                        // page size select
-                        pageSizeSelect: [5, 10, 20, 50, 100],
-                    },
-                },
+                        pageSizeSelect: [10, 20, 50, 100]
+                    }
+                }
             },
-
-            search: {
-                input: $('#email')
-            },
-
             // columns definition
             columns: [
-                /*{
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                    },
-                },*/
                 {
                     field: 'id',
                     title: 'Id',
@@ -137,20 +89,21 @@ var DatatableRemoteAjaxDemo = function () {
                 {
                     field: 'phone_number',
                     title: 'Phone',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false
                 },
                 {
                     field: 'status',
                     title: 'Status',
-                    filterable: false, // disable or enable filtering
-                    //width: 50
+                    filterable: false
                 },
                 {
                     field: 'created_at',
                     title: 'Sign up date',
-                    filterable: false, // disable or enable filtering
-                    //width: 100
+                    filterable: false,
+                    sortable: 'desc',
+                    template: function (row) {
+                        return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                    }
                 },
                 {
                     field: 'Actions',
@@ -159,7 +112,6 @@ var DatatableRemoteAjaxDemo = function () {
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return '\<a href="#/users/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
 							<i class="la la-edit"></i>\
 						</a>\
@@ -199,80 +151,70 @@ var DatatableRemoteAjaxDemo = function () {
 							<i class="la la-trash"></i>\
 						</a>\
 					';
-                    },
-                }],
+                    }
+                }]
         });
-
-        var query = datatable.getDataSourceQuery();
-
-        $('#email').on('input propertychange paste', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.email = $(this).val();
-            } else {
-                delete query.email;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.email !== 'undefined' ? query.email : '');
-
-
-        $('#fname').on('input propertychange paste', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.fname = $(this).val();
-            } else {
-                delete query.fname;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.fname !== 'undefined' ? query.fname : '');
-
-        $('#phone_number').on('input propertychange paste', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            if ($(this).val()) {
-                query.phone_number = $(this).val();
-            } else {
-                delete query.phone_number;
-            }
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.phone_number !== 'undefined' ? query.phone_number : '');
-
-        $('#selectall').change(function (e) {
-            console.log($(e.target)[0].checked, 'e');
-            $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });
-        datatable.on('click', '[id^="delete-row-"]', function (e) {
-            var id = $(e.target).prop('id');
-            id = id.replace('delete-row-', '');
-            console.log(id, 'e');
-
-            $.ajax({
-                url: baseUrl + '/' + id,
-                method: 'delete'
-            }).done(datatable.load);
-
-
-        });
-
-
+        query(filter);
+        return datatable;
     };
+
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+        if (currentCountry && !filter['country_id']) {
+            query['country_id'] = currentCountry;
+        } else {
+            if (filter['country_id']) {
+                query['country_id'] = filter['country_id'];
+            } else {
+                delete query.country_id
+            }
+        }
+        if (filter['email']) {
+            query['email'] = {$like: filter['email'] + '%'};
+        } else {
+            delete query.email;
+        }
+
+        if (filter['name']) {
+            query['fname'] = {$like: filter['name'] + '%'};
+        } else {
+            delete query.fname;
+        }
+
+        if (filter['phone_number']) {
+            query['phone_number'] = {$like: filter['phone_number'] + '%'};
+        } else {
+            delete query.phone_number;
+        }
+
+        if (filter['start_date'] && filter['end_date']) {
+            query['created_at'] = {$between: [filter['start_date'], filter['end_date']]};
+        } else {
+            delete query.created_at;
+        }
+        if (filter['status']) {
+            query['status'] = filter['status'];
+        } else {
+            delete query.status;
+        }
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
 
     return {
         // public functions
-        init: function () {
-            demo();
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam
+            return demo(filter);
         },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
     };
 }();
-
-jQuery(document).ready(function () {
-    DatatableRemoteAjaxDemo.init();
-});

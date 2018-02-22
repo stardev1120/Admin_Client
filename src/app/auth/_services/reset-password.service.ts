@@ -1,26 +1,25 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
-import { BaseApiService } from "../../_services/baseAPI";
-import { HttpClient } from "@angular/common/http";
+import {BaseApiService} from "../../_services/baseAPI";
+import {HttpClient} from "@angular/common/http";
 
-export class ResetPassowrd {
-    constructor(public newPassword?: String,
-                public id?: String
-    ) {
+export class ResetPassword {
+    constructor(public newPassword?: string,
+                public id?: string) {
     }
 
 }
 
 @Injectable()
-export class ResetPasswordService extends BaseApiService<ResetPassowrd> {
+export class ResetPasswordService extends BaseApiService<ResetPassword> {
 
     constructor(http: HttpClient) {
         super(http);
         this.url = '/admin-user/reset';
     }
 
-    reset(newPassword: string, token:string) {
-        return this.update(new ResetPassowrd(newPassword, token))
+    reset(newPassword: string, token: string) {
+        return this.update(new ResetPassword(newPassword, token))
             .map((data: any) => {
                 console.log(data)
             });

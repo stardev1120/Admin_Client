@@ -24,6 +24,11 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
         this._currentAdminUser = value;
     }
 
+    changePasswordByAdmin(passwordModel:any){
+        let url = this.url + '/admin/change-password';
+        return this.http.put(this.baseUrl + url, passwordModel, {headers: this.authorization()});
+    }
+
     verify() {
         if (!this._currentAdminUser) {
             return this.get('me').map((adminUser: AdminUser) => {
@@ -34,8 +39,29 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
         return Observable.of(true);
     }
 
+    get isSuperAdmin() {
+        return (this._currentAdminUser) && (this._currentAdminUser.role_id === 1)
+    }
+
+    get isAdmin() {
+        return (this._currentAdminUser) && (this._currentAdminUser.role_id === 2)
+    }
+
+    get isCallCenter() {
+        return (this._currentAdminUser) && (this._currentAdminUser.role_id === 3)
+    }
+    get isDistributorAdmin() {
+        return (this._currentAdminUser) && (this._currentAdminUser.role_id === 4)
+    }
+    get isDistributor() {
+        return (this._currentAdminUser) && (this._currentAdminUser.role_id === 5)
+    }
+    get isUserhasMainRole(){
+        return (this._currentAdminUser) &&
+            (this._currentAdminUser.role_id >= 1 ) && (this._currentAdminUser.role_id <= 5 )
+    }
     public checkModuleRight(module: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -49,7 +75,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
     }
 
     public checkModuleActionRight(module: string, action: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -62,7 +88,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
     }
 
     public checkModuleFieldRight(module: string, field: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -76,7 +102,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
 
 
     public checkModuleOtherRight(module: string, other: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -89,7 +115,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
     }
 
     public getModuleAction(module: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -102,7 +128,7 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
     }
 
     public getModuleOther(module: string) {
-        if (this._currentAdminUser) {
+        if (this._currentAdminUser && this._currentAdminUser.Role) {
             let featureAcl = _.filter(this._currentAdminUser.Role.FeatureACLs,
                 (feature: FeatureACL) => {
                     return feature.module === module;
@@ -114,11 +140,14 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
         return JSON.stringify({});
     }
 
-    public async changePassword(passwordModel: any) {
+    public changePassword(passwordModel: any) {
         let url = this.url + '/change-password';
-        let res = await this.http.put(this.baseUrl + url, passwordModel, {headers: this.authorization()}).toPromise()
-        this.url = '/admin-user';
-        return res
+        return this.http.put(this.baseUrl + url, passwordModel, {headers: this.authorization()}).toPromise();
+    }
+
+    public reset2FA() {
+        let url = this.url + '/reset-2-fa';
+        return this.http.put(this.baseUrl + url, {}, {headers: this.authorization()}).toPromise();
     }
 }
 

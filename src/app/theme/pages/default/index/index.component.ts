@@ -9,6 +9,7 @@ import {AdminUsersService} from "../../../../_services/apis/admin-users.service"
 import {Country} from "../../../../models/country";
 import {UserActivityLogService} from "../../../../_services/apis/user-activity-log.service";
 import {UserActivityLog} from "../../../../models/user-activity-log";
+import {DashboardService} from "../../../../_services/apis/dashboard.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -22,6 +23,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     selectedDateRange: any;
     selectedDateRangeActivity: any;
     adminUserActivityLogs: UserActivityLog[];
+    chartData: any;
     serialAmChart1Options = {
         axis_1: 'usersAxis',
         axis_title_1: 'Users',
@@ -50,11 +52,26 @@ export class IndexComponent implements OnInit, AfterViewInit {
         axis_legendValueText_3: '$ issued loans',
         axis_valueField_3: 'loans'
     };
+    filter: any = {};
+
     constructor(private _script: ScriptLoaderService,
                 private _router: Router,
                 public adminUserService: AdminUsersService,
-                private _userAcitvityLog: UserActivityLogService) {
+                private _userAcitvityLog: UserActivityLogService,
+                private _apiDashboard: DashboardService) {
         this.adminUserCountries = this.adminUserService.currentAdminUser.AdminuserCountries;
+    }
+
+    loadingDashboard() {
+        this.filter = {
+            country_id: this.currentCountry ? this.currentCountry.id : undefined,
+            start_date: this.selectedDateRange ? this.selectedDateRange.start : undefined,
+            end_date: this.selectedDateRange ? this.selectedDateRange.end : undefined
+        };
+
+        this._apiDashboard.getDashboard(this.filter).subscribe((data: any) => {
+            this.chartData = data;
+        })
     }
 
     ngOnInit() {
@@ -62,34 +79,20 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/app/js/dashboard.js');*/
-
-        /*        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-                    'assets/grids/users-activity-log.js');*/
-
-        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            '//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js');
-
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            '//www.amcharts.com/lib/3/plugins/export/export.min.js');
-*/
-        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/demo/default/custom/components/charts/amcharts/charts.js');*/
-
-        /*Helpers.loadStyles('.m-grid__item.m-grid__item--fluid.m-wrapper', [
-            '//www.amcharts.com/lib/3/plugins/export/export.css']);*/
-
-        /*this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/demo/default/custom/components/charts/google-charts.js');*/
 
         this.onLoadUserActivityLog(undefined);
 
     }
 
-    onNavigateToRoute(router: string) {
+    onNavigateToRoute(router: string, key1?: string, value1?: string, key2?: string, value2?: string) {
         const routerUrl = router ? "/" + router : "/";
-        this._router.navigate([routerUrl])
+        if (key1) {
+            this.filter[key1] = value1;
+        }
+        if (key2) {
+            this.filter[key2] = value2;
+        }
+        this._router.navigate([routerUrl], {queryParams: {filter: JSON.stringify(this.filter)}})
     }
 
     onChangeCountry(country: Country) {
@@ -98,11 +101,12 @@ export class IndexComponent implements OnInit, AfterViewInit {
         } else {
             this.currentCountry = null
         }
-
+        this.loadingDashboard();
     }
 
     onChangeDateRange(range: any) {
         this.selectedDateRange = range;
+        this.loadingDashboard();
     }
 
     onChangeDateRangeActivity(range: any) {
@@ -117,11 +121,13 @@ export class IndexComponent implements OnInit, AfterViewInit {
     onLoadUserActivityLog(daterange: any) {
         if (this.adminUserService && this.adminUserService.checkModuleActionRight('user-activities', 'GET')) {
             let where = {};
+            if (!this.adminUserService.isSuperAdmin && !this.adminUserService.isAdmin) {
+                where['user_email'] = this.adminUserService.currentAdminUser.email;
+            }
             if (daterange) {
                 where['created_at'] = {
                     $between: [daterange.start, daterange.end]
                 }
-
             }
             this._userAcitvityLog.query('{"where":' + JSON.stringify(where) + ', "order":[["created_at","desc"]]}').subscribe((logs: UserActivityLog[]) => {
                 this.adminUserActivityLogs = logs;

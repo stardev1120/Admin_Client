@@ -31,15 +31,6 @@ const routes: Routes = [
                 resolve: {
                     role: RoleResolver
                 }
-            },
-            {
-                "path": "view/:id",
-                "component": RoleViewComponent,
-                "canActivate": [AuthGuard],
-                data: {module: 'roles', action: 'GET'},
-                resolve: {
-                    role: RoleResolver
-                }
             }
         ]
     }

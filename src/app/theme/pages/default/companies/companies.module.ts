@@ -33,15 +33,6 @@ const routes: Routes = [
                     company: CompanyResolver,
                     countries: CountriesResolver
                 }
-            },
-            {
-                "path": "view/:id",
-                "component": CompanyViewComponent,
-                "canActivate": [AuthGuard],
-                data:{module: 'companies', action: 'GET'},
-                resolve: {
-                    company: CompanyResolver
-                }
             }
         ]
     }

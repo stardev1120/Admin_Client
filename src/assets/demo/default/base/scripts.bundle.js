@@ -849,8 +849,9 @@ jQuery.fn.extend({
                 dt.setupBaseDOM.call();
                 dt.setupDOM(datatable.table);
                 // set custom query from options
-                API.setDataSourceQuery(API.getOption('data.source.read.params.query'));
-
+                if (API.getOption('data.source.read.params.query') !== null) {
+                    API.setDataSourceQuery(API.getOption('data.source.read.params.query'));
+                }
                 // on event after layout had done setup, show datatable
                 $(datatable).on('m-datatable--on-layout-updated', dt.afterRender);
 
@@ -873,7 +874,7 @@ jQuery.fn.extend({
                         datatable.dataSet = datatable.originalDataSet
                             = dt.dataMapCallback(options.data.source);
                     }
-                    dt.dataRender();
+                    //dt.dataRender();
                 }
 
                 dt.setHeadTitle.call();
@@ -2977,7 +2978,6 @@ jQuery.fn.extend({
                     }
 
                     // remove empty element from array
-                    console.log('queryx', params.query)
                     $.each(params.query, function (k, v) {
                         if (v === "") {
                             delete params.query[k];

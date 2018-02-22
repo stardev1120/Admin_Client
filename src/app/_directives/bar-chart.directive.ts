@@ -75,8 +75,8 @@ export class BarChartDirective implements OnChanges {
             };
             $(that.el.nativeElement).empty();
             let chartContainer = (<any>$(that.el.nativeElement).append('<canvas></canvas>')).find('canvas');
-            let kpi = t[that.chatKpiName][0]?t[that.chatKpiName][0]:t[that.chatKpiName];
-            $('#' + that.chartKpiId).text((kpi[that.chatKpiName]?kpi[that.chatKpiName]:0) + ' ' + that.chatKpiText);
+            let kpi = t[that.chatKpiName]?t[that.chatKpiName]:t[that.chatKpiName];
+            $('#' + that.chartKpiId).text((kpi?kpi:0) + ' ' + that.chatKpiText);
             if (chartContainer.length == 0) {
                 return;
             }

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
 
 import {Country} from "../../../models/country";
-import {environment} from '../../../../environments/environment'
+import {environment} from '../../../../environments/environment';
 import {AdminUsersService} from "../../../_services/apis/admin-users.service";
 import {AdminUserCountry} from "../../../models/admin-user-country";
 
@@ -23,19 +23,17 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.currentUser = this._adminUserService.currentAdminUser;
-        if(!this._adminUserService.checkModuleOtherRight('countries', 'seeAllCountries')) {
-            this.adminUserCountries = this._adminUserService.currentAdminUser.AdminuserCountries;
-            if(!!localStorage.getItem('currentCountry')){
-                this.currentCountry = JSON.parse(localStorage.getItem('currentCountry')) as Country;
-            } else {
-                if(this.adminUserCountries[0]){
-                    this.currentCountry = this.adminUserCountries[0].Country;
-                    localStorage.setItem('currentCountry', JSON.stringify(this.adminUserCountries[0].Country));
-                }
-            }
+        this.adminUserCountries = this._adminUserService.currentAdminUser.AdminuserCountries;
+        if (!!localStorage.getItem('currentCountry')) {
+            this.currentCountry = JSON.parse(localStorage.getItem('currentCountry')) as Country;
         } else {
-            this.adminUserCountries = null;
-            localStorage.removeItem('currentCountry');
+            if (this.adminUserCountries && this.adminUserCountries[0]) {
+                this.currentCountry = this.adminUserCountries[0].Country;
+                localStorage.setItem('currentCountry', JSON.stringify(this.adminUserCountries[0].Country));
+            } else {
+                this.adminUserCountries = null;
+                localStorage.removeItem('currentCountry');
+            }
         }
     }
 

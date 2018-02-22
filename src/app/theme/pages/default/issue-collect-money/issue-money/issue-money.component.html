@@ -3,7 +3,7 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                             <label class="m--font-boldest">
                                 User ID:
                             </label>
-                            <span class="m--font-normal">{{data.User.fname}}</span>
+                            <span class="m--font-normal">{{data.User.id}}</span>
                         </div>
                         <div class="">
                             <label class="m--font-boldest">
@@ -106,7 +106,7 @@
                     Amount to be issued :
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    <div class="col-form-label m--font-normal">{{data.amount_pending}}</div>
+                    <div class="col-form-label m--font-normal">{{data.ammount_taken}} {{data.currency}}</div>
                 </div>
 
             </div>
@@ -115,7 +115,7 @@
                     Confirm amount issued :
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    <div class="col-form-label m--font-normal">{{data.amount_pending}}</div>
+                    <div class="col-form-label m--font-normal">{{data.ammount_taken}} {{data.currency}}</div>
                 </div>
             </div>
             <div class="row">
@@ -126,7 +126,7 @@
                             class="btn btn-focus m-btn m-btn--custom m-btn--pill">
                         Issue Cash
                     </button>
-                    <button routerLink="/issue-collect-money" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                    <button (click)="goBack()" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                         Cancel
                     </button>
                 </div>

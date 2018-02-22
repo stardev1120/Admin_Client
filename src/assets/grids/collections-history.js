@@ -1,246 +1,193 @@
-//== Class definition
-
-var DatatableRemoteAjaxDemo = function () {
-    //== Private functions
-    var baseUrl = 'http://localhost:3000/api/admin/collection-history'
-    // basic demo
-    var demo = function () {
-
-        var datatable = $('.m_datatable').mDatatable({
-            // datasource definition
+var Datatable_Collections_History_AJAX_DEMO = function () {
+    var datatable;
+    var baseUrl;
+    var currentUserString = localStorage.getItem('currentUser');
+    var currentCountry = (JSON.parse(localStorage.getItem('currentCountry'))) ?
+        (JSON.parse(localStorage.getItem('currentCountry'))).id : null;
+    var headers = {
+        "content-type": "application/json"
+    };
+    if (currentUserString) {
+        var currentUser = JSON.parse(currentUserString);
+        if (currentUser) {
+            var token = currentUser.token;
+            headers['authorization'] = "JWT " + token;
+            if (currentCountry) {
+                headers['country_id'] = currentCountry;
+            }
+        }
+    }
+    var demo = function (filter) {
+        datatable = $('.m_datatable_collection_histroy').mDatatable({
             data: {
-                //type: 'remote',
+                type: 'remote',
                 source: {
                     read: {
-                        // sample GET method
-                        method: 'get',
-                        //url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
-                        url: baseUrl,
-                        headers: {"authorization": localStorage.getItem('token')},
+                        method: 'GET',
+                        url: baseUrl + '/collection-history',
+                        headers: headers,
                         map: function (raw) {
-                            // sample data mapping
                             var dataSet = raw;
                             if (typeof raw.data !== 'undefined') {
                                 dataSet = raw.data;
                             }
                             return dataSet;
-                        },
-                    },
+                        }
+                    }
                 },
-                pageSize: 10,
+                pageSize: 10, // display 20 records per page
                 saveState: {
                     cookie: true,
-                    webstorage: true,
+                    webstorage: true
                 },
                 serverPaging: true,
                 serverFiltering: true,
-                serverSorting: true,
+                serverSorting: true
             },
 
             // layout definition
             layout: {
-                theme: 'default', // datatable theme
-                class: '', // custom wrapper class
-                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-                footer: false // display/hide footer
+                theme: 'default',
+                scroll: false,
+                height: null,
+                footer: false
             },
 
             // column sorting
             sortable: true,
-
             pagination: true,
-
             toolbar: {
                 // toolbar items
                 items: {
-                    // pagination
-                    // actions: {
-                    //     delete: {
-                    //         name: 'Delete All',
-                    //         url: '/delete',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     },
-                    //     activate: {
-                    //         name: 'Activate All',
-                    //         url: '/active',
-                    //         fn: function (ids) {
-                    //             console.log(ids);
-                    //         }
-                    //     }
-                    // },
                     pagination: {
                         // page size select
-                        pageSizeSelect: [ 10, 20, 30, 50, 100],
-                    },
-                },
-            },
-
-            search: {
-                input: $('#m_form_user_name'),
+                        pageSizeSelect: [10, 20, 30, 50, 100]
+                    }
+                }
             },
 
             // columns definition
             columns: [
                 {
-                    field: 'select',
-                    width: 20,
-                    title: ' <input type="checkbox" name="selectall" id="selectall" value="all"/>',
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row) {
-                        return '<input type="checkbox" id="select-' + row.id + '" data-value="'+row.id+'"/>';
-                    },
-                },
-                {
-                    field: 'user',
-                    title: 'User Name',
-                    filterable: false, // disable or enable filtering
-                    width: 200,
-                    template: function (row) {
-                        return loan.user.fname+' '+loan.user.mname+' '+loan.user.lname;
-                    }
-                },
-                {
                     field: 'loan_id',
-                    title: 'loan_id',
-                    filterable: false, // disable or enable filtering
-                    width: 100
+                    title: 'Loan Id',
+                    filterable: false
                 },
                 {
                     field: 'amount',
-                    title: 'amount',
+                    title: 'Amount',
                     filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
+                    template: function (row) {
+                        return row.amount+ ' ' + row.currency;
+                    }
                 },
                 {
                     field: 'date',
-                    title: 'date',
+                    title: 'Date of Collection',
                     filterable: false, // disable or enable filtering
-                    width: 50
-                },
-                {
-                    field: 'currency',
-                    title: 'currency',
-                    filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
+                    template: function (row) {
+                        return DateFormat.format.date(row.date, 'D MMM yyyy');
+                    }
                 },
                 {
                     field: 'retry_date',
-                    title: 'retry_date',
+                    title: 'Retry Date',
                     filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
+                    template: function (row) {
+                        return DateFormat.format.date(row.retry_date, 'D MMM yyyy');
+                    }
                 },
                 {
                     field: 'status',
-                    title: 'status',
-                    filterable: false, // disable or enable filtering
-                    width: 50
+                    title: 'Status',
+                    filterable: false
                 },
                 {
                     field: 'date_of_entry',
-                    title: 'date_of_entry',
+                    title: 'Date of Entry',
                     filterable: false, // disable or enable filtering
-                    width: 50
+                    //width: 50
+                    template: function (row) {
+                        return DateFormat.format.date(row.date_of_entry, 'D MMM yyyy');
+                    }
                 },
                 {
                     field: 'bank_response',
-                    title: 'bank_response',
-                    filterable: false, // disable or enable filtering
-                    width: 200
+                    title: 'Bank Response',
+                    filterable: false
                 },
                 {
-                    field: 'Actions',
-                    width: 110,
-                    title: 'Actions',
-                    sortable: false,
-                    overflow: 'visible',
+                    field: 'AdminUser',
+                    title: 'Admin User',
+                    filterable: false, // disable or enable filtering
+                    // width: 70
                     template: function (row) {
-                        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return '\
-                            <a href="#/collection-history/'+row.id+'" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
-						</a>\
-					';
-                    },
-                }],
+                        if (row.AdminUser) {
+                            return row.AdminUser.name;
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {
+                    field: 'created_at',
+                    title: 'Date',
+                    filterable: false, // disable or enable filtering
+                    //width: 80
+                    template: function (row) {
+                        return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                    }
+                }
+            ]
         });
 
-        var query = datatable.getDataSourceQuery();
-
-        $('#m_form_user_name').on('change', function () {
-            // shortcode to datatable.getDataSourceParam('query');
-            var query = datatable.getDataSourceQuery();
-            query.user.fname = $(this).val(); // todo: we need to do for mname and lname with or and like
-            // shortcode to datatable.setDataSourceParam('query', query);
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.fname !== 'undefined' ? query.fname : '');
-
-        $('#selectall').change(function (e) {
-            console.log($(e.target)[0].checked, 'e');
-            $('[id^="select-"]').prop('checked', $(e.target).prop('checked'));
-        });
-        datatable.on('click', '[id^="delete-row-"]', function (e) {
-            var id = $(e.target).prop('id');
-            id = id.replace('delete-row-', '');
-            console.log(id, 'e');
-
-            $.ajax({
-                url: baseUrl + '/' + id,
-                method: 'delete'
-            }).done(datatable.load);
-
-
-        });
-
-
+        query(filter);
+        return datatable;
     };
+
+    function query(filter) {
+        var query = datatable.getDataSourceQuery();
+        var include = [];
+        var adminUser = {
+            association: "AdminUser",
+            required: true
+        };
+
+        var loan = {
+            association: "Loan",
+            required: true
+        };
+        include.push(adminUser);
+        include.push(loan);
+        datatable.setOption('include', include);
+
+        if (filter['collection_id']) {
+            query['collection_id'] = filter['collection_id'];
+        } else {
+            delete query.collection_id;
+        }
+
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }
 
     return {
         // public functions
-        init: function () {
-            demo();
+        init: function (filter, baseUrlParam) {
+            baseUrl = baseUrlParam;
+            return demo(filter);
         },
+
+        query: function (filter) {
+            if (datatable) {
+                query(filter);
+            }
+            else {
+                demo(filter);
+            }
+        }
     };
 }();
-
-jQuery(document).ready(function () {
-    DatatableRemoteAjaxDemo.init();
-});

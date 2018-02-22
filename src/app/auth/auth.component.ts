@@ -1,6 +1,6 @@
 import {
     Component,
-    ComponentFactoryResolver,
+    ComponentFactoryResolver, OnDestroy,
     OnInit,
     ViewChild,
     ViewContainerRef,
@@ -17,6 +17,7 @@ import {Helpers} from "../helpers";
 import {AdminUsersService} from "../_services/apis/admin-users.service";
 import {RequestResetPasswordService} from "./_services/request-reset-password.service";
 import {environment} from '../../environments/environment'
+import {RecaptchaComponent} from "ng-recaptcha";
 
 @Component({
     selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
@@ -24,7 +25,7 @@ import {environment} from '../../environments/environment'
     encapsulation: ViewEncapsulation.None
 })
 
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
     model: any = {};
     loading = false;
     returnUrl: string;
@@ -38,6 +39,7 @@ export class AuthComponent implements OnInit {
     @ViewChild('alertSignup', {read: ViewContainerRef}) alertSignup: ViewContainerRef;
     @ViewChild('alertForgotPass', {read: ViewContainerRef}) alertForgotPass: ViewContainerRef;
     @ViewChild('alert2FA', {read: ViewContainerRef}) alert2FA: ViewContainerRef;
+    @ViewChild('captchaRef') captchaRef: RecaptchaComponent;
 
     constructor(private _router: Router,
                 private _script: ScriptLoaderService,
@@ -61,7 +63,9 @@ export class AuthComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentCountry');
+        localStorage.clear();
         this.model.remember = true;
         // get return url from route parameters or default to '/'
         this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
@@ -97,6 +101,7 @@ export class AuthComponent implements OnInit {
                         }
                     }, (error: any) => {
                         this.model['g-recaptcha-response'] = '';
+                        this.captchaRef.reset();
                         this.showAlert('alertSignin');
                         if (error.error) {
                             this._alertService.error(error.error.text);
@@ -110,6 +115,7 @@ export class AuthComponent implements OnInit {
                 },
                 (error: any) => {
                     this.model['g-recaptcha-response'] = '';
+                    this.captchaRef.reset();
                     this.showAlert('alertSignin');
                     this._alertService.error(error._body);
                     this.loading = false;
@@ -193,5 +199,13 @@ export class AuthComponent implements OnInit {
             ref.changeDetectorRef.detectChanges();
         }
 
+    }
+
+    ngOnDestroy() {
+        if (this.captchaRef) {
+            this.captchaRef.reset();
+            this.captchaRef.ngOnDestroy();
+            this.captchaRef = null;
+        }
     }
 }

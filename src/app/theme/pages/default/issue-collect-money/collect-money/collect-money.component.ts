@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/pairwise';
+
 import {Collection} from "../../../../../models/collection";
 import {CollectionsService} from "../../../../../_services/apis/collections.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -17,7 +19,9 @@ export class CollectMoneyComponent implements OnInit {
                 private router: Router,
                 private route: ActivatedRoute,
                 private modalService: NgbModal) {
-
+/*        this.router.events.pairwise().subscribe((e) => {
+            console.log('e---->', e);
+        });*/
     }
 
     ngOnInit() {
@@ -25,16 +29,19 @@ export class CollectMoneyComponent implements OnInit {
     }
 
     onSubmit(content: any) {
-        this.data.status = 'Collected';
-        this.api.save(this.data)
+        this.api.collectLoanMoney(this.data.id)
             .subscribe(() => {
-                this.modalService.open(content).result.then((result) => {
-                    this.router.navigate(["/issue-collect-money"])
+                this.modalService.open(content).result.then(() => {
+                   this.goBack();
                 }, () => {
-                    this.router.navigate(["/issue-collect-money"])
+                    this.goBack();
                 });
             }, error => {
                 console.log(error);
             });
+    }
+
+    goBack(){
+        window.history.back();
     }
 }

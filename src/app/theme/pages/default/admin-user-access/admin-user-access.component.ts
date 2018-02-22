@@ -78,4 +78,8 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
         this.error = '';
         this.hasError = false;
     }
+
+    goBack() {
+        window.history.back();
+    }
 }

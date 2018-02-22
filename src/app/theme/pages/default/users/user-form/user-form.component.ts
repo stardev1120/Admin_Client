@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import 'rxjs/add/observable/forkJoin';
+
 import { UsersService } from "../../../../../_services/apis/users.service";
 import { User } from "../../../../../models/user";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/forkJoin';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",

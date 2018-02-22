@@ -4,7 +4,15 @@ import {Routes, RouterModule} from '@angular/router';
 import {IndexComponent} from './index.component';
 import {LayoutModule} from '../../../layouts/layout.module';
 import {DefaultComponent} from '../default.component';
-import {BarChartDirective, DateRangeDirective, SerialAmChartDirective, LineChartDirective} from "../../../../_directives";
+import {
+    BarChartDirective,
+    DateRangeDirective,
+    SerialAmChartDirective,
+    LineChartDirective,
+    BarChartDataDirective,
+    SerialAmChartDataDirective,
+    LineChartDataDirective
+} from "../../../../_directives";
 
 const routes: Routes = [
     {
@@ -29,7 +37,10 @@ const routes: Routes = [
         BarChartDirective,
         DateRangeDirective,
         SerialAmChartDirective,
-        LineChartDirective
+        LineChartDirective,
+        BarChartDataDirective,
+        SerialAmChartDataDirective,
+        LineChartDataDirective
     ]
 })
 export class IndexModule {

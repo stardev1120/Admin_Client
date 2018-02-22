@@ -4,18 +4,8 @@
 		<div class="mr-auto">
 			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
-					<a href="/index" class="m-nav__link m-nav__link--icon">
+					<a href="#/index" class="m-nav__link m-nav__link--icon">
 						<i class="m-nav__link-icon la la-home"></i>
-					</a>
-				</li>
-				<li class="m-nav__separator">
-					-
-				</li>
-				<li class="m-nav__item">
-					<a href="/index" class="m-nav__link">
-						<span class="m-nav__link-text">
-							Home
-						</span>
 					</a>
 				</li>
 				<li class="m-nav__separator">
@@ -68,7 +58,7 @@
 						<div class="form-group m-form__group row align-items-center">
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Name ..." id="name">
+									<input type="text" (change)="onChangeName($event)"  class="form-control m-input m-input--solid" placeholder="Name ...">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -78,7 +68,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Email..." id="email">
+									<input (change)="onChangeEmail($event)" type="text" class="form-control m-input m-input--solid" placeholder="Email...">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -88,7 +78,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Phone Number..." id="phone_number">
+									<input type="text" (change)="onChangePhoneNumber($event)" class="form-control m-input m-input--solid" placeholder="Phone Number...">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -114,7 +104,8 @@
 			</div>
 			<!--end: Search Form -->  		<!--begin: Datatable -->
 			<input type="hidden" id="adminUsers_id_actions" [value]="_adminUserService.getModuleAction('admin-users')">
-			<div class="m_datatable" id="json_data"></div>
+			<input type="hidden" id="currentAdminUser_id" [value]="_adminUserService.currentAdminUser.id">
+			<div class="m_datatable_admin_users" id="m_datatable_admin_users"></div>
 			<!--end: Datatable -->
 		</div>
 	</div>

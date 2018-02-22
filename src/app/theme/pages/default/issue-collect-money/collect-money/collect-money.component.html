@@ -3,7 +3,7 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                             <label class="m--font-boldest">
                                 User ID:
                             </label>
-                            <span class="m--font-normal">{{data.Loan.User.fname}}</span>
+                            <span class="m--font-normal">{{data.Loan.User.id}}</span>
                         </div>
                         <div class="">
                             <label class="m--font-boldest">
@@ -102,20 +102,20 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                <label class="col-form-label col-lg-4 col-sm-12 m--font-boldest">
                     Amount to be collected :
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    <div class="col-form-label m--font-normal">{{data.amount}}</div>
+                    <div class="col-form-label m--font-normal">{{data.amount}} {{data.currency}}</div>
                 </div>
 
             </div>
             <div class="form-group row">
-                <label class="col-form-label col-lg-3 col-sm-12 m--font-boldest">
+                <label class="col-form-label col-lg-4 col-sm-12 m--font-boldest">
                     Confirm amount collected :
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    <div class="col-form-label m--font-normal">{{data.amount}}</div>
+                    <div class="col-form-label m--font-normal">{{data.amount}} {{data.currency}}</div>
                 </div>
             </div>
             <div class="row">
@@ -126,7 +126,7 @@
                             class="btn btn-focus m-btn m-btn--custom m-btn--pill">
                         Collect Cash
                     </button>
-                    <button routerLink="/issue-collect-money" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                    <button (click)="goBack()" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                         Cancel
                     </button>
                 </div>

@@ -3,7 +3,7 @@
         <div class="mr-auto">
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="/index" class="m-nav__link m-nav__link--icon">
+                    <a href="#/index" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -106,7 +106,8 @@
                             <button type="submit" class="btn btn-focus m-btn m-btn--custom m-btn--pill">
                                 Save
                             </button>
-                            <button routerLink="/roles" type="reset" class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            <button routerLink="/roles" type="reset"
+                                    class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
                                 Cancel
                             </button>
                         </div>
@@ -115,5 +116,113 @@
             </div>
         </form>
         <!--end::Form-->
+        <div class="row col-lg-12 align-items-center">
+            <div class="col-xl-4 order-1 order-xl-2">
+                <h4 class="m-portlet__head-text">
+                    Features ACL
+                </h4>
+                <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="m-portlet__body" style="padding: 0 !important;">
+                <!--begin::Section-->
+                <div class="m-section">
+                    <div class="m-section__content">
+                        <table class="table table-lg m-table m-table--head-bg-brand">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>
+                                    Module
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                                <th>
+                                    Fields
+                                </th>
+                                <th>
+                                    Other
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="text-align: center;" *ngIf="!data.FeatureACLs || data.FeatureACLs.length === 0">
+                                <td colspan="4">
+                                    <span>Please, add role first then you can add its feature acls.</span>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let featureACL of data.FeatureACLs">
+                                <th scope="row">
+                                    {{featureACL.module}}
+                                </th>
+                                <td>
+                                    <form class="m-form">
+                                        <div class="m-form__group form-group row">
+                                            <div class="m-checkbox-list">
+                                                <label class="m-checkbox"
+                                                       *ngFor="let action of getJSONKeys(featureACL.actions)">
+                                                    <input type="checkbox" [checked]="featureACL.actions[action]"
+                                                           (change)="featureACL.actions[action] = !featureACL.actions[action];onFeatureACL(featureACL);">
+                                                    {{action}}
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form class="m-form">
+                                        <div class="m-form__group form-group row">
+                                            <div class="m-checkbox-list">
+                                                <label class="m-checkbox"
+                                                       *ngFor="let field of getJSONKeys(featureACL.fields)">
+                                                    <input type="checkbox" [checked]="featureACL.fields[field]"
+                                                           (change)="featureACL.fields[field] = !featureACL.fields[field];onFeatureACL(featureACL);">
+                                                    {{field}}
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form class="m-form">
+                                        <div class="m-form__group form-group row">
+                                            <div class="m-checkbox-list">
+                                                <label class="m-checkbox"
+                                                       *ngFor="let other of getJSONKeys(featureACL.other)">
+                                                    <input type="checkbox" [checked]="featureACL.other[other]"
+                                                           (change)="featureACL.other[other] = !featureACL.other[other];onFeatureACL(featureACL);">
+                                                    {{other}}
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class="row" style="padding: 10px">
+                    <div class="col-lg-9 ml-lg-auto">
+                        <button type="button" (click)="saveRights()" [disabled]="!data.FeatureACLs || data.FeatureACLs.length === 0"
+                                class="btn btn-focus m-btn m-btn--custom m-btn--pill">
+                            Save feature ACLs
+                        </button>
+                        <button routerLink="/roles" type="reset"
+                                class="btn btn-secondary m-btn m-btn--custom m-btn--pill">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

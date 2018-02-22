@@ -1,5 +1,4 @@
-import {Directive, ElementRef, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {environment} from '../../environments/environment'
+import {Directive, ElementRef, EventEmitter, Input, Output} from '@angular/core';
 
 //declare var $: JQueryStatic;
 declare var moment: any;
@@ -9,6 +8,8 @@ declare var DateRangePicker: any;
     selector: '[appDateRange]'
 })
 export class DateRangeDirective {
+
+    @Input('start-date') startDate?: string;
     @Output('on-change') onChanged = new EventEmitter();
 
     constructor(private el: ElementRef) {
@@ -24,7 +25,7 @@ export class DateRangeDirective {
         }
 
         let picker = $(this.el.nativeElement);
-        let start = moment().subtract(6, 'days');
+        let start = this.startDate == 'today' ? moment() : moment().subtract(6, 'days');
         let end = moment();
         let that = this;
 
