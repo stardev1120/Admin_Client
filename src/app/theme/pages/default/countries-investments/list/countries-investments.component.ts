@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { ActivatedRoute } from "@angular/router";
-import { environment } from "../../../../../../environments/environment";
+import {ActivatedRoute} from "@angular/router";
+import {environment} from "../../../../../../environments/environment";
 // import { Helpers } from '../../../../../../../helpers';
 // import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 
@@ -17,7 +17,7 @@ export class CountriesInvestmentsComponent implements OnInit, AfterViewInit, OnD
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-        private route: ActivatedRoute) {
+                private route: ActivatedRoute) {
 
     }
     ngOnInit() {
@@ -32,11 +32,11 @@ export class CountriesInvestmentsComponent implements OnInit, AfterViewInit, OnD
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/countries-investments-1.js').then(() => {
-                this.grid = (window as any).Datatable_Investement_AJAX_DEMO;
-                if (this.grid) {
-                    this.grid.init(this.filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Investement_AJAX_DEMO;
+            if (this.grid) {
+                this.grid.init(this.filter, environment.baseUrl);
+            }
+        });
 
     }
 

@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { environment } from "../../../../../../environments/environment";
+import {environment} from "../../../../../../environments/environment";
 
 
 @Component({
@@ -15,7 +15,7 @@ export class AdminCollectDistributeComponent implements OnInit, AfterViewInit, O
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-        private route: ActivatedRoute) {
+                private route: ActivatedRoute) {
 
     }
 
@@ -32,11 +32,11 @@ export class AdminCollectDistributeComponent implements OnInit, AfterViewInit, O
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/admin-collect-distribute.js').then(() => {
-                this.grid = (window as any).Datatable_Distribute_AJAX_DEMO;
-                if (this.grid) {
-                    this.grid.init(this.filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Distribute_AJAX_DEMO;
+            if (this.grid) {
+                this.grid.init(this.filter, environment.baseUrl);
+            }
+        });
 
     }
 

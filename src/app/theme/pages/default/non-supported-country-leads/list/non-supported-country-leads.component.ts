@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { environment } from "../../../../../../environments/environment";
+import {environment} from "../../../../../../environments/environment";
 
 
 @Component({
@@ -22,11 +22,11 @@ export class NonSupportedCountryLeadsComponent implements OnInit, AfterViewInit 
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/non-supported-country-leads.js').then(() => {
-                this.grid = (window as any).Datatable_Leads_AJAX_DEMO;
-                if (this.grid) {
-                    this.grid.init(this.filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Leads_AJAX_DEMO;
+            if (this.grid) {
+                this.grid.init(this.filter, environment.baseUrl);
+            }
+        });
     }
 
     onChangeName(event: any) {

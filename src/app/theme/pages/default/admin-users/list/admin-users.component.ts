@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
-import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { AdminUsersService } from "../../../../../_services/apis/admin-users.service";
-import { environment } from "../../../../../../environments/environment";
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
+import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
+import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
+import {environment} from "../../../../../../environments/environment";
 
 
 @Component({
@@ -24,11 +24,11 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/admin-users.js').then(() => {
-                this.grid = (window as any).Datatable_Admin_Users_AJAX_DEMO;
-                if (this.grid) {
-                    this.grid.init(this.filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Admin_Users_AJAX_DEMO;
+            if (this.grid) {
+                this.grid.init(this.filter, environment.baseUrl);
+            }
+        });
     }
 
     onChangeEmail(event: any) {

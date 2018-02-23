@@ -1,6 +1,6 @@
-import { BaseModel } from "../_services/base-model";
-import { User } from "./user";
-import { PaymentMethod } from "./payment-method";
+import {BaseModel} from "../_services/base-model";
+import {User} from "./user";
+import {PaymentMethod} from "./payment-method";
 
 export class UserPaymentMethod implements BaseModel {
     public name: string;

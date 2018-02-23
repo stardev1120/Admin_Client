@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash'
-import { UsersService } from "../../../../_services/apis/users.service";
-import { LoansService } from "../../../../_services/apis/loans.service";
-import { CollectionsService } from "../../../../_services/apis/collections.service";
-import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
-import { Loan } from "../../../../models/loan";
-import { Collection } from "../../../../models/collection";
+import {UsersService} from "../../../../_services/apis/users.service";
+import {LoansService} from "../../../../_services/apis/loans.service";
+import {CollectionsService} from "../../../../_services/apis/collections.service";
+import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
+import {Loan} from "../../../../models/loan";
+import {Collection} from "../../../../models/collection";
 
 
 @Component({
@@ -23,10 +23,10 @@ export class IssueCollectMoneyComponent implements OnInit {
     submitted = false;
 
     constructor(private api: UsersService,
-        private _router: Router,
-        private _loanService: LoansService,
-        private _collectionService: CollectionsService,
-        private _adminUserService: AdminUsersService) {
+                private _router: Router,
+                private _loanService: LoansService,
+                private _collectionService: CollectionsService,
+                private _adminUserService: AdminUsersService) {
 
     }
 
@@ -36,9 +36,9 @@ export class IssueCollectMoneyComponent implements OnInit {
     onIssueMoney(loanId: string) {
         this._loanService.get(loanId).subscribe((loan: Loan) => {
             if (loan) {
-                if (loan.status === 'To-be-Given') {
+                if(loan.status === 'To-be-Given'){
                     if (loan.user_id) {
-                        if (loan.User) {
+                        if(loan.User){
                             this._router.navigate(['/issue-collect-money/issue/' + loan.user_id + '/' + loan.id]).then();
                         } else {
                             this.error = 'Loan\'s user didn\'t belong to a current counrty';
@@ -67,7 +67,7 @@ export class IssueCollectMoneyComponent implements OnInit {
     onCollectMoney(collectionId: string) {
         this._collectionService.get(collectionId).subscribe((collection: Collection) => {
             if (collection) {
-                if (collection.status !== 'Collected') {
+                if(collection.status !== 'Collected'){
                     if (collection.Loan && collection.Loan.user_id) {
                         this._router.navigate(['/issue-collect-money/collect/' + collection.Loan.user_id + '/' + collection.id]).then();
                     }

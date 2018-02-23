@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 
-import { CountrySetting } from "../../../../../models/country-setting";
-import { CountriesSettingsService } from "../../../../../_services/apis/countries-settings.service";
-import { Country } from "../../../../../models/country";
-import { CountriesService } from "../../../../../_services/apis/countries.service";
+import {CountrySetting} from "../../../../../models/country-setting";
+import {CountriesSettingsService} from "../../../../../_services/apis/countries-settings.service";
+import {Country} from "../../../../../models/country";
+import {CountriesService} from "../../../../../_services/apis/countries.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -19,10 +19,10 @@ export class CountrySettingFormComponent implements OnInit {
     country: Country;
 
     constructor(private api: CountriesSettingsService,
-        private countryApi: CountriesService,
-        private router: Router,
-        private route: ActivatedRoute,
-        public location: Location) {
+                private countryApi: CountriesService,
+                private router: Router,
+                private route: ActivatedRoute,
+                public location: Location) {
 
     }
 
@@ -31,8 +31,8 @@ export class CountrySettingFormComponent implements OnInit {
         this.route.params
             .map(params => params['countryId'])
             .subscribe(countryId => {
-                this.data.country_id = countryId * 1;
-                this.countryApi.get(countryId).subscribe(country => {
+                this.data.country_id = countryId*1;
+                this.countryApi.get(countryId).subscribe(country=>{
                     this.country = country;
                 })
             });

@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 
-import { AdminUserAccessService } from "../../../../_services/apis/admin-user-access.service";
-import { AdminUserAccess } from "../../../../models/admin-user-access";
+import {AdminUserAccessService} from "../../../../_services/apis/admin-user-access.service";
+import {AdminUserAccess} from "../../../../models/admin-user-access";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -19,8 +19,8 @@ export class AdminUserAccessComponent implements OnInit, AfterViewInit, OnDestro
     hasError = false;
 
     constructor(private _router: Router,
-        private route: ActivatedRoute,
-        private _adminUserAccessService: AdminUserAccessService) {
+                private route: ActivatedRoute,
+                private _adminUserAccessService: AdminUserAccessService) {
 
     }
 

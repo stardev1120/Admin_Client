@@ -1,6 +1,6 @@
-import { BaseModel } from "../_services/base-model";
-import { User } from "./user";
-import { AdminUser } from "./admin-user";
+import {BaseModel} from "../_services/base-model";
+import {User} from "./user";
+import {AdminUser} from "./admin-user";
 
 export class LoansHistory implements BaseModel {
     public bank_id: number;

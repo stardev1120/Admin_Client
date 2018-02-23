@@ -13,7 +13,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
             var token = currentUser.token;
             headers['authorization'] = "JWT " + token;
             if (currentCountry) {
-                headers['country_id'] = currentCountry;
+               // headers['country_id'] = currentCountry;
             }
         }
     }

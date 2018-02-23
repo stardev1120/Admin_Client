@@ -13,7 +13,7 @@ export class DistributionCentersService extends BaseApiService<DistributionCente
         this.url = '/distribution-center';
     }
 
-    getCentersByCompanyId(companyId: string) {
+    getCentersByCompanyId(companyId: string){
         return this.http
             .get<DistributionCenter>(this.baseUrl + this.url + `/company/${companyId}`, { headers: this.authorization() })
     }

@@ -13,7 +13,7 @@ var Datatable_Countries_Investments_AJAX_DEMO = function () {
             var token = currentUser.token;
             headers['authorization'] = "JWT " + token;
             if (currentCountry) {
-                headers['country_id'] = currentCountry;
+              //  headers['country_id'] = currentCountry;
             }
         }
     }

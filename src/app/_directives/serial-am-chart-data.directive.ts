@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
-import { environment } from '../../environments/environment'
+import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import {environment} from '../../environments/environment'
 
 //declare var $: JQueryStatic;
 declare var AmCharts: any;

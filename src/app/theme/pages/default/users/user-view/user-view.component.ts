@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 
-import { UsersService } from "../../../../../_services/apis/users.service";
-import { User } from "../../../../../models/user";
-import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { AdminUsersService } from "../../../../../_services/apis/admin-users.service";
-import { LoansService } from "../../../../../_services/apis/loans.service";
-import { environment } from "../../../../../../environments/environment";
+import {UsersService} from "../../../../../_services/apis/users.service";
+import {User} from "../../../../../models/user";
+import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
+import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
+import {LoansService} from "../../../../../_services/apis/loans.service";
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -23,11 +23,11 @@ export class UserViewComponent implements OnInit, AfterViewInit {
     grid: any;
 
     constructor(private api: UsersService,
-        private apiLoan: LoansService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private _script: ScriptLoaderService,
-        public _adminUserService: AdminUsersService) {
+                private apiLoan: LoansService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private _script: ScriptLoaderService,
+                public _adminUserService: AdminUsersService) {
 
     }
 
@@ -60,12 +60,12 @@ export class UserViewComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/loans-collections.js').then(() => {
-                this.grid = (window as any).Datatable_Loans_Collections_AJAX_DEMO;
-                if (this.grid) {
-                    let filter = { user_id: this.data.id };
-                    this.grid.init(filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Loans_Collections_AJAX_DEMO;
+            if(this.grid){
+                let filter = {user_id: this.data.id};
+                this.grid.init(filter, environment.baseUrl);
+            }
+        });
 
     }
 

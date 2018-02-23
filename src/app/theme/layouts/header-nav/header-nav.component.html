@@ -95,7 +95,11 @@
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 									<span class="m-topbar__userpic">
                             <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                 *ngIf="currentUser.photo"
                                  [src]="currentUser.photo" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+<img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+     *ngIf="!currentUser.photo"
+     [src]="'assets/app/media/img/bg/default_person.png'" class="m--img-rounded m--marginless m--img-centered" alt=""/>
 									</span>
                                     <span class="m-topbar__username m--hide">
 										{{currentUser.name}}
@@ -110,7 +114,12 @@
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
                                                     <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                                         *ngIf="currentUser.photo"
                                                          [src]="currentUser.photo"
+                                                         class="m--img-rounded m--marginless" alt=""/>
+                                                    <img onerror="this.src='assets/app/media/img/bg/default_person.png'"
+                                                         *ngIf="!currentUser.photo"
+                                                         [src]="'assets/app/media/img/bg/default_person.png'"
                                                          class="m--img-rounded m--marginless" alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">

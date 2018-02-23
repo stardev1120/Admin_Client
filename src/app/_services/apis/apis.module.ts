@@ -14,10 +14,10 @@ import { RolesService } from "./role.service";
 import { FeatureACLsService } from "./feature-acls.service";
 import { AdminUserCountriesService } from "./admin-user-countries.service";
 import { AdminUsersService } from "./admin-users.service";
-import { AdminUserAccessService } from "./admin-user-access.service";
-import { UserActivityLogService } from "./user-activity-log.service"
-import { S3Service } from "./s3";
-import { DashboardService } from "./dashboard.service";
+import {AdminUserAccessService} from "./admin-user-access.service";
+import {UserActivityLogService} from "./user-activity-log.service"
+import {S3Service} from "./s3";
+import {DashboardService} from "./dashboard.service";
 
 @NgModule({
     imports: [

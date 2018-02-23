@@ -1,8 +1,8 @@
-import { BaseModel } from "../_services/base-model";
-import { User } from "./user";
-import { Collection } from "./collection";
-import { UserPaymentMethod } from "./user-payment-method";
-import { LoansHistory } from "./Loans-History";
+import {BaseModel} from "../_services/base-model";
+import {User} from "./user";
+import {Collection} from "./collection";
+import {UserPaymentMethod} from "./user-payment-method";
+import {LoansHistory} from "./Loans-History";
 
 export class Loan implements BaseModel {
     public date_taken: Date;

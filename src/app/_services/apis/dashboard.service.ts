@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 
-import { BaseApiService } from "../baseAPI";
+import {BaseApiService} from "../baseAPI";
 
-import { Dashboard } from "../../models/dashboard";
+import {Dashboard} from "../../models/dashboard";
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class DashboardService extends BaseApiService<Dashboard> {
     }
 
     getDashboard(filter: any) {
-        return this.http.post(this.baseUrl + this.url, filter, { headers: this.authorization() })
+        return this.http.post(this.baseUrl + this.url, filter, {headers: this.authorization()})
     }
 
 }

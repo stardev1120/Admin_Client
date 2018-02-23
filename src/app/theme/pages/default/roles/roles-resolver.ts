@@ -8,7 +8,7 @@ import { Company } from "../../../../models/company";
 import { CompaniesService } from "../../../../_services/apis/company.service";
 import { Role } from "../../../../models/role";
 import { RolesService } from "../../../../_services/apis/role.service";
-import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
+import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
 
 @Injectable()
 export class RolesResolver implements Resolve<Role[]> {

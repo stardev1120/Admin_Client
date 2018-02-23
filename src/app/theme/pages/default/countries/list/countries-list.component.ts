@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
-import { AdminUsersService } from "../../../../../_services/apis/admin-users.service";
-import { environment } from "../../../../../../environments/environment";
+import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
+import {environment} from "../../../../../../environments/environment";
 // import { Helpers } from '../../../../../../../helpers';
 // import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 
@@ -16,7 +16,7 @@ export class CountrieslistComponent implements OnInit, AfterViewInit {
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-        public _adminUserService: AdminUsersService) {
+                public _adminUserService: AdminUsersService) {
 
     }
     ngOnInit() {
@@ -25,11 +25,11 @@ export class CountrieslistComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/countries.js').then(() => {
-                this.grid = (window as any).Datatable_Countries_AJAX_DEMO;
-                if (this.grid) {
-                    this.grid.init(this.filter, environment.baseUrl);
-                }
-            });
+            this.grid = (window as any).Datatable_Countries_AJAX_DEMO;
+            if (this.grid) {
+                this.grid.init(this.filter, environment.baseUrl);
+            }
+        });
     }
     onChangeName(event: any) {
         this.setFilterAndReload('name', event.target.value);

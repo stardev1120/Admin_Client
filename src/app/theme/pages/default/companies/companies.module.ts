@@ -11,14 +11,14 @@ import { CompanyFormComponent } from "./company-form/company-form.component";
 import { CompanyViewComponent } from "./company-view/company-view.component";
 import { CompanyResolver } from "./company-resolver";
 import { CountriesResolver } from "../countries/countries-resolver";
-import { AuthGuard } from "../../../../auth/_guards";
+import {AuthGuard} from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "canActivate": [AuthGuard],
-        data: { module: 'companies' },
+        data:{module: 'companies'},
         "children": [
             {
                 "path": "",
@@ -28,7 +28,7 @@ const routes: Routes = [
                 "path": ":id",
                 "component": CompanyFormComponent,
                 "canActivate": [AuthGuard],
-                data: { module: 'companies', action: 'PUT' },
+                data:{module: 'companies', action: 'PUT'},
                 resolve: {
                     company: CompanyResolver,
                     countries: CountriesResolver
@@ -59,5 +59,5 @@ const routes: Routes = [
         CompanyViewComponent
     ]
 })
-export class CompaniesModule { }
+export class CompaniesModule {}
 
