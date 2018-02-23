@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
-import {environment} from "../../../../../../environments/environment";
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import { environment } from "../../../../../../environments/environment";
 
 
 @Component({
@@ -15,7 +15,7 @@ export class CollectionsComponent implements OnInit, AfterViewInit, OnDestroy {
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-                private route: ActivatedRoute) {
+        private route: ActivatedRoute) {
 
     }
 
@@ -32,11 +32,11 @@ export class CollectionsComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/collections.js').then(() => {
-            this.grid = (window as any).Datatable_Collections_AJAX_DEMO;
-            if (this.grid) {
-                this.grid.init(this.filter, environment.baseUrl);
-            }
-        });
+                this.grid = (window as any).Datatable_Collections_AJAX_DEMO;
+                if (this.grid) {
+                    this.grid.init(this.filter, environment.baseUrl);
+                }
+            });
     }
 
     onChangeName(event: any) {

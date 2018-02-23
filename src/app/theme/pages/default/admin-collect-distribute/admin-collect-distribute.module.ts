@@ -1,13 +1,13 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {RouterModule, Routes} from "@angular/router";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {FormsModule} from "@angular/forms";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule, Routes } from "@angular/router";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from "@angular/forms";
 
-import {DefaultComponent} from "../default.component";
-import {LayoutModule} from "../../../layouts/layout.module";
-import {AuthGuard} from "../../../../auth/_guards";
-import {AdminCollectDistributeComponent} from "./list/admin-collect-distribute.component";
+import { DefaultComponent } from "../default.component";
+import { LayoutModule } from "../../../layouts/layout.module";
+import { AuthGuard } from "../../../../auth/_guards";
+import { AdminCollectDistributeComponent } from "./list/admin-collect-distribute.component";
 
 const routes: Routes = [
     {
@@ -18,7 +18,7 @@ const routes: Routes = [
                 "path": "",
                 "component": AdminCollectDistributeComponent,
                 "canActivate": [AuthGuard],
-                data: {module: 'admin-collect-distribute', action: 'GET'},
+                data: { module: 'admin-collect-distribute', action: 'GET' },
             }
         ]
     }

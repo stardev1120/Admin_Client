@@ -14,10 +14,10 @@ const routes: Routes = [
         "path": "",
         "component": DefaultComponent,
         "children": [
-/*            {
-                "path": "",
-                "component": CountriesSettingsComponent
-            },*/
+            /*            {
+                            "path": "",
+                            "component": CountriesSettingsComponent
+                        },*/
             {
                 "path": ":id/:countryId",
                 "component": CountrySettingFormComponent,

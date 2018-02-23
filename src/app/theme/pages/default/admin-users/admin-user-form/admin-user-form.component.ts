@@ -29,23 +29,23 @@ export class AdminUserFormComponent implements OnInit {
 
     ngOnInit() {
         this.data = this.route.snapshot.data.adminUser as AdminUser;
-        if(this.api.currentAdminUser.id === this.data.id){
+        if (this.api.currentAdminUser.id === this.data.id) {
             this.router.navigate(["/admin-users"]);
             return;
         }
-        if(this.data && this.data.AdminuserCountries) {
+        if (this.data && this.data.AdminuserCountries) {
             let that = this;
-            _.each(that.data.AdminuserCountries, function (country) {
+            _.each(that.data.AdminuserCountries, function(country) {
                 that.selectedCountries.push(country.country_id)
             })
-        } else{
+        } else {
             this.selectedCountries = []
         }
         this.companies = this.route.snapshot.data.companies as any;
         this.roles = this.route.snapshot.data.roles as any;
 
         this.currentAdminUser = this.api.currentAdminUser;
-        if(this.currentAdminUser.Role.role_id != 'super_admin') {
+        if (this.currentAdminUser.Role.role_id != 'super_admin') {
             this.roles = this.roles.filter(function(role) {
                 return role.role_id !== 'super_admin';
             });
@@ -64,7 +64,7 @@ export class AdminUserFormComponent implements OnInit {
         }
     }
     onCheckboxChange(country, event) {
-        if(event.target.checked) {
+        if (event.target.checked) {
             this.selectedCountries.push(country.id);
         } else {
             for (var i = 0; i < this.countries.length; i++) {
@@ -74,7 +74,7 @@ export class AdminUserFormComponent implements OnInit {
             }
         }
     }
-    goBack(){
+    goBack() {
         window.history.back();
     }
 
@@ -83,7 +83,7 @@ export class AdminUserFormComponent implements OnInit {
         this.matched = this.renewPassword === this.data.password;
     }
 
-    onChangeStatus(){
+    onChangeStatus() {
         this.data.status && this.data.status === 'Active' ? this.data.status = 'Inactive' : this.data.status = 'Active';
     }
 }

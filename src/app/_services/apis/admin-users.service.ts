@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs/Observable";
 import * as _ from 'lodash';
-import {BaseApiService} from "../baseAPI";
-import {AdminUser} from "../../models/admin-user";
-import {FeatureACL} from "../../models/featureACL";
+import { BaseApiService } from "../baseAPI";
+import { AdminUser } from "../../models/admin-user";
+import { FeatureACL } from "../../models/featureACL";
 
 
 @Injectable()
@@ -24,9 +24,9 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
         this._currentAdminUser = value;
     }
 
-    changePasswordByAdmin(passwordModel:any){
+    changePasswordByAdmin(passwordModel: any) {
         let url = this.url + '/admin/change-password';
-        return this.http.put(this.baseUrl + url, passwordModel, {headers: this.authorization()});
+        return this.http.put(this.baseUrl + url, passwordModel, { headers: this.authorization() });
     }
 
     verify() {
@@ -56,9 +56,9 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
     get isDistributor() {
         return (this._currentAdminUser) && (this._currentAdminUser.role_id === 5)
     }
-    get isUserhasMainRole(){
+    get isUserhasMainRole() {
         return (this._currentAdminUser) &&
-            (this._currentAdminUser.role_id >= 1 ) && (this._currentAdminUser.role_id <= 5 )
+            (this._currentAdminUser.role_id >= 1) && (this._currentAdminUser.role_id <= 5)
     }
     public checkModuleRight(module: string) {
         if (this._currentAdminUser && this._currentAdminUser.Role) {
@@ -142,12 +142,12 @@ export class AdminUsersService extends BaseApiService<AdminUser> {
 
     public changePassword(passwordModel: any) {
         let url = this.url + '/change-password';
-        return this.http.put(this.baseUrl + url, passwordModel, {headers: this.authorization()}).toPromise();
+        return this.http.put(this.baseUrl + url, passwordModel, { headers: this.authorization() }).toPromise();
     }
 
     public reset2FA() {
         let url = this.url + '/reset-2-fa';
-        return this.http.put(this.baseUrl + url, {}, {headers: this.authorization()}).toPromise();
+        return this.http.put(this.baseUrl + url, {}, { headers: this.authorization() }).toPromise();
     }
 }
 

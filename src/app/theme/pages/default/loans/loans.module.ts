@@ -1,25 +1,25 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {RouterModule, Routes} from "@angular/router";
-import {DefaultComponent} from "../default.component";
-import {LayoutModule} from "../../../layouts/layout.module";
-import {LoanslistComponent} from "./list/loans-list.component";
-import {LoanFormComponent} from "./loan-form/loan-form.component";
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule, Routes } from "@angular/router";
+import { DefaultComponent } from "../default.component";
+import { LayoutModule } from "../../../layouts/layout.module";
+import { LoanslistComponent } from "./list/loans-list.component";
+import { LoanFormComponent } from "./loan-form/loan-form.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {LoanResolver} from "./loan-resolver";
+import { LoanResolver } from "./loan-resolver";
 
-import {FormsModule} from "@angular/forms";
-import {UsersResolver} from "../users/users-resolver";
-import {AuthGuard} from "../../../../auth/_guards";
-import {LoanViewComponent} from "./loan-view/loan-view.component";
+import { FormsModule } from "@angular/forms";
+import { UsersResolver } from "../users/users-resolver";
+import { AuthGuard } from "../../../../auth/_guards";
+import { LoanViewComponent } from "./loan-view/loan-view.component";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "canActivate": [AuthGuard],
-        data: {module: 'loans'},
+        data: { module: 'loans' },
         "children": [
             {
                 "path": "",
@@ -29,7 +29,7 @@ const routes: Routes = [
                 "path": ":loanId",
                 "component": LoanFormComponent,
                 "canActivate": [AuthGuard],
-                data: {module: 'loans', action: 'PUT'},
+                data: { module: 'loans', action: 'PUT' },
                 resolve: {
                     loan: LoanResolver,
                     users: UsersResolver
@@ -39,7 +39,7 @@ const routes: Routes = [
                 "path": "view/:loanId",
                 "component": LoanViewComponent,
                 "canActivate": [AuthGuard],
-                data: {module: 'loans', action: 'GET'},
+                data: { module: 'loans', action: 'GET' },
                 resolve: {
                     loan: LoanResolver
                 }

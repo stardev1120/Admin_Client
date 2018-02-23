@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 
-import {AdminUsersService} from "../../_services/apis/admin-users.service";
-import {AdminUserAccessService} from "../../_services/apis/admin-user-access.service";
+import { AdminUsersService } from "../../_services/apis/admin-users.service";
+import { AdminUserAccessService } from "../../_services/apis/admin-user-access.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
     constructor(private _router: Router, private _adminUserService: AdminUsersService,
-                private _adminUserAccessService: AdminUserAccessService) {
+        private _adminUserAccessService: AdminUserAccessService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
@@ -65,13 +65,13 @@ export class AuthGuard implements CanActivate {
 
                 }
                 // error when verify so redirect to login page with the return url
-                this._router.navigate(['/login'], {queryParams: {returnUrl: state.url}}).then();
+                this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } }).then();
                 return false;
             }).catch(error => {
-            // error when verify so redirect to login page with the return url
-            console.error(error, "error");
-            this._router.navigate(['/login'], {queryParams: {returnUrl: state.url}}).then();
-            return false;
-        });
+                // error when verify so redirect to login page with the return url
+                console.error(error, "error");
+                this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } }).then();
+                return false;
+            });
     }
 }

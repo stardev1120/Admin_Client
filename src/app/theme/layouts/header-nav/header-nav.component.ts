@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 
-import {Country} from "../../../models/country";
-import {environment} from '../../../../environments/environment';
-import {AdminUsersService} from "../../../_services/apis/admin-users.service";
-import {AdminUserCountry} from "../../../models/admin-user-country";
+import { Country } from "../../../models/country";
+import { environment } from '../../../../environments/environment';
+import { AdminUsersService } from "../../../_services/apis/admin-users.service";
+import { AdminUserCountry } from "../../../models/admin-user-country";
 
 declare let mLayout: any;
 

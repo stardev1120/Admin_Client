@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
-import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
-import {environment} from '../../../../../../environments/environment';
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import { environment } from '../../../../../../environments/environment';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-                private route: ActivatedRoute) {
+        private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -32,11 +32,11 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/users.js').then(() => {
-            this.grid = (window as any).Datatable_Users_AJAX_DEMO;
-            if (this.grid) {
-                this.grid.init(this.filter, environment.baseUrl);
-            }
-        });
+                this.grid = (window as any).Datatable_Users_AJAX_DEMO;
+                if (this.grid) {
+                    this.grid.init(this.filter, environment.baseUrl);
+                }
+            });
     }
 
     onChangeEmail(event: any) {

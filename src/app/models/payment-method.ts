@@ -1,5 +1,5 @@
-import {BaseModel} from "../_services/base-model";
-import {Country} from "./country";
+import { BaseModel } from "../_services/base-model";
+import { Country } from "./country";
 
 export class PaymentMethod implements BaseModel {
     public name: string;

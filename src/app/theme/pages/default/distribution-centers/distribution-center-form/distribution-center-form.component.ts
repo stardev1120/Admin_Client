@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 
-import {DistributionCenter} from "../../../../../models/distribution-center";
-import {DistributionCentersService} from "../../../../../_services/apis/distribution-center.service";
+import { DistributionCenter } from "../../../../../models/distribution-center";
+import { DistributionCentersService } from "../../../../../_services/apis/distribution-center.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -19,9 +19,9 @@ export class DistributionCenterFormComponent implements OnInit {
     isRequestError = false;
     errorMessage: string;
     constructor(private api: DistributionCentersService,
-                private router: Router,
-                private route: ActivatedRoute,
-                public location: Location) {
+        private router: Router,
+        private route: ActivatedRoute,
+        public location: Location) {
 
     }
 
@@ -31,7 +31,7 @@ export class DistributionCenterFormComponent implements OnInit {
         this.companies = this.route.snapshot.data.companies;
         this.route.params
             .map(params => params['companyId'])
-            .subscribe(companyId => this.data.company_id = companyId*1);
+            .subscribe(companyId => this.data.company_id = companyId * 1);
     }
 
     onSubmit(mForm: any) {

@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
 import * as _ from 'lodash';
 
-import {RolesService} from "../../../../../_services/apis/role.service";
-import {Role} from "../../../../../models/role";
-import {FeatureACL} from "../../../../../models/featureACL";
-import {FeatureACLsService} from "../../../../../_services/apis/feature-acls.service";
+import { RolesService } from "../../../../../_services/apis/role.service";
+import { Role } from "../../../../../models/role";
+import { FeatureACL } from "../../../../../models/featureACL";
+import { FeatureACLsService } from "../../../../../_services/apis/feature-acls.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -20,9 +20,9 @@ export class RoleViewComponent implements OnInit {
 
 
     constructor(private api: RolesService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private _featureAcls: FeatureACLsService) {
+        private router: Router,
+        private route: ActivatedRoute,
+        private _featureAcls: FeatureACLsService) {
 
     }
 
@@ -39,14 +39,14 @@ export class RoleViewComponent implements OnInit {
 
     onFeatureACL(featureACL: FeatureACL) {
         this._featureAcls.save(featureACL).subscribe(data => {
-                console.log(data);
-            },
+            console.log(data);
+        },
             error => {
                 console.log(error);
             })
     }
 
-    saveRights(){
+    saveRights() {
         location.reload()
     }
 

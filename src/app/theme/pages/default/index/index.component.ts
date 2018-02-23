@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {isEmpty} from 'lodash'
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { isEmpty } from 'lodash'
 
-import {Helpers} from '../../../../helpers';
-import {ScriptLoaderService} from '../../../../_services/script-loader.service';
-import {AdminUserCountry} from "../../../../models/admin-user-country";
-import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
-import {Country} from "../../../../models/country";
-import {UserActivityLogService} from "../../../../_services/apis/user-activity-log.service";
-import {UserActivityLog} from "../../../../models/user-activity-log";
-import {DashboardService} from "../../../../_services/apis/dashboard.service";
+import { Helpers } from '../../../../helpers';
+import { ScriptLoaderService } from '../../../../_services/script-loader.service';
+import { AdminUserCountry } from "../../../../models/admin-user-country";
+import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
+import { Country } from "../../../../models/country";
+import { UserActivityLogService } from "../../../../_services/apis/user-activity-log.service";
+import { UserActivityLog } from "../../../../models/user-activity-log";
+import { DashboardService } from "../../../../_services/apis/dashboard.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -55,10 +55,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
     filter: any = {};
 
     constructor(private _script: ScriptLoaderService,
-                private _router: Router,
-                public adminUserService: AdminUsersService,
-                private _userAcitvityLog: UserActivityLogService,
-                private _apiDashboard: DashboardService) {
+        private _router: Router,
+        public adminUserService: AdminUsersService,
+        private _userAcitvityLog: UserActivityLogService,
+        private _apiDashboard: DashboardService) {
         this.adminUserCountries = this.adminUserService.currentAdminUser.AdminuserCountries;
     }
 
@@ -92,7 +92,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
         if (key2) {
             this.filter[key2] = value2;
         }
-        this._router.navigate([routerUrl], {queryParams: {filter: JSON.stringify(this.filter)}})
+        this._router.navigate([routerUrl], { queryParams: { filter: JSON.stringify(this.filter) } })
     }
 
     onChangeCountry(country: Country) {

@@ -1,10 +1,10 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
 
-import {Company} from "../../../../models/company";
-import {CompaniesService} from "../../../../_services/apis/company.service";
-import {AdminUsersService} from "../../../../_services/apis/admin-users.service";
+import { Company } from "../../../../models/company";
+import { CompaniesService } from "../../../../_services/apis/company.service";
+import { AdminUsersService } from "../../../../_services/apis/admin-users.service";
 
 @Injectable()
 export class CompaniesResolver implements Resolve<Company[]> {

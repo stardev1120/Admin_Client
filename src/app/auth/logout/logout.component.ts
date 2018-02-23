@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../_services/authentication.service";
-import {Helpers} from "../../helpers";
-import {AdminUsersService} from "../../_services/apis/admin-users.service";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthenticationService } from "../_services/authentication.service";
+import { Helpers } from "../../helpers";
+import { AdminUsersService } from "../../_services/apis/admin-users.service";
 
 @Component({
     selector: 'app-logout',
@@ -13,8 +13,8 @@ import {AdminUsersService} from "../../_services/apis/admin-users.service";
 export class LogoutComponent implements OnInit {
 
     constructor(private _router: Router,
-                private _authService: AuthenticationService,
-                private _adminUserService: AdminUsersService) {
+        private _authService: AuthenticationService,
+        private _adminUserService: AdminUsersService) {
     }
 
     ngOnInit(): void {

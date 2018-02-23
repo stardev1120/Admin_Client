@@ -1,9 +1,9 @@
-import {BaseModel} from "../_services/base-model";
-import {Loan} from "./loan";
-import {Country} from "./country";
-import {Company} from "./company";
-import {Role} from "./role";
-import {AdminUserCountry} from "./admin-user-country";
+import { BaseModel } from "../_services/base-model";
+import { Loan } from "./loan";
+import { Country } from "./country";
+import { Company } from "./company";
+import { Role } from "./role";
+import { AdminUserCountry } from "./admin-user-country";
 
 export class AdminUser implements BaseModel {
     public name: string;

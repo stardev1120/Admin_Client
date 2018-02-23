@@ -12,15 +12,15 @@ import { CompaniesResolver } from "../companies/companies-resolver";
 import { RolesResolver } from "../roles/roles-resolver";
 import { AdminUserResolver } from "./admin-user-resolver";
 import { CountriesResolver } from "../countries/countries-resolver";
-import {AuthGuard} from "../../../../auth/_guards";
-import {AdminUserChangePasswordComponent} from "./admin-user-change-password/admin-user-change-password.component";
+import { AuthGuard } from "../../../../auth/_guards";
+import { AdminUserChangePasswordComponent } from "./admin-user-change-password/admin-user-change-password.component";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "canActivate": [AuthGuard],
-        data:{module: 'admin-users'},
+        data: { module: 'admin-users' },
         "children": [
             {
                 "path": "",
@@ -30,7 +30,7 @@ const routes: Routes = [
                 "path": ":id",
                 "component": AdminUserFormComponent,
                 "canActivate": [AuthGuard],
-                data:{module: 'admin-users', action: 'PUT'},
+                data: { module: 'admin-users', action: 'PUT' },
                 resolve: {
                     adminUser: AdminUserResolver,
                     companies: CompaniesResolver,
@@ -42,7 +42,7 @@ const routes: Routes = [
                 "path": "change-password/:id",
                 "component": AdminUserChangePasswordComponent,
                 "canActivate": [AuthGuard],
-                data:{module: 'admin-users', action: 'PUT'},
+                data: { module: 'admin-users', action: 'PUT' },
                 resolve: {
                     adminUser: AdminUserResolver,
                 }

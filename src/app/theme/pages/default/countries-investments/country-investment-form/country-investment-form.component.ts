@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/do';
 
-import {Country} from "../../../../../models/country";
-import {CountriesService} from "../../../../../_services/apis/countries.service";
-import {CountryInvestment} from "../../../../../models/country-investment";
-import {CountriesInvestmentService} from "../../../../../_services/apis/countries-investment.service";
-import {Location} from "@angular/common";
+import { Country } from "../../../../../models/country";
+import { CountriesService } from "../../../../../_services/apis/countries.service";
+import { CountryInvestment } from "../../../../../models/country-investment";
+import { CountriesInvestmentService } from "../../../../../_services/apis/countries-investment.service";
+import { Location } from "@angular/common";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -27,10 +27,10 @@ export class CountryInvestmentFormComponent implements OnInit {
     }];
 
     constructor(private api: CountriesInvestmentService,
-                private countryApi: CountriesService,
-                private router: Router,
-                private route: ActivatedRoute,
-                public location: Location) {
+        private countryApi: CountriesService,
+        private router: Router,
+        private route: ActivatedRoute,
+        public location: Location) {
 
     }
 
@@ -46,7 +46,7 @@ export class CountryInvestmentFormComponent implements OnInit {
             });
     }
 
-    onChangeStatus(){
+    onChangeStatus() {
         this.data.status && this.data.status === 'Active' ? this.data.status = 'Disabled' : this.data.status = 'Active';
     }
 

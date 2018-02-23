@@ -2,15 +2,15 @@ import {
     Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef,
     ViewEncapsulation
 } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UUID} from 'angular2-uuid';
+import { ActivatedRoute, Router } from "@angular/router";
+import { UUID } from 'angular2-uuid';
 
-import {AdminUsersService} from '../../../../../_services/apis/admin-users.service'
-import {AlertComponent} from "../../../../../auth/_directives";
-import {AlertService} from "../../../../../auth/_services";
-import {S3Service} from "../../../../../_services/apis/s3";
-import {AdminUser} from "../../../../../models/admin-user";
-import {FormGroup, NgForm} from "@angular/forms";
+import { AdminUsersService } from '../../../../../_services/apis/admin-users.service'
+import { AlertComponent } from "../../../../../auth/_directives";
+import { AlertService } from "../../../../../auth/_services";
+import { S3Service } from "../../../../../_services/apis/s3";
+import { AdminUser } from "../../../../../models/admin-user";
+import { FormGroup, NgForm } from "@angular/forms";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -25,17 +25,17 @@ export class HeaderProfileComponent implements OnInit {
     companies: any = [];
     passwordModel: any = {};
     profilePhoto: any;
-    @ViewChild('alertReset2FA', {read: ViewContainerRef}) alertReset2FA: ViewContainerRef;
-    @ViewChild('alertUploadPhoto', {read: ViewContainerRef}) alertUploadPhoto: ViewContainerRef;
-    @ViewChild('alertUpdateProfile', {read: ViewContainerRef}) alertUpdateProfile: ViewContainerRef;
-    @ViewChild('alertChangePassword', {read: ViewContainerRef}) alertChangePassword: ViewContainerRef;
+    @ViewChild('alertReset2FA', { read: ViewContainerRef }) alertReset2FA: ViewContainerRef;
+    @ViewChild('alertUploadPhoto', { read: ViewContainerRef }) alertUploadPhoto: ViewContainerRef;
+    @ViewChild('alertUpdateProfile', { read: ViewContainerRef }) alertUpdateProfile: ViewContainerRef;
+    @ViewChild('alertChangePassword', { read: ViewContainerRef }) alertChangePassword: ViewContainerRef;
 
     constructor(private route: ActivatedRoute,
-                private adminUserService: AdminUsersService,
-                private cfr: ComponentFactoryResolver,
-                private _alertService: AlertService,
-                private router: Router,
-                private _s3Service: S3Service) {
+        private adminUserService: AdminUsersService,
+        private cfr: ComponentFactoryResolver,
+        private _alertService: AlertService,
+        private router: Router,
+        private _s3Service: S3Service) {
 
     }
 
@@ -99,7 +99,7 @@ export class HeaderProfileComponent implements OnInit {
         }
         const hash = UUID.UUID();
         const uploadedFile: any = await
-            this._s3Service.uploadS3({filename: hash, type: file.type}).toPromise();
+            this._s3Service.uploadS3({ filename: hash, type: file.type }).toPromise();
         await
             this._s3Service.updateS3(uploadedFile.url, file).toPromise();
         const urlBasic = uploadedFile.urlBasic;

@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 declare var Chart: any;
 
@@ -36,7 +36,7 @@ export class BarChartDataDirective implements OnChanges {
         $(that.el.nativeElement).empty();
         let chartContainer = (<any>$(that.el.nativeElement).append('<canvas></canvas>')).find('canvas');
         let val = (this.chartData[this.chatKpiName] ? this.chartData[this.chatKpiName] : 0);
-        $('#' + that.chartKpiId).text(parseFloat(val).toFixed(2).toString()+ ' ' + that.chatKpiText))
+        $('#' + that.chartKpiId).text(parseFloat(val).toFixed(2).toString() + ' ' + that.chatKpiText);
 
         if (chartContainer.length == 0) {
             return;

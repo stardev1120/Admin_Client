@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/pairwise';
 
-import {Collection} from "../../../../../models/collection";
-import {CollectionsService} from "../../../../../_services/apis/collections.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Collection } from "../../../../../models/collection";
+import { CollectionsService } from "../../../../../_services/apis/collections.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -16,12 +16,12 @@ export class CollectMoneyComponent implements OnInit {
     data: Collection;
 
     constructor(private api: CollectionsService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private modalService: NgbModal) {
-/*        this.router.events.pairwise().subscribe((e) => {
-            console.log('e---->', e);
-        });*/
+        private router: Router,
+        private route: ActivatedRoute,
+        private modalService: NgbModal) {
+        /*        this.router.events.pairwise().subscribe((e) => {
+                    console.log('e---->', e);
+                });*/
     }
 
     ngOnInit() {
@@ -32,7 +32,7 @@ export class CollectMoneyComponent implements OnInit {
         this.api.collectLoanMoney(this.data.id)
             .subscribe(() => {
                 this.modalService.open(content).result.then(() => {
-                   this.goBack();
+                    this.goBack();
                 }, () => {
                     this.goBack();
                 });
@@ -41,7 +41,7 @@ export class CollectMoneyComponent implements OnInit {
             });
     }
 
-    goBack(){
+    goBack() {
         window.history.back();
     }
 }

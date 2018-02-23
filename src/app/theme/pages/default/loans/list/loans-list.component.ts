@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
-import {ScriptLoaderService} from "../../../../../_services/script-loader.service";
-import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
-import {environment} from "../../../../../../environments/environment";
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
+import { AdminUsersService } from "../../../../../_services/apis/admin-users.service";
+import { environment } from "../../../../../../environments/environment";
 
 
 @Component({
@@ -17,8 +17,8 @@ export class LoanslistComponent implements OnInit, AfterViewInit, OnDestroy {
     grid: any;
 
     constructor(private _script: ScriptLoaderService,
-                public _adminUserService: AdminUsersService,
-                private route: ActivatedRoute) {
+        public _adminUserService: AdminUsersService,
+        private route: ActivatedRoute) {
 
     }
 
@@ -35,11 +35,11 @@ export class LoanslistComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
             'assets/grids/loans.js').then(() => {
-            this.grid = (window as any).Datatable_Loans_AJAX_DEMO;
-            if (this.grid) {
-                this.grid.init(this.filter, environment.baseUrl);
-            }
-        });
+                this.grid = (window as any).Datatable_Loans_AJAX_DEMO;
+                if (this.grid) {
+                    this.grid.init(this.filter, environment.baseUrl);
+                }
+            });
     }
 
     onChangeName(event: any) {

@@ -8,15 +8,15 @@ import { CountriesFormComponent } from "./countries-form/countries-form.componen
 import { CountryResolver } from "./country-resolver";
 
 import { FormsModule } from "@angular/forms";
-import {CountryViewComponent} from "./countries-view/country-view.component";
-import {AuthGuard} from "../../../../auth/_guards";
+import { CountryViewComponent } from "./countries-view/country-view.component";
+import { AuthGuard } from "../../../../auth/_guards";
 
 const routes: Routes = [
     {
         "path": "",
         "component": DefaultComponent,
         "canActivate": [AuthGuard],
-        data:{module: 'countries'},
+        data: { module: 'countries' },
         "children": [
             {
                 "path": "",
@@ -26,7 +26,7 @@ const routes: Routes = [
                 "path": ":id",
                 "component": CountriesFormComponent,
                 "canActivate": [AuthGuard],
-                data:{module: 'countries', action: 'PUT'},
+                data: { module: 'countries', action: 'PUT' },
                 resolve: {
                     country: CountryResolver
                 }

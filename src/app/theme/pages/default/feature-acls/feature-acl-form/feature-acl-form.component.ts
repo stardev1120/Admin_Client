@@ -9,7 +9,7 @@ import { CompaniesService } from "../../../../../_services/apis/company.service"
 import { Company } from "../../../../../models/company";
 import { FeatureACL } from "../../../../../models/featureACL";
 import { FeatureACLsService } from "../../../../../_services/apis/feature-acls.service";
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -24,7 +24,7 @@ export class FeatureACLFormComponent implements OnInit {
     constructor(private api: FeatureACLsService,
         private router: Router,
         private route: ActivatedRoute,
-                public location: Location) {
+        public location: Location) {
 
     }
 

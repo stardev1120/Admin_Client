@@ -11,8 +11,8 @@ export class CollectionsService extends BaseApiService<Collection> {
         super(http);
         this.url = '/collection';
     }
-    collectLoanMoney(collectId: string){
-        return this.http.put(this.baseUrl + this.url + '/collect-money/' + collectId, {},{headers: this.authorization()});
+    collectLoanMoney(collectId: string) {
+        return this.http.put(this.baseUrl + this.url + '/collect-money/' + collectId, {}, { headers: this.authorization() });
     }
 }
 

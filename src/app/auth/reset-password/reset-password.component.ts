@@ -56,10 +56,10 @@ export class ResetPasswordComponent implements OnInit {
         this.loading = true;
         this._resetService.reset(this.model.password, this.resetToken)
             .subscribe(
-                data => {
+            data => {
                 this._router.navigate(['/login']);
             },
-                error => {
+            error => {
                 this._alertService.error(error);
                 this.loading = false;
             });

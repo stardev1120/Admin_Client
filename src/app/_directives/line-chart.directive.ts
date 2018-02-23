@@ -1,5 +1,5 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
-import {environment} from '../../environments/environment'
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { environment } from '../../environments/environment'
 
 //declare var $: JQueryStatic;
 declare var Chart: any;
@@ -68,7 +68,7 @@ export class LineChartDirective implements OnChanges {
             method: 'post',
             data: JSON.stringify(body),
             headers: headers
-        }).done(function (t) {
+        }).done(function(t) {
             let data = new google.visualization.DataTable();
             data.addColumn('string', that.column1);
             data.addColumn('number', that.column2);
@@ -78,7 +78,7 @@ export class LineChartDirective implements OnChanges {
             let options = {
                 chart: {
                     title: that.title,
-                    subtitle: t.sum[0]?'Total of revenue: '+ t.sum[0].sum+ ' $':'0.0 $'
+                    subtitle: t.sum[0] ? 'Total of revenue: ' + t.sum[0].sum + ' $' : '0.0 $'
                 }
             };
             let chart = new google.charts.Line(that.el.nativeElement);
