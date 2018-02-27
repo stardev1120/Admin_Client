@@ -134,6 +134,20 @@ var Datatable_Loans_Collections_AJAX_DEMO = function () {
                     overflow: 'visible',
                     template: function (row) {
                         var content = '';
+                        content = content + '\
+                            <a href="#/loans/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-folder-open"></i>\
+						</a>\
+						</div>\
+						\
+						';
+                        if (isSuperAdmin && row.status === 'To-be-Given') {
+                            content = content + '\
+                            <a href="#/issue-collect-money/issue/' + row.User.id + '/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						\
+						';
                         if (actionsRights && (actionsRights['cancelLoanBasedOnStatusNotGiven'] || actionsRights['closeLoan'] || actionsRights['cancelLoanBasedOnStatus'])) {
                             content = content + '\
                                     <div>\
@@ -143,16 +157,16 @@ var Datatable_Loans_Collections_AJAX_DEMO = function () {
                             if (actionsRights['closeLoan']) {
 
                                 content = content + '\
-                                <option class="status-row-' + row.id + '" value="close">Close</option>\
+                                <option class="status-row-' + row.id + '" value="Closed">Close</option>\
                                 \ '
                             }
                             if (row.status === 'To-be-Given' && actionsRights['cancelLoanBasedOnStatusNotGiven']) {
                                 content = content + '\
-                                <option class="status-row-' + row.id + '" value="cancel">Cancel</option>\
+                                <option class="status-row-' + row.id + '" value="Cancel">Cancel</option>\
                                 \ '
                             } else if (row.status !== 'To-be-Given' && actionsRights['cancelLoanBasedOnStatus']) {
                                 content = content + '\
-                                <option class="status-row-' + row.id + '" value="cancel">Cancel</option>\
+                                <option class="status-row-' + row.id + '" value="Cancel">Cancel</option>\
                                 \ '
                             }
                             content = content + '\
@@ -161,28 +175,26 @@ var Datatable_Loans_Collections_AJAX_DEMO = function () {
                         } else {
                             return '';
                         }
-                        if (isSuperAdmin && row.status === 'To-be-Given') {
-                            content = content + '\
-                            <a href="#/issue-collect-money/issue/' + row.User.id + '/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-edit"></i>\
-						</a>\
-						\
-						';
                         }
-                        content = content + '\
-                            <a href="#/loans/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-folder-open"></i>\
-						</a>\
-						</div>\
-						\
-						';
                         return content;
                     }
                 }
 
             ]
         });
+        datatable.on('change', '[class^="status-row-"]', function (e) {
 
+            var id = $(e.target).prop('class');
+            var data = {status: ''};
+            data.status = $(e.target).prop('value');
+            id = id.replace('status-row-', '');
+            $.ajax({
+                url: baseUrl + '/loan/' + id,
+                method: 'put',
+                data: JSON.stringify(data),
+                headers: headers
+            }).done(datatable.load);
+        });
         function subTableInit(e) {
             var datatable2 = $('<div/>').attr('id', 'child_data_ajax_' + e.data.id).appendTo(e.detailCell).mDatatable({
                 data: {
@@ -262,6 +274,12 @@ var Datatable_Loans_Collections_AJAX_DEMO = function () {
                         overflow: 'visible',
                         template: function (row) {
                             var content = '';
+                            content = content + '\
+                            <a href="#/collections/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-folder-open"></i>\
+						</a>\
+						\
+						';
                             if (isSuperAdmin && row.status === 'To-be-Collected') {
                                 content = content + '\
                             <a href="#/issue-collect-money/collect/' + row.Loan.User.id + '/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
@@ -270,12 +288,6 @@ var Datatable_Loans_Collections_AJAX_DEMO = function () {
 						\
 						';
                             }
-                            content = content + '\
-                            <a href="#/collections/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-							<i class="la la-folder-open"></i>\
-						</a>\
-						\
-						';
                             return content;
                         }
                     }

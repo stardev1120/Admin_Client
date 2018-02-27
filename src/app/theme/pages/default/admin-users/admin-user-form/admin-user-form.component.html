@@ -22,8 +22,11 @@
                 </li>
                 <li class="m-nav__item">
                     <a href="" class="m-nav__link">
-						<span class="m-nav__link-text">
+						<span class="m-nav__link-text"  *ngIf="data.id">
 							{{data.email}}
+						</span>
+                        <span class="m-nav__link-text"  *ngIf="!data.id">
+							New Admin User
 						</span>
                     </a>
                 </li>
@@ -43,7 +46,7 @@
                         Edit : {{data.email}}
                     </h3>
                     <h3 class="m-portlet__head-text" *ngIf="!data.id">
-                        New User
+                        New Admin User
                     </h3>
                 </div>
             </div>
@@ -246,6 +249,7 @@
                         </div>
                     </div>
                 </div>
+                <ng-template #alertUpdate></ng-template>
             </div>
             <div class="m-portlet__foot m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions">

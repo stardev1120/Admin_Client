@@ -13,13 +13,14 @@ var Datatable_Admin_Users_AJAX_DEMO = function () {
             var token = currentUser.token;
             headers['authorization'] = "JWT " + token;
             if (currentCountry) {
-               // headers['country_id'] = currentCountry;
+                // headers['country_id'] = currentCountry;
             }
         }
     }
     var demo = function (filter) {
         var actionsRights = JSON.parse($('#adminUsers_id_actions').val());
         var currentUserId = JSON.parse($('#currentAdminUser_id').val());
+        var isSuperAdmin = JSON.parse($('#currentAdminUser_superAdmin').val());
         datatable = $('.m_datatable_admin_users').mDatatable({
             data: {
                 type: 'remote',
@@ -102,7 +103,7 @@ var Datatable_Admin_Users_AJAX_DEMO = function () {
                     title: 'Role',
                     //sortable: 'asc', // default sort
                     filterable: false, // disable or enable filtering
-                   // width: 100,
+                    // width: 100,
                     template: function (row) {
                         return row.Role.role_name;
                     }
@@ -114,18 +115,18 @@ var Datatable_Admin_Users_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     // width: 100,
                     template: function (row) {
-                        return row.status?row.status:'Inactive';
+                        return row.status ? row.status : 'Inactive';
                     }
                 },
                 {
                     field: 'Actions',
-                   // width: 110,
+                    // width: 110,
                     title: 'Actions',
                     // sortable: false,
                     overflow: 'visible',
                     template: function (row) {
                         var content = '';
-                        if(row.id === currentUserId){
+                        if (row.id === currentUserId || (!isSuperAdmin && row.role_id === 1)) {
                             return;
                         }
                         if (actionsRights) {
@@ -256,19 +257,19 @@ var Datatable_Admin_Users_AJAX_DEMO = function () {
         include.push(company);
         datatable.setOption('include', include);
 
-        if (filter['email']) {
+        if (!!filter['email']) {
             query['email'] = {$like: filter['email'] + '%'};
         } else {
             delete query.email;
         }
 
-        if (filter['name']) {
+        if (!!filter['name']) {
             query['name'] = {$like: filter['name'] + '%'};
         } else {
-            delete query.fname;
+            delete query.name;
         }
 
-        if (filter['phone_number']) {
+        if (!!filter['phone_number']) {
             query['phone_number'] = {$like: filter['phone_number'] + '%'};
         } else {
             delete query.phone_number;

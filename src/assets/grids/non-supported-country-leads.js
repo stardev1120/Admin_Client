@@ -97,6 +97,15 @@ var Datatable_Leads_AJAX_DEMO = function () {
                     template: function (row) {
                         return row.gps_location ? row.gps_location : {'lat': '-', 'long': '-'};
                     }
+                },
+                {
+                    field: 'created_at',
+                    title: 'Create Date',
+                    filterable: false, // disable or enable filtering
+                    //width: 50,
+                    template: function (row) {
+                        return DateFormat.format.date(row.created_at, 'D MMM yyyy');
+                    }
                 }]
         });
 

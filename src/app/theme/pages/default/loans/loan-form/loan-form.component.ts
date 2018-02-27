@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import 'rxjs/add/observable/forkJoin';
+
 import { LoansService } from "../../../../../_services/apis/loans.service";
 import { Loan } from "../../../../../models/loan";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/forkJoin';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -13,19 +13,28 @@ import 'rxjs/add/observable/forkJoin';
 export class LoanFormComponent implements OnInit {
     data: Loan;
     users: any = [];
-    statuses: any = [{
-        id: 'status1',
-        title: 'Status 1'
-    }, {
-        id: 'status2',
-        title: 'Status 2'
-    }, {
-        id: 'status3',
-        title: 'Status 3'
-    }, {
-        id: 'status4',
-        title: 'Status 4'
-    }];
+    statuses: any[] = [
+        {
+            key: 'Active',
+            value: 'Active'
+        },
+        {
+            key: 'To-be-Processed',
+            value: 'To be Processed'
+        },
+        {
+            key: 'To-be-Given',
+            value: 'To be Given'
+        },
+        {
+            key: 'Closed',
+            value: 'Closed'
+        },
+        {
+            key: 'Cancel',
+            value: 'Cancel'
+        }
+    ];
     constructor(private api: LoansService,
         private router: Router,
         private route: ActivatedRoute) {
@@ -41,10 +50,9 @@ export class LoanFormComponent implements OnInit {
 
         if (mForm.valid) {
             this.api.save(this.data)
-                .subscribe(r => {
-                    this.router.navigate(["/users"])
+                .subscribe(() => {
+                    this.router.navigate(["/users"]).then();
                 });
         }
     }
-
 }

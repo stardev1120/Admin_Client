@@ -68,7 +68,10 @@
                     Amount
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.amount}} {{data.currency}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.amount}} {{data.currency}}</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.amount" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/> {{data.currency}}
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -93,7 +96,13 @@
                     Status
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.status}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.status}}</span>
+                    <select *ngIf="_adminUserService.isSuperAdmin" class="form-control m-input m-input--square" [(ngModel)]="data.status"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangValue()">
+                        <option *ngFor="let status of statuses" [ngValue]="status.key">
+                            {{status.value}}
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="form-group m-form__group row">

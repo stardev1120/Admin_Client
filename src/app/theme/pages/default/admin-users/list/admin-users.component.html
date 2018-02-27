@@ -41,9 +41,9 @@
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
-						Users
+						Admin Users
 						<small>
-							Users
+							Admin Users
 						</small>
 					</h3>
 				</div>
@@ -105,6 +105,7 @@
 			<!--end: Search Form -->  		<!--begin: Datatable -->
 			<input type="hidden" id="adminUsers_id_actions" [value]="_adminUserService.getModuleAction('admin-users')">
 			<input type="hidden" id="currentAdminUser_id" [value]="_adminUserService.currentAdminUser.id">
+			<input type="hidden" id="currentAdminUser_superAdmin" [value]="_adminUserService.isSuperAdmin">
 			<div class="m_datatable_admin_users" id="m_datatable_admin_users"></div>
 			<!--end: Datatable -->
 		</div>

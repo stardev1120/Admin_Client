@@ -18,6 +18,7 @@ var Datatable_Collections_AJAX_DEMO = function () {
         }
     }
     var demo = function (filter) {
+        var isSuperAdmin = JSON.parse($('#adminUsers_Supper_Admin').val());
         datatable = $('.m_datatable_collections').mDatatable({
             data: {
                 type: 'remote',
@@ -127,6 +128,45 @@ var Datatable_Collections_AJAX_DEMO = function () {
                     title: 'status',
                     filterable: false // disable or enable filtering
                     // width: 50
+                },
+                {
+                    field: 'AdminUser',
+                    title: 'Admin User',
+                    filterable: false, // disable or enable filtering
+                    // width: 70
+                    template: function (row) {
+                        if (row.AdminUser) {
+                            return row.AdminUser.name;
+                        } else {
+                            return '';
+                        }
+
+                    }
+                },
+                {
+                    field: 'Actions',
+                    //width: 100,
+                    title: 'Actions',
+                    sortable: false,
+                    overflow: 'visible',
+                    template: function (row) {
+                        var content = '';
+                        content = content + '\
+                            <a href="#/collections/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-folder-open"></i>\
+						</a>\
+						\
+						';
+                        if (isSuperAdmin && row.status === 'To-be-Collected') {
+                            content = content + '\
+                            <a href="#/issue-collect-money/collect/' + row.Loan.User.id + '/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						\
+						';
+                        }
+                        return content;
+                    }
                 }]
         });
         query(filter);
@@ -147,6 +187,11 @@ var Datatable_Collections_AJAX_DEMO = function () {
         var adminUser = {
             association: "AdminUser"
         };
+        if (filter['loan_id']) {
+            query['loan_id'] = filter['loan_id'];
+        } else {
+            delete query.loan_id;
+        }
         if (currentCountry && !filter['country_id']) {
             user['where'] = {country_id: currentCountry};
         } else if (filter['country_id']) {

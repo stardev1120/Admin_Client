@@ -1,5 +1,6 @@
 import { BaseModel } from "../_services/base-model";
 import { Loan } from "./loan";
+import {AdminUser} from "./admin-user";
 
 export class CollectionHistory implements BaseModel {
     public amount: number;
@@ -11,5 +12,6 @@ export class CollectionHistory implements BaseModel {
     public bank_response: string;
     public loan_id: number;
     public loan: Loan;
+    public AdminUser?: AdminUser;
     public id?: string;
 }

@@ -38,6 +38,6 @@ export class AppComponent implements OnInit {
 
     handleAnimation(anim: any) {
         this.anim = anim;
-        this.anim.setSpeed(0.5);
+        this.anim.setSpeed(2.5);
     }
 }

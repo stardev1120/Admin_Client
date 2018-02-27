@@ -115,41 +115,7 @@ var Datatable_Users_AJAX_DEMO = function () {
                         return '\<a href="#/users/view/' + row.id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View details">\
 							<i class="la la-edit"></i>\
 						</a>\
-						<div class="modal fade" id="model-del-' + row.id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
-                            <div class="modal-dialog" role="document">\
-                            <div class="modal-content">\
-                            <div class="modal-header">\
-                            <h5 class="modal-title" id="exampleModalLabel">\
-                            Delete\
-                            </h5>\
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                            <span aria-hidden="true">\
-                            &times;\
-                        </span>\
-                        </button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <p>\
-                            Are you Sure ?\
-                       </p>\
-                        </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">\
-                            Close\
-                            </button>\
-                            <button id="delete-row-' + row.id + '" type="button" class="btn btn-danger" data-dismiss="modal">\
-                             Delete\
-                            </button>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>\
-						<a href="javascript:void(0)" \
-						  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" \
-						  title="Delete"\
-						   data-target="#model-del-' + row.id + '" data-toggle="modal"> \
-							<i class="la la-trash"></i>\
-						</a>\
+						\
 					';
                     }
                 }]

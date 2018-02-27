@@ -4,7 +4,6 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/observable/forkJoin';
-import * as _ from 'lodash';
 
 import {AdminUsersService} from "../../../../../_services/apis/admin-users.service";
 import {AdminUser} from "../../../../../models/admin-user";
@@ -34,20 +33,18 @@ export class AdminUserChangePasswordComponent implements OnInit {
     ngOnInit() {
         this.data = this.route.snapshot.data.adminUser as AdminUser;
         this.data.password = '';
-        if (this.api.currentAdminUser.id === this.data.id) {
-            this.router.navigate(["/admin-users"]);
-            return;
+        if ((this.api.currentAdminUser.id === this.data.id) || (this.api.currentAdminUser.role_id !== 1 && this.data.role_id === 1)) {
+            this.router.navigate(["/admin-users"]).then();
         }
     }
 
     onSubmit(mForm: any) {
         if (mForm.valid && (this.matched || this.data.id)) {
-            this.api.changePasswordByAdmin({password: this.data.password})
-                .subscribe(r => {
-
-                    this.router.navigate(["/admin-users"])
+            this.api.changePasswordByAdmin({id: this.data.id, password: this.data.password})
+                .subscribe(() => {
+                    this.router.navigate(["/admin-users"]).then()
                 }, error => {
-                    console.log(error)
+                    console.log(error);
                     this.showAlert('alertChangePassword');
                     this._alertService.error('The password is wrong.', true);
                 });

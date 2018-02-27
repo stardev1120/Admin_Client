@@ -13,7 +13,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
             var token = currentUser.token;
             headers['authorization'] = "JWT " + token;
             if (currentCountry) {
-               // headers['country_id'] = currentCountry;
+                // headers['country_id'] = currentCountry;
             }
         }
     }
@@ -81,7 +81,12 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 80
                     template: function (row) {
-                        return DateFormat.format.date(row.date_taken, 'D MMM yyyy');
+                        if(row.date_taken){
+                            return DateFormat.format.date(row.date_taken, 'D MMM yyyy');
+                        } else {
+                            return '';
+                        }
+
                     }
                 },
                 {
@@ -90,7 +95,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 70
                     template: function (row) {
-                        return row.ammount_taken+' ' + row.currency;
+                        return row.ammount_taken + ' ' + row.currency;
                     }
                 },
                 {
@@ -118,7 +123,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     // width: 70
                     template: function (row) {
-                        return row.amount_pending+ ' ' + row.currency;
+                        return row.amount_pending + ' ' + row.currency;
                     }
                 },
                 {
@@ -141,7 +146,12 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 80
                     template: function (row) {
-                        return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                        if (row.created_at) {
+                            return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                        } else {
+                            return '';
+                        }
+
                     }
                 }
             ]
@@ -209,7 +219,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
         if (filter['loan_id']) {
             query['loan_id'] = filter['loan_id'];
         } else {
-            delete query.status;
+            delete query.loan_id;
         }
         delete query.country_id;
         datatable.setDataSourceQuery(query);

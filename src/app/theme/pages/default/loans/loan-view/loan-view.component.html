@@ -68,7 +68,10 @@
                     Amount taken
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.ammount_taken}} {{data.currency}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.ammount_taken}} {{data.currency}}</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.ammount_taken" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/> {{data.currency}}
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -76,16 +79,21 @@
                     Service fee
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.service_fee}} {{data.currency}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.service_fee}} {{data.currency}}</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.service_fee" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/> {{data.currency}}
                 </div>
-
             </div>
             <div class="form-group m-form__group row">
                 <label class="col-form-label col-lg-3 col-sm-12">
                     Interest rate
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.interest_rate}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.interest_rate}}%</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.interest_rate" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/> %
                 </div>
 
             </div>
@@ -95,7 +103,10 @@
                     Duration of loan
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.duration_of_loan}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.duration_of_loan}}</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.duration_of_loan" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/>
                 </div>
 
             </div>
@@ -104,7 +115,13 @@
                     Status
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.status}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.status}}</span>
+                    <select *ngIf="_adminUserService.isSuperAdmin" class="form-control m-input m-input--square" [(ngModel)]="data.status"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangValue()">
+                        <option *ngFor="let status of statuses" [ngValue]="status.key">
+                            {{status.value}}
+                        </option>
+                    </select>
                 </div>
             </div>
 
@@ -113,7 +130,10 @@
                     Amount pending
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.amount_pending}} {{data.currency}}
+                    <span *ngIf="!_adminUserService.isSuperAdmin">{{data.amount_pending}} {{data.currency}}</span>
+                    <input *ngIf="_adminUserService.isSuperAdmin" type="number"
+                           [(ngModel)]="data.amount_pending" [ngModelOptions]="{standalone: true}"
+                           (change)="onChangValue()"/> {{data.currency}}
                 </div>
             </div>
 
@@ -158,8 +178,14 @@
                 </div>
             </div>
             <!--end: loan view -->
+            <input type="hidden" id="adminUsers_Supper_Admin" [value]="_adminUserService.isSuperAdmin">
             <!--begin: Datatable -->
-            <input type="hidden" id="loan_id" [value]="data.id">
+            <div class="row">
+                <h4><i class="m-menu__link-icon flaticon-attachment"></i> Collections</h4>
+            </div>
+            <div class="m_datatable_collections" id="m_datatable_collections"></div>
+            <!--end: Datatable -->
+            <!--begin: Datatable -->
             <div class="row">
                 <h4><i class="m-menu__link-icon flaticon-attachment"></i> Loan History</h4>
             </div>

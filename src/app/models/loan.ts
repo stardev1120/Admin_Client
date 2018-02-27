@@ -3,6 +3,7 @@ import {User} from "./user";
 import {Collection} from "./collection";
 import {UserPaymentMethod} from "./user-payment-method";
 import {LoansHistory} from "./Loans-History";
+import {AdminUser} from "./admin-user";
 
 export class Loan implements BaseModel {
     public date_taken: Date;
@@ -22,5 +23,6 @@ export class Loan implements BaseModel {
     public Collections: Collection[];
     public UserPaymentMethod: UserPaymentMethod;
     public LoansHistory: LoansHistory;
+    public AdminUser?: AdminUser;
     public id?: string;
 }

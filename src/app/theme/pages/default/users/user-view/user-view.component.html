@@ -237,7 +237,7 @@
                                                 Proof Document</a>
                                         </div>
                                     </div>
-                                    <div class="row" *ngIf="data.selfie_proof_video">
+                                    <div class="row">
                                         <div style="text-decoration: underline" class="m--font-normal">
                                             <a  data-toggle="modal" data-target="#m_modal_3" style="cursor: pointer">Selife Proof Video</a>
                                         </div>
@@ -376,7 +376,7 @@
             </div>
             <div class="modal-body">
                 <p style="text-align: center;">
-                    <img [src]="data.id_proof_file"
+                    <img [src]="data.id_proof_file" width="100%" height="100%"
                          onerror="this.src='assets/app/media/img/bg/not-available.png'"
                          alt="">
                 </p>
@@ -406,7 +406,7 @@
             </div>
             <div class="modal-body">
                 <p style="text-align: center;">
-                    <img [src]="data.address_proof_file"
+                    <img [src]="data.address_proof_file" width="100%" height="100%"
                          onerror="this.src='assets/app/media/img/bg/not-available.png'"
                          alt="">
                 </p>
