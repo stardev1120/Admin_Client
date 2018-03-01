@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { HeaderProfileComponent } from './header-profile.component';
-import { LayoutModule } from '../../../../layouts/layout.module';
-import { DefaultComponent } from '../../default.component';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Routes, RouterModule} from '@angular/router';
+import {HeaderProfileComponent} from './header-profile.component';
+import {LayoutModule} from '../../../../layouts/layout.module';
+import {DefaultComponent} from '../../default.component';
+import {FormsModule} from '@angular/forms';
 import {CompaniesResolver} from "../../companies/companies-resolver";
+import {QRCodeModule} from 'angular2-qrcode';
+
 const routes: Routes = [
     {
         "path": "",
@@ -21,11 +23,14 @@ const routes: Routes = [
         ]
     }
 ];
+
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes), LayoutModule,
-        FormsModule
+        RouterModule.forChild(routes),
+        LayoutModule,
+        FormsModule,
+        QRCodeModule
     ], exports: [
         RouterModule
     ], declarations: [

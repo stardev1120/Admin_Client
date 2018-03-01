@@ -13,7 +13,7 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
             var token = currentUser.token;
             headers['authorization'] = "JWT " + token;
             if (currentCountry) {
-             //   headers['country_id'] = currentCountry;
+                //   headers['country_id'] = currentCountry;
             }
         }
     }
@@ -79,7 +79,7 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50
                     template: function (row) {
-                        return row.amount+ ' ' + row.currency;
+                        return row.amount + ' ' + row.currency;
                     }
                 },
                 {
@@ -88,7 +88,7 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50
                     template: function (row) {
-                        return DateFormat.format.date(row.date, 'D MMM yyyy');
+                        return moment(row.date).format('D MMM YYYY');
                     }
                 },
                 {
@@ -97,7 +97,7 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50
                     template: function (row) {
-                        return DateFormat.format.date(row.retry_date, 'D MMM yyyy');
+                        return moment(row.retry_date).format('D MMM YYYY');
                     }
                 },
                 {
@@ -111,7 +111,12 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50
                     template: function (row) {
-                        return DateFormat.format.date(row.date_of_entry, 'D MMM yyyy');
+                        if (row.date_of_entry) {
+                            return moment(row.date_of_entry).format('D MMM YYYY');
+                        } else {
+                            return '';
+                        }
+
                     }
                 },
                 {
@@ -138,7 +143,7 @@ var Datatable_Collections_History_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 80
                     template: function (row) {
-                        return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                        return moment(row.created_at).format('D MMM YYYY hh:mm ss');
                     }
                 }
             ]

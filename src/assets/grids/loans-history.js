@@ -82,7 +82,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     //width: 80
                     template: function (row) {
                         if(row.date_taken){
-                            return DateFormat.format.date(row.date_taken, 'D MMM yyyy');
+                            return moment(row.date_taken).format('D MMM YYYY');
                         } else {
                             return '';
                         }
@@ -147,7 +147,7 @@ var Datatable_Loan_History_AJAX_DEMO = function () {
                     //width: 80
                     template: function (row) {
                         if (row.created_at) {
-                            return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                            return moment(row.created_at).format('D MMM YYYY');
                         } else {
                             return '';
                         }

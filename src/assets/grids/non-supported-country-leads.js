@@ -104,7 +104,7 @@ var Datatable_Leads_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 50,
                     template: function (row) {
-                        return DateFormat.format.date(row.created_at, 'D MMM yyyy');
+                        return moment(row.created_at).format('D MMM YYYY');
                     }
                 }]
         });

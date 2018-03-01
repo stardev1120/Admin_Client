@@ -89,7 +89,7 @@ var Datatable_Loans_AJAX_DEMO = function () {
                     title: 'Date Taken',
                     filterable: false,
                     template: function (row) {
-                        return DateFormat.format.date(row.date_taken, 'D MMM yyyy');
+                        return moment(row.date_taken).format('D MMM YYYY');
                     }
                 },
                 {

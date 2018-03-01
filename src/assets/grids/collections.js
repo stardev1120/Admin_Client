@@ -111,7 +111,7 @@ var Datatable_Collections_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     // width: 80,
                     template: function (row) {
-                        return DateFormat.format.date(row.date, 'D MMM yyyy hh:mm ss');
+                        return moment(row.date).format('D MMM YYYY');
                     }
                 },
                 {
@@ -120,7 +120,7 @@ var Datatable_Collections_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     // width: 80,
                     template: function (row) {
-                        return DateFormat.format.date(row.retry_date, 'D MMM yyyy hh:mm ss');
+                        return moment(row.retry_date).format('D MMM YYYY');
                     }
                 },
                 {

@@ -87,7 +87,7 @@ var Datatable_OTP_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 80
                     template: function (row) {
-                        return DateFormat.format.date(row.date, 'D MMM yyyy hh:mm ss');
+                        return moment(row.date).format('D MMM YYYY hh:mm ss');
                     }
                 },
                 {

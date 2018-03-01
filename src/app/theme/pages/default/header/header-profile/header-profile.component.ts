@@ -7,7 +7,7 @@ import {UUID} from 'angular2-uuid';
 
 import {AdminUsersService} from '../../../../../_services/apis/admin-users.service'
 import {AlertComponent} from "../../../../../auth/_directives";
-import {AlertService} from "../../../../../auth/_services";
+import {AlertService, AuthenticationService} from "../../../../../auth/_services";
 import {S3Service} from "../../../../../_services/apis/s3";
 import {AdminUser} from "../../../../../models/admin-user";
 import {FormGroup, NgForm} from "@angular/forms";
@@ -19,12 +19,16 @@ import {FormGroup, NgForm} from "@angular/forms";
 })
 export class HeaderProfileComponent implements OnInit {
     loading = false;
+    loading2FA = false;
     matched: boolean;
     renewPassword: string;
     currentAdminUser: AdminUser;
     companies: any = [];
     passwordModel: any = {};
     profilePhoto: any;
+    show2FA = false;
+    code: string;
+    otpauth_url: string;
     @ViewChild('alertReset2FA', {read: ViewContainerRef}) alertReset2FA: ViewContainerRef;
     @ViewChild('alertUploadPhoto', {read: ViewContainerRef}) alertUploadPhoto: ViewContainerRef;
     @ViewChild('alertUpdateProfile', {read: ViewContainerRef}) alertUpdateProfile: ViewContainerRef;
@@ -35,7 +39,8 @@ export class HeaderProfileComponent implements OnInit {
                 private cfr: ComponentFactoryResolver,
                 private _alertService: AlertService,
                 private router: Router,
-                private _s3Service: S3Service) {
+                private _s3Service: S3Service,
+                private _authService: AuthenticationService) {
 
     }
 
@@ -59,7 +64,7 @@ export class HeaderProfileComponent implements OnInit {
             this._markFormPristine(changePasswordForm);
             changePasswordForm.resetForm();
         } catch (error) {
-            console.log(error)
+            console.log(error);
             this.showAlert('alertChangePassword');
             this._alertService.error('The password is wrong.', true);
         }
@@ -67,11 +72,38 @@ export class HeaderProfileComponent implements OnInit {
 
     async onReset2FA() {
         try {
-            await this.adminUserService.reset2FA();
-            this.showAlert('alertReset2FA');
-            this._alertService.success('Reset of 2 FA is done successfully.', true);
+            let data: any = await this.adminUserService.reset2FA();
+            if (data && data.otpauth_url) {
+                this.otpauth_url = data.otpauth_url;
+            } else {
+                this.otpauth_url = this.adminUserService.currentAdminUser.otpauth_url;
+            }
+            this.show2FA = true;
         } catch (error) {
             console.log(error);
+            this.showAlert('alertReset2FA');
+            this._alertService.error('Error is happened while reset 2 FA.', true);
+        }
+    }
+
+    async verification2FA() {
+        try {
+            this.loading2FA = true;
+            let token = (JSON.parse(localStorage.getItem('currentUser'))) ?
+                (JSON.parse(localStorage.getItem('currentUser'))).token : null;
+            let data = await this._authService.faVerification(this.code, {token: token}).toPromise();
+            console.log('data ===> ', data);
+            if (data.verified) {
+                this.showAlert('alertReset2FA');
+                this._alertService.success('Reset of 2 FA is done successfully.', true);
+            } else {
+                this.showAlert('alert2FA');
+                this._alertService.error('2 FA code is invalid.');
+            }
+            this.onHide2FA()
+        } catch (error) {
+            console.log(error);
+            this.onHide2FA();
             this.showAlert('alertReset2FA');
             this._alertService.error('Error is happened while reset 2 FA.', true);
         }
@@ -159,6 +191,12 @@ export class HeaderProfileComponent implements OnInit {
 
     passwordMatching() {
         this.matched = this.renewPassword === this.passwordModel.new_password;
+    }
+
+    onHide2FA() {
+        this.loading2FA = false;
+        this.show2FA = false;
+        this.code = '';
     }
 
     private _markFormPristine(form: FormGroup | NgForm): void {

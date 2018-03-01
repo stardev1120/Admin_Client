@@ -76,7 +76,7 @@ var Datatable_Distribute_AJAX_DEMO = function () {
                     filterable: false, // disable or enable filtering
                     //width: 80
                     template: function (row) {
-                        return DateFormat.format.date(row.created_at, 'D MMM yyyy hh:mm ss');
+                        return moment(row.created_at).format('D MMM YYYY hh:mm ss');
                     }
                 },
                 {

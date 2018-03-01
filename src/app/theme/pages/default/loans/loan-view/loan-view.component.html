@@ -60,7 +60,7 @@
                     Date taken
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.date_taken| date: 'medium'}}
+                    {{data.date_taken| date: 'mediumDate'}}
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -165,7 +165,7 @@
                 <label class="col-form-label col-lg-3 col-sm-12">
                     User Payment Method
                 </label>
-                <div class="col-lg-4 col-md-9 col-sm-12">
+                <div *ngIf="data.UserPaymentMethod" class="col-lg-4 col-md-9 col-sm-12">
                     {{data.UserPaymentMethod.name}}
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     Date
                 </label>
                 <div class="col-lg-4 col-md-9 col-sm-12">
-                    {{data.created_at| date: 'medium'}}
+                    {{data.created_at| date: 'mediumDate'}}
                 </div>
             </div>
             <!--end: loan view -->

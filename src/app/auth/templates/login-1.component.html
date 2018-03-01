@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="m-login__2fa" *ngIf="show2FA">
-                        <div class="m-login__head">
+                        <div class="m-login__head" *ngIf="!clonedAdminUser.is2FAVerified">
                             <h3 class="m-login__title">
                                 QR Code
                             </h3>
@@ -176,7 +176,12 @@
                                 Generator
                             </div>
                         </div>
-                        <div class="align-content-center">
+                        <div class="m-login__head" *ngIf="clonedAdminUser.is2FAVerified">
+                            <h3 class="m-login__title">
+                                Please, enter 2 FA code
+                            </h3>
+                        </div>
+                        <div class="align-content-center" *ngIf="!clonedAdminUser.is2FAVerified">
                             <qr-code [value]="clonedAdminUser.otpauth_url" [size]="150"></qr-code>
                         </div>
                         <form (ngSubmit)="fa.form.valid && verification2FA()" #fa="ngForm" class="m-login__form m-form"

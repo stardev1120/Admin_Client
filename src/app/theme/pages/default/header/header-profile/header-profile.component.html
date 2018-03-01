@@ -456,10 +456,48 @@
                         </form>
                     </div>
                     <div class="tab-pane" id="m_user_profile_tab_3">
-                        <div class="row" style="padding-top: 15%;">
+                        <div class="row" style="padding-top: 15%;" *ngIf="!show2FA">
                             <div class="col-lg-4"></div>
                             <div class="col-lg-4">
                                 <button class="btn btn-primary btn-lg" (click)="onReset2FA()">Reset 2 FA</button>
+                            </div>
+                        </div>
+                        <div class="m-login__2fa" *ngIf="show2FA">
+                            <div class="m-login__head" style="text-align: center;padding-top: 20px;" *ngIf="!adminUserService.currentAdminUser.is2FAVerified">
+                                <h3 class="m-login__title">
+                                    QR Code
+                                </h3>
+                                <div class="m-login__desc">
+                                    Scan this QR code with Google
+                                    Authenticator to use as the 2FA
+                                    Generator
+                                </div>
+                            </div>
+                            <div class="align-content-center">
+                                <qr-code [value]="otpauth_url" [size]="150"></qr-code>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <form (ngSubmit)="fa.form.valid && verification2FA()" #fa="ngForm" class="m-login__form m-form align-content-center"
+                                          action="">
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input" type="text" placeholder="2 FA Code" name="FACode"
+                                                   [(ngModel)]="code" #faCode="ngModel" id="m_2fa_code" autocomplete="off">
+                                        </div>
+                                        <div class="m-login__form-action align-content-center" style="text-align: center;">
+                                            <button [disabled]="loading"
+                                                    [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" type="submit"
+                                                    class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+                                                Verify
+                                            </button>
+                                            <button type="button" (click)="onHide2FA()" [disabled]="loading"
+                                                    class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 15px;">

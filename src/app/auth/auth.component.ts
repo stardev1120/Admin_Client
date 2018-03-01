@@ -88,7 +88,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this._adminUserService.verify().subscribe(() => {
-                        if (this._adminUserService.checkModuleOtherRight('admin-users', '2FA') && !this._adminUserService.currentAdminUser.is2FAVerified) {
+                        if (this._adminUserService.checkModuleOtherRight('admin-users', '2FA')) {
                             this.show2FA = true;
                             this.loading = false;
                             this.clonedCurrentUser = (JSON.parse(localStorage.getItem('currentUser'))) ?
