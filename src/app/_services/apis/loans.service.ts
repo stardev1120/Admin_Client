@@ -16,7 +16,7 @@ export class LoansService extends BaseApiService<Loan> {
 
     getLoansCountOfUser(userId: string) {
         let filter = {"where": {"user_id": userId}};
-        return this.http.get(this.baseUrl + this.url + '/count?filter=' + JSON.stringify(filter), {headers: this.authorization()});
+        return this.http.get(this.baseUrl + this.url + '/count?filter='+ `${encodeURI(JSON.stringify(filter))}`, {headers: this.authorization()});
     }
 
     issueLoanMoney(loanId: string){
